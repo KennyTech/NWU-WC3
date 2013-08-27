@@ -49,6 +49,30 @@ library Spells requires ChakraArmor,TimerUtils
     define addMP(u,v)    = SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)+v)
     define removeMp(u,v) = SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)-v)
     define removeMP(u,v) = SetUnitState(u,UNIT_STATE_MANA,GetUnitState(u,UNIT_STATE_MANA)-v)
+
+
+    /**
+     * Sometimes you need a delay to add mana
+     */
+
+    private void addMpDelayedaCallback(){
+        timer t = GetExpiredTimer()
+        integer h = GetHandleId(t)
+        addMp(GetUnit(h,0),GetReal(h,0))
+        ReleaseTimer(t)
+    }
+
+    /**
+     * Add MP to a Unit with a 0 delay time. It can be used when you have to add mana to trigger unit in a SpellCallback
+     * normal adding doesn't seems to work.
+     */
+    void addMpDelayed(unit u,real mp){
+        timer t = NewTimer()
+        integer h = GetHandleId(t)
+        SetUnit(h,0,u)
+        SetReal(h,0,mp)
+        TimerStart(t,0,false,function addMpDelayedaCallback)
+    }
     
 //*****************************************
 //  Damage AOE Module

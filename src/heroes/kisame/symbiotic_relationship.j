@@ -5,22 +5,21 @@ scope SymbioticRelationship{
         private DURATION = 5
         private HEALTH_BONUS(LVL) = (5+15*LVL)
         private HEALTH(LVL) = (5+10*LVL)
+        private ARMOR_BONUS(LVL) = 1+LVL
     }
     
     private nothing onExpire(){
         timer t=GetExpiredTimer()
         integer h=GetHandleId(t)
         unit u=GetUnit(h,1)
-        real hp=GetWidgetLife(u)
         integer lvl=GetUnitAbilityLevel(u,ID)
         // Effects
-        if(hp<=0.4*MaxHp(u)){
-            hp+=HEALTH_BONUS(lvl)
+        if(GetHp(u)<=0.4*MaxHp(u)){
+            addHp(u,HEALTH_BONUS(lvl))
         } else {
-            hp+=HEALTH(lvl)
+            addHp(u,HEALTH(lvl))
         }
-        call SetWidgetLife(u,hp)
-        // END
+        // End condition
         if(GetIntDec(h,0)==0){
             ReleaseTimerEx()
         }
@@ -28,15 +27,18 @@ scope SymbioticRelationship{
         t=null
         u=null
     }
-    
+
     private boolean onCast(){
         timer t=NewTimer()
         integer h=GetHandleId(t)
+        unit caster=GetTriggerUnit()
+        // Armor bonus
+        AddBonusTimed(caster,BONUS_TYPE_ARMOR,ARMOR_BONUS(GetUnitAbilityLevel(caster,ID)),DURATION)
         // TABLE
         SetInt(h,0,DURATION)
-        SetUnit(h,1,GetTriggerUnit())
+        SetUnit(h,1,caster)
         // START
-        call TimerStart(t,1,true,function onExpire)
+        TimerStart(t,1,true,function onExpire)
         // LEAKS
         t=null
         return false
