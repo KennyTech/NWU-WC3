@@ -11,6 +11,20 @@ include "src//core//caverns//lower.j"
 include "src//core//caverns//upper.j"
 
 /**************************************************************
+		DAMAGE
+**************************************************************/
+include "src//core//damage//damage_engine.j"
+include "src//core//damage//damage_extension.j"
+include "src//core//damage//last_target.j"
+
+/**************************************************************
+		ITEMS
+**************************************************************/
+include "src//core//items//item_cost.j"
+include "src//core//items//item_sys.j"
+include "src//core//items//recipe.j"
+
+/**************************************************************
 		MECHANICS
 **************************************************************/
 include "src//core//mechanics//afk_system.j"
@@ -48,6 +62,12 @@ include "src//core//status//inmunity.j"
 include "src//core//status//status.j"
 include "src//core//status//status1.j"
 include "src//core//status//status_timed.j"
+
+/**************************************************************
+		TRIGGERS
+**************************************************************/
+include "src//core//triggers//gt_events.j"
+include "src//core//triggers//player_unit_events.j"
 
 /**************************************************************
 		WAYPOINTS
