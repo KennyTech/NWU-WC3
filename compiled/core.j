@@ -29,6 +29,7 @@ include "src//core//items//recipe.j"
 **************************************************************/
 include "src//core//mechanics//afk_system.j"
 include "src//core//mechanics//creep_agro.j"
+include "src//core//mechanics//last_order.j"
 include "src//core//mechanics//observer_support.j"
 include "src//core//mechanics//personal_commands.j"
 include "src//core//mechanics//players.j"
