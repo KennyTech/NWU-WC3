@@ -25,6 +25,7 @@ scope AgroSystem
             call SaveAgentHandle(HT,id,105,udg_CreepAgro_Attacker)
             call SaveBoolean(HT,id,119,true)
             call IssueTargetOrderById(u,851983,udg_CreepAgro_Attacker)
+            set u = null
             return true
         endif
         set u=null
