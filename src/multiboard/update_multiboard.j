@@ -1,4 +1,4 @@
-library Multiboard
+library Multiboard initializer Init
     function setItemValue takes multiboard mb,integer c,integer r,string value returns nothing
         local multiboarditem mbi=null
         set mbi=MultiboardGetItem(mb,r-1,c-1)
@@ -37,7 +37,7 @@ library Multiboard
     private function ChangeTitle takes nothing returns nothing
         call ForForce(bj_FORCE_ALL_PLAYERS,function ChangeTitleEnum)
     endfunction
-    function InitTrig_Update_Multiboard takes nothing returns nothing
+    private function Init takes nothing returns nothing
         call TimerStart(CreateTimer(),2,false,function ChangeTitle)
     endfunction
 endlibrary
