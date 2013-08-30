@@ -1,5 +1,5 @@
 scope AgroSystem
-
+    
     function reorder_enum takes nothing returns nothing
         local unit u=GetEnumUnit()
         call RemoveSavedBoolean(HT,GetHandleId(u),119)
@@ -8,6 +8,9 @@ scope AgroSystem
         set u=null
     endfunction
     
+    /**
+     *  
+     */
     private function reorder takes nothing returns nothing
         local timer t=GetExpiredTimer()
         local group g=LoadGroupHandle(HT,GetHandleId(t),0)
@@ -31,6 +34,14 @@ scope AgroSystem
         return false
     endfunction
 
+    /**
+     *  Executed when EVENT_PLAYER_UNIT_ATTACKED & EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER.
+     *  Checks if the attacker unit is at 500 range from attacked one and if the attacked
+     *  unit is a hero and if the attacker unit is controller by a human and if the units
+     *  are enemies, if that condition is satisfied, 
+     *
+     *  @private
+     */
     private function onAttack takes nothing returns nothing
         local group creeps
         local timer t
@@ -40,7 +51,7 @@ scope AgroSystem
         else
            set udg_CreepAgro_Attacked = GetOrderTargetUnit()
            set udg_CreepAgro_Attacker = GetTriggerUnit()
-           if GetIssuedOrderId() > 851983 then
+           if GetIssuedOrderId() > 851983 then // 851983 = order attack
               return
            endif
         endif
@@ -55,6 +66,11 @@ scope AgroSystem
         endif
     endfunction
 
+    /**
+     *  Executed in map init
+     *  Creates a trigger that listen for 
+     *  EVENT_PLAYER_UNIT_ATTACKED and EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER
+     */
     function StartTrigger_Agro_System takes nothing returns nothing
         local trigger t=CreateTrigger()
         call GT_RegisterPlayerEvent(t,EVENT_PLAYER_UNIT_ATTACKED)
