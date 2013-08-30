@@ -1,4 +1,4 @@
-scope LightningcloneCast initializer Init
+scope LightningcloneCast
   private function Trig_LightningClone_Cast_Actions takes nothing returns nothing
       local unit Caster = GetTriggerUnit()
       local unit Summon
@@ -30,16 +30,16 @@ scope LightningcloneCast initializer Init
       set Summon = null
   endfunction
 
-  private function Init takes nothing returns nothing
+  public function Init takes nothing returns nothing
       local integer index = 0
-      set gg_trg_LightningClone_Cast = CreateTrigger()
-      call DisableTrigger( gg_trg_LightningClone_Cast )
+      local trigger t = CreateTrigger()
       loop
-          call TriggerRegisterPlayerUnitEvent(gg_trg_LightningClone_Cast, Player(index), EVENT_PLAYER_UNIT_SPELL_CAST, null)
-          call TriggerRegisterPlayerUnitEvent(gg_trg_LightningClone_Cast, Player(index), EVENT_PLAYER_UNIT_SUMMON, null)
+          call TriggerRegisterPlayerUnitEvent(t, Player(index), EVENT_PLAYER_UNIT_SPELL_CAST, null)
+          call TriggerRegisterPlayerUnitEvent(t, Player(index), EVENT_PLAYER_UNIT_SUMMON, null)
           set index = index + 1
           exitwhen index == bj_MAX_PLAYER_SLOTS
       endloop
-      call TriggerAddAction( gg_trg_LightningClone_Cast, function Trig_LightningClone_Cast_Actions )
+      call TriggerAddAction( t, function Trig_LightningClone_Cast_Actions )
+      set t = null
   endfunction
 endscope
