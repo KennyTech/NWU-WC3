@@ -1,8 +1,6 @@
 scope SharinganCopy
 
-  define{
-    ID = 'A03G'
-  }
+  define private ID = 'A03G';
 
   private function onCast takes nothing returns boolean
       local integer Ability

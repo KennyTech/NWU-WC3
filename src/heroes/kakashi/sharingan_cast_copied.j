@@ -1,8 +1,6 @@
 scope SharinganCastCopied
 
-  define{
-    ID = 'O009'
-  }
+  define private ID = 'O009';
 
   private function onCast takes nothing returns boolean
       local unit Caster = GetTriggerUnit()

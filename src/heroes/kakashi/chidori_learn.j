@@ -1,8 +1,6 @@
 scope ChidoriLearn
 
-    define{
-        ID = 'A09J'
-    }
+    define private ID = 'A09J';
 
     private boolean onLearn(){
         unit Caster = GetTriggerUnit()

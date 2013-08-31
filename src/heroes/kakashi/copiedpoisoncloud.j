@@ -1,8 +1,6 @@
 scope CopiadPoisonCloud
 
-  define{
-      ID = 'A00E'
-  }
+  define private ID = 'A00E';
 
   private function CopiedPoisonCloud_Main takes nothing returns nothing
      local timer t = GetExpiredTimer()
