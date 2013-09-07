@@ -28,6 +28,6 @@ scope CreepsInit initializer Init
             set udg_Creep_Actualizacion[1] = 'R006' // Arriba
             set udg_Creep_Actualizacion[2] = 'R003' // Medio
             set udg_Creep_Actualizacion[3] = 'R005' // Abajo
-            BJDebugMsg("Funciona")
+            //BJDebugMsg("Funciona")
     }
 endscope
