@@ -1,4 +1,4 @@
-scope LightningcloneCast
+scope LightningCloneCast
   private function Trig_LightningClone_Cast_Actions takes nothing returns nothing
       local unit Caster = GetTriggerUnit()
       local unit Summon
@@ -41,5 +41,6 @@ scope LightningcloneCast
       endloop
       call TriggerAddAction( t, function Trig_LightningClone_Cast_Actions )
       set t = null
+      BJDebugMsg("CMON")
   endfunction
 endscope
