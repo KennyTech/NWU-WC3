@@ -48,7 +48,7 @@
   function Trig_Sharingan_Learn_Conditions takes nothing returns boolean
       return GetLearnedSkill() == 'A04Z' and IsUnitIllusion(GetTriggerUnit()) == false
   endfunction
-  private function Init takes nothing returns nothing
+  public function Init takes nothing returns nothing
       trigger t = CreateTrigger()
       call TriggerRegisterAnyUnitEventBJ( t, EVENT_PLAYER_HERO_SKILL )
       call TriggerAddCondition( t, Condition( function Trig_Sharingan_Learn_Conditions ) )
