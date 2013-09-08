@@ -96,12 +96,12 @@ library HeroPick initializer Init requires TimerUtils
         elseif UnitType==KAKASHI then//***KAKASHI***
             call ExecuteFunc("Dogs_Init")
             call ExecuteFunc("Chidori_Init")
-            call ExecuteFunc("Sharingan_Learn_Init")
-            call ExecuteFunc("Sharingan_Copy_Cast_Init")
-            call ExecuteFunc("Sharingan_Cast_Copied_Init")
-            call ExecuteFunc("Copied_Poison_Cloud_Init")
-            call ExecuteFunc("LightningClone_Cast_Init")
-            call ExecuteFunc("Chidori_Learn_Init")
+            call ExecuteFunc("SharinganLearn_Init")
+            call ExecuteFunc("SharinganCopyCast_Init")
+            call ExecuteFunc("SharinganCastCopied_Init")
+            call ExecuteFunc("CopiedPoisonCloud_Init")
+            call ExecuteFunc("LightningCloneCast_Init")
+            call ExecuteFunc("ChidoriLearn_Init")
         elseif UnitType==KAKUZU then//***KAKUZU***
             call EnableTrigger( gg_trg_FirePath )
             call EnableTrigger( gg_trg_LigthningBolt )
@@ -539,16 +539,16 @@ library HeroPick initializer Init requires TimerUtils
     private function Init takes nothing returns nothing
         local integer index = 0
         local player p
-        set gg_trg_Hero_Pick = CreateTrigger()
+        trigger t = CreateTrigger()
         loop
             set p = Player(index)
-            call TriggerRegisterPlayerUnitEvent(gg_trg_Hero_Pick, p, EVENT_PLAYER_UNIT_SELL, null)
-            call TriggerRegisterPlayerChatEvent(gg_trg_Hero_Pick, p, "-repick", true )
-            call TriggerRegisterPlayerChatEvent(gg_trg_Hero_Pick, p, "-random", true )
+            call TriggerRegisterPlayerUnitEvent(t, p, EVENT_PLAYER_UNIT_SELL, null)
+            call TriggerRegisterPlayerChatEvent(t, p, "-repick", true )
+            call TriggerRegisterPlayerChatEvent(t, p, "-random", true )
             set index = index + 1
             exitwhen index == bj_MAX_PLAYER_SLOTS
         endloop
-        call TriggerAddAction( gg_trg_Hero_Pick, function Trig_Hero_Pick_Actions )
+        call TriggerAddAction( t, function Trig_Hero_Pick_Actions )
         set p = null
     endfunction
     

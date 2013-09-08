@@ -1,4 +1,4 @@
-scope SharinganCopy
+scope SharinganCopyCast
 
   define private ID = 'A03G';
 

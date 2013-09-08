@@ -45,7 +45,7 @@ library Sharingan initializer Init requires TextTag,TimerUtils
     endfunction 
     
     
-    private function Init takes nothing returns nothing
+    public function Init takes nothing returns nothing
         local trigger t=CreateTrigger()
         local integer i=0
         loop
