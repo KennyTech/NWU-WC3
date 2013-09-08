@@ -41,6 +41,5 @@ scope LightningCloneCast
       endloop
       call TriggerAddAction( t, function Trig_LightningClone_Cast_Actions )
       set t = null
-      BJDebugMsg("CMON")
   endfunction
 endscope
