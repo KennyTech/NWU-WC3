@@ -1,4 +1,4 @@
-scope UpperPortalEnter
+scope UpperPortalEnter initializer init
     function UpperPortal_Enter takes nothing returns nothing
         local unit u = GetTriggerUnit()
         local real x = GetRectCenterX(gg_rct_Portal_Down)
