@@ -31,11 +31,11 @@ endfunction
 function Mod takes integer i,integer j returns boolean
     return ModuloInteger(i,j)==0
 endfunction
-function DEBUG takes string s returns nothing
+/*function DEBUG takes string s returns nothing
     if udg_SingleMode then
         call BJDebugMsg(s)
     endif
-endfunction    
+endfunction*/    
 function Mensaje takes string m returns nothing
     call DisplayTimedTextToPlayer(GetLocalPlayer(),0,0,12.3,m)
 endfunction

@@ -1,21 +1,18 @@
-function Chidori_Learn_Actions takes nothing returns nothing
-    local unit Caster = GetTriggerUnit()
+scope ChidoriLearn
 
-    call UnitAddAbility(Caster, 'A05N' )
-    call SetUnitAbilityLevel(Caster, 'A05N', GetUnitAbilityLevel(Caster,'A09J') )
-    call UnitMakeAbilityPermanent(Caster,true,'A05N')
+    define private ID = 'A09J';
 
-    set Caster = null
-endfunction
+    private boolean onLearn(){
+        unit Caster = GetTriggerUnit()
 
-//===========================================================================
-function Chidori_Learn_Conditions takes nothing returns boolean
-    return GetLearnedSkill() == 'A09J'
-endfunction
-function InitTrig_Chidori_Learn takes nothing returns nothing
-    set gg_trg_Chidori_Learn = CreateTrigger(  )
-    call DisableTrigger( gg_trg_Chidori_Learn )
-    call TriggerRegisterAnyUnitEventBJ( gg_trg_Chidori_Learn, EVENT_PLAYER_HERO_SKILL )
-    call TriggerAddCondition( gg_trg_Chidori_Learn, Condition( function Chidori_Learn_Conditions ) )
-    call TriggerAddAction( gg_trg_Chidori_Learn, function Chidori_Learn_Actions )
-endfunction
+        UnitAddAbility(Caster, 'A05N' )
+        SetUnitAbilityLevel(Caster, 'A05N', GetUnitAbilityLevel(Caster,'A09J') )
+        UnitMakeAbilityPermanent(Caster,true,'A05N')
+
+        return false
+    }
+
+    public void Init(){
+        GT_LearnEvent(ID,function onLearn)
+    }
+endscope
