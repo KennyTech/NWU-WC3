@@ -195,7 +195,8 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
         //set ORDER[STATUS_PHASE]             = 852129
         //set ORDER[STATUS_DISABLE]           = 852252
     endfunction
-/**********************************************************************************/
+/********************************************************************************
+*/
 
     private boolean disarmFix(unit u){
         return GetOwningPlayer(u)==udg_team1[0] or GetOwningPlayer(u)==udg_team2[0]

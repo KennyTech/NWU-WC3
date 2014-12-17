@@ -15,6 +15,11 @@ library StatusTimed requires Status
         SetUnit(h,0,u)
         SetInt(h,0,status)
         TimerStart(t,time,false,function onExpire)
+        static if TEST_MODE then
+            if status == STATUS_STUN then
+                call BJDebugMsg("[Status_AddTimed] STATUS_STUN - TIME: " + R2S(time))
+            endif
+        endif
     }
     
     // WRAPPERS
