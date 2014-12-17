@@ -13,6 +13,11 @@ include "src//heroes//kakashi//sharingan_copy_cast.j"
 include "src//heroes//kakashi//sharingan_learn.j"
 
 /**************************************************************
+		KANKURO
+**************************************************************/
+include "src//heroes//kankuro//sanshouo.js"
+
+/**************************************************************
 		KISAME
 **************************************************************/
 include "src//heroes//kisame//samehada_feast.j"
