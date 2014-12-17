@@ -310,7 +310,7 @@ library proj requires KT,GroupUtils,Alloc,Effects,Status
 			local real dy
             local boolean canMove=true
             if IsUnitType(m,UNIT_TYPE_DEAD)==true and allowDead==false then
-                set this.finish=true // STOP WHEN PROJECTILE IS DEAD
+                set this.finish = true // STOP WHEN PROJECTILE IS DEAD
             endif
 			if not finish then // MISIL HOMMING
                 if tu!=null and GetUnitTypeId(tu)!=0 then
@@ -335,8 +335,13 @@ library proj requires KT,GroupUtils,Alloc,Effects,Status
                         endif
                     endif
                 endif
+                // Calculate next unit Position
                 set dx=GetUnitX(m)+mvx
                 set dy=GetUnitY(m)+mvy
+                // Finish if its an unsafe position
+                if not SafePosition.isSafe(dx, dy)
+                    finish = true
+                endif
                 if arcing then
                     set maz = 2*((tz-mz)/time/time*PERIOD*PERIOD-(mvz*PERIOD)/time)
                     set mvz  = mvz + maz/2.0
