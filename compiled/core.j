@@ -21,7 +21,7 @@ include "src//core//damage//last_target.j"
 		ITEMS
 **************************************************************/
 include "src//core//items//item_cost.j"
-include "src//core//items//item_sys.j"
+include "src//core//items//item_system.j"
 include "src//core//items//recipe.j"
 
 /**************************************************************
@@ -70,6 +70,11 @@ include "src//core//status//status_timed.j"
 **************************************************************/
 include "src//core//triggers//gt_events.j"
 include "src//core//triggers//player_unit_events.j"
+
+/**************************************************************
+		UNITS
+**************************************************************/
+include "src//core//units//unit_type_helper.j"
 
 /**************************************************************
 		WAYPOINTS

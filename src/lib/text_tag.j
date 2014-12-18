@@ -126,9 +126,8 @@ public function GoldBounty takes unit whichUnit, integer bounty, player killer r
     set tt = null
 endfunction
 
-function ManaBurnEx takes unit whichUnit, integer dmg,boolean sfx returns nothing
+function BlueText takes unit whichUnit, string text returns nothing
     local texttag tt = CreateTextTag()
-    local string text = "-" + I2S(dmg)
     call SetTextTagText(tt, text, FONT_SIZE)
     call SetTextTagPos(tt, GetUnitX(whichUnit)-SIGN_SHIFT, GetUnitY(whichUnit), 0.0)
     call SetTextTagColor(tt, 82, 82 ,255 ,255)
@@ -137,11 +136,15 @@ function ManaBurnEx takes unit whichUnit, integer dmg,boolean sfx returns nothin
     call SetTextTagFadepoint(tt, 2.0)
     call SetTextTagLifespan(tt, 5.0)
     call SetTextTagPermanent(tt, false)
-    if sfx then
-        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl",whichUnit,"chest"))
-    endif
     set text = null
     set tt = null
+endfunction
+
+function ManaBurnEx takes unit whichUnit, integer dmg,boolean sfx returns nothing
+    call BlueText(whichUnit, "-" + I2S(dmg))
+    if sfx then
+        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Charm\\CharmTarget.mdl", whichUnit, "chest"))
+    endif
 endfunction
 
 define ManaBurn(u,d) = ManaBurnEx(u,d,true)
