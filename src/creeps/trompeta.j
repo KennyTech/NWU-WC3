@@ -34,7 +34,7 @@ scope Trompeta initializer Init
     endfunction
 
     private void Init() {
-        call TimerStart(CreateTimer(),10,false,function Trig_Trompeta_Actions)
+        call TimerStart(CreateTimer(),COOLDOWN,false,function Trig_Trompeta_Actions)
         call StartSound(gg_snd_TheHornOfCenarius)
     }
 
