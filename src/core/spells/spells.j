@@ -17,10 +17,6 @@ library Spells requires ChakraArmor,TimerUtils
             return false
         endif
     }
-
-    boolean isUnitAlive(unit u){
-        return GetWidgetLife(u) > 0.405;
-    }
     
 //*****************************************
 //  Wrappers
