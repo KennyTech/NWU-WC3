@@ -1,0 +1,4 @@
+define
+	KYUUBI_SPAWN_X = 15600
+	KYUUBI_SPAWN_Y = -6000
+enddefine

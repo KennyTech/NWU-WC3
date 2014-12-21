@@ -1,17 +1,15 @@
 scope KyuubiLeaves initializer init
 
-	function Kyuubi_Leaves takes nothing returns boolean
-	    local unit u = GetTriggerUnit()
-	    if GetUnitTypeId(u) == 'n01J'  then
-	        call SetUnitPosition(u,15500,-9600)
-	    endif
-	    set u = null
-	    return false
-	endfunction
+    function Kyuubi_Leaves takes nothing returns boolean
+        if isKyuubi(GetTriggerUnit()) then
+            SetUnitPosition(GetTriggerUnit(), KYUUBI_SPAWN_X, KYUUBI_SPAWN_Y)
+        endif
+        return false
+    endfunction
 
     private nothing init(){
-	    set gg_trg_Kyuubi_Leaves = CreateTrigger(  )
-	    call TriggerRegisterLeaveRectSimple( gg_trg_Kyuubi_Leaves, gg_rct_Kyubi )
-	    call TriggerAddCondition( gg_trg_Kyuubi_Leaves, Condition( function Kyuubi_Leaves ) )
-	}
+        trigger t = CreateTrigger(  )
+        TriggerRegisterLeaveRectSimple( t, gg_rct_Kyubi )
+        TriggerAddCondition( t, Condition( function Kyuubi_Leaves ) )
+    }
 endscope
