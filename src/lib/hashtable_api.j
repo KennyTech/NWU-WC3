@@ -5,13 +5,20 @@ library HTAPI{
     //*****************************************  
     
     define{
-        KEY_SEAL_OF_CHAKRA  = 200
-        KEY_KANKURO_ULTI    = 119 // BOOLEAN
-        KEY_BUG_SHIELD      = 101 // SFX AND HP
-        KEY_BUG_SHIELD_TIME = 201 // TIME
+        KEY_SEAL_OF_CHAKRA    = 200
+        KEY_KANKURO_ULTI      = 119 // BOOLEAN
+        KEY_BUG_SHIELD        = 101 // SFX AND HP
+        KEY_INO_ULTIMATE      = 121 // SAVES A BOOLEAN AND A UNIT
+        KEY_BUG_SHIELD_TIME   = 201 // TIME
         KEY_BUG_SHIELD_CASTER = 202
         KEY_HINATA_BLOCK      = 100
-        KEY_BUG_SHIELD_TIMER = 203
+        KEY_BUG_SHIELD_TIMER  = 203
+        KEY_BUG_SHIELD_DAMAGE = 204
+    }
+
+    define{
+        IsMindControlled(u) = LoadBoolean(HT, GetHandleId(u), KEY_INO_ULTIMATE) == true
+        GetMindController(u)  = LoadUnitHandle(HT, GetHandleId(u), KEY_INO_ULTIMATE) 
     }
 
     //*****************************************
@@ -23,6 +30,7 @@ library HTAPI{
         SetUnit(h,key,value)   = SaveAgentHandle(HT,h,key,value)
         SetGroup(h,key,value)  = SaveAgentHandle(HT,h,key,value)
         SetEffect(h,key,value) = SaveEffectHandle(HT,h,key,value)
+        SetTimer(h,key,value)  = SaveAgentHandle(HT,h,key,value)
         
         GetReal(h,key)   = LoadReal(HT,h,key)
         GetInt(h,key)    = LoadInteger(HT,h,key)

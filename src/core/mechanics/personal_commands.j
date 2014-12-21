@@ -217,6 +217,19 @@ scope Personal
             call TriggerRegisterPlayerEvent(t,udg_Host, EVENT_PLAYER_END_CINEMATIC)
             call TriggerAddAction(t,function Refill)
         endif
+        static if TEST_MODE then
+            // ALLOWS LEVELUP IN TEST_MODE FOR FASTER TESTS
+            BJDebugMsg("TEST_MODE: You can type -lvlup X to level up your Hero")
+            int playerId = 0
+            loop
+                exitwhen i > 25
+                loop
+                    exitwhen playerId > 12
+                    call TriggerRegisterPlayerChatEvent(t, Player(playerId), "-lvlup "+I2S(i), false)
+                endloop
+                set i = i + 1 
+            endloop
+        endif
         set t=null
     endfunction
 

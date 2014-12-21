@@ -4,6 +4,11 @@ library StatusTimed requires Status
         timer t=GetExpiredTimer()
         integer h=GetHandleId(t)
         Status_Remove(GetUnit(h,0),GetInt(h,0))
+        static if TEST_MODE then
+            if GetInt(h,0) == STATUS_STUN then
+                call BJDebugMsg("[Status_AddTimed] STATUS_STUN - REMOVING ")
+            endif
+        endif
         ReleaseTimer(t)
         t=null
     }

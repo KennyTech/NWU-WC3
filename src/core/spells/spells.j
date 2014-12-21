@@ -129,7 +129,7 @@ library Spells requires ChakraArmor,TimerUtils
         loop
             set m = FirstOfGroup(ENUM)
             exitwhen m==null
-            static if DEBUG_MODE then
+            static if TEST_MODE then
                 if IsUnitType(m, UNIT_TYPE_DEAD)==false and IsUnitType(m,UNIT_TYPE_STRUCTURE)==false and IsUnitTypeWard(m)==false and UnitFilter(m) then
                     if StringLength(FX)>0 then
                         call DestroyEffect(AddSpecialEffectTarget(FX,m,"chest"))

@@ -110,7 +110,11 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
     {
         BUFF_ENTANGLE_AIR = 'B506'
     }
-/**********************************************************************************/
+/*********************************************************************************
+*
+*   GLOBALS
+*
+*/
     define
     {
         STATUS_STUN                        = 1
@@ -171,10 +175,10 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
         //set ABILITY[STATUS_REFLECT_PIERCING]= 'A50S'
         //set ABILITY[STATUS_DISABLE]         = 'A50T'
         
-        set BUFF[STATUS_STUN]               = 'B02R'
-        set BUFF[STATUS_SILENCE]            = 'BNsi'
+        set BUFF[STATUS_STUN]                 = 'B02R'
+        set BUFF[STATUS_SILENCE]              = 'BNsi'
         //set BUFF[STATUS_DOOM]               = 'B509'
-        set BUFF[STATUS_DISARM_BOTH]        = 'B02B'
+        set BUFF[STATUS_DISARM_BOTH]          = 'B02B'
         //set BUFF[STATUS_DISARM_MELEE]       = 'B503'
         //set BUFF[STATUS_DISARM_RANGE]       = 'B504'
         //set BUFF[STATUS_ENTANGLE]           = 'B505'
@@ -183,9 +187,9 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
         //set BUFF[STATUS_PHASE]              = 'B50L'
         //set BUFF[STATUS_DISABLE]            = 'B50T'
         
-        set ORDER[STATUS_STUN]              = 852231
-        set ORDER[STATUS_SILENCE]           = 852668
-        set ORDER[STATUS_DISARM_BOTH]       = 852585
+        set ORDER[STATUS_STUN]                = 852231
+        set ORDER[STATUS_SILENCE]             = 852668
+        set ORDER[STATUS_DISARM_BOTH]         = 852585
         //set ORDER[STATUS_DISARM_MELEE]      = 852585
         //set ORDER[STATUS_DISARM_RANGE]      = 852585
         //set ORDER[STATUS_ENTANGLE]          = 852106
@@ -235,7 +239,7 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
                     call UnitAddAbility(u, ABILITY[status])
                     call UnitMakeAbilityPermanent(u, true, ABILITY[status])
                 else
-                    CasterCast(u,ABILITY[status],ORDER[status])
+                    CasterCast(u, ABILITY[status], ORDER[status])
                     // DISARM CREEPS FIX
                     if status == STATUS_DISARM_BOTH and disarmFix(u)==true then
                         call IssueImmediateOrder(u,"stop")
@@ -247,11 +251,11 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
     
     public function Remove takes unit u,integer status returns nothing
         local integer id = GetHandleId(u)
-        local integer level = LoadInteger(hashTable, id, status) - 1
+        local integer level = IMaxBJ(LoadInteger(hashTable, id, status) - 1, 0)
         
         call SaveInteger(hashTable, id, status, level)
         
-        if (level == 0) then
+        if level == 0 then
             if (status == STATUS_INVULNERABLE) then
                 call SetUnitInvulnerable(u, false)
             elseif (status == STATUS_PAUSE) then
@@ -276,7 +280,7 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
                         call OrderCreep(u)
                     endif
                     
-                    // we also have to remove the air tangle buff
+                    // We also have to remove the air tangle buff
                     if (status == STATUS_ENTANGLE) then
                         call UnitRemoveAbility(u, BUFF_ENTANGLE_AIR)
                     endif
@@ -285,8 +289,29 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
         endif
     endfunction
     
-    private function Clear takes nothing returns boolean
-        call FlushChildHashtable(hashTable, GetHandleId(GetTriggerUnit()))
+    /**
+     * Limpiamos todos los estados a una unidad
+     * 
+     * @param unit whichUnit
+     */ 
+    public function Clear takes unit whichUnit returns nothing
+        local integer status = STATUS_UNPATH // ultimo estado
+        local integer id = GetHandleId(whichUnit)
+        
+        loop
+            exitwhen status == 0
+            
+            call SaveInteger(hashTable, id, status, 1)
+            call Remove(whichUnit, status)
+            
+            set status = status - 1
+        endloop
+        
+        call FlushChildHashtable(hashTable, id)
+    endfunction
+    
+    private function OnDeath takes nothing returns boolean
+        call Clear(GetTriggerUnit())
         return false
     endfunction
     
@@ -296,7 +321,7 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
         local integer n = 0
         
         call TriggerRegisterAnyUnitEventBJ(onDeath, EVENT_PLAYER_UNIT_DEATH)
-        call TriggerAddCondition(onDeath, Condition(function Clear))
+        call TriggerAddCondition(onDeath, Condition(function OnDeath))
         
         call Load()
     
