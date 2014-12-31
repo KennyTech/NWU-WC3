@@ -120,6 +120,7 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
         STATUS_STUN                        = 1
         STATUS_SILENCE                     = 2
         STATUS_DISARM_BOTH                 = 3
+
         STATUS_DISARM_MELEE                = 4
         STATUS_DISARM_RANGE                = 5
         STATUS_ENTANGLE                    = 6
@@ -136,6 +137,7 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
         STATUS_RESISTANT_SKIN              = 17
         STATUS_REFLECT_PIERCING            = 18
         STATUS_DISABLE                     = 19
+
         STATUS_INVULNERABLE                = 20
         STATUS_PAUSE                       = 21
         STATUS_HIDE                        = 22
@@ -250,11 +252,16 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
     endfunction
     
     public function Remove takes unit u,integer status returns nothing
-        local integer id = GetHandleId(u)
-        local integer level = IMaxBJ(LoadInteger(hashTable, id, status) - 1, 0)
+        local integer id     = GetHandleId(u)
+        local integer level  = LoadInteger(hashTable, id, status) - 1
+
+        // We don't want to do anything else if there is nothing stored
+        if not Has(u, status) then
+            return
+        endif
         
         call SaveInteger(hashTable, id, status, level)
-        
+
         if level == 0 then
             if (status == STATUS_INVULNERABLE) then
                 call SetUnitInvulnerable(u, false)
@@ -301,9 +308,11 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
         loop
             exitwhen status == 0
             
-            call SaveInteger(hashTable, id, status, 1)
-            call Remove(whichUnit, status)
-            
+            if Has(whichUnit, status) then
+                call SaveInteger(hashTable, id, status, 1)
+                call Remove(whichUnit, status)
+            endif
+
             set status = status - 1
         endloop
         
