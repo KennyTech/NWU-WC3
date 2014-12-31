@@ -15,7 +15,7 @@ include "src//heroes//kakashi//sharingan_learn.j"
 /**************************************************************
 		KANKURO
 **************************************************************/
-include "src//heroes//kankuro//sanshouo.js"
+include "src//heroes//kankuro//sanshouo.j"
 
 /**************************************************************
 		KISAME
