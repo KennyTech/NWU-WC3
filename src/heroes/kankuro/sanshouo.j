@@ -2,13 +2,18 @@ scope Sanshouuo
 
     define
         private PUPPET_ID = 'o00M'
-        private AOE = 900
+        private AOE       = 900
+        private BUFF_ID   = 'B033'
     enddefine
     
     public function DmgBlockDestroy takes unit u returns nothing
         call RemoveSavedBoolean(HT,GetHandleId(u),KEY_KANKURO_ULTI)
         call RemoveAbility(u,'A0KG')
         call UnitRemoveAbility(u,'B033')
+    endfunction
+
+    private function HasProtection takes unit u returns boolean
+        return GetUnitAbilityLevel(u, BUFF_ID) > 0
     endfunction
     
     private function DmgBlockDestroyAll takes nothing returns nothing
@@ -89,7 +94,7 @@ scope Sanshouuo
     endfunction
     
     private void onDamage(unit target,unit source,real damage){
-        if(HaveSavedBoolean(HT,GetHandleId(target),KEY_KANKURO_ULTI)){
+        if(HasProtection(target)){
 
             Damage_BlockAll()
 
