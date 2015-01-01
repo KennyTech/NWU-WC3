@@ -1,4 +1,11 @@
 scope LightningCloneCast
+
+  define
+    private STUN_DURATION      = 1
+    private STUN_EFFECT_TARGET = "Abilities\\Weapons\\FarseerMissile\\FarseerMissile.mdl"
+    private STUN_EFFECT_XY     = "Abilities\\Spells\\Human\\ThunderClap\\ThunderClapCaster.mdl"
+  enddefine
+
   private function Trig_LightningClone_Cast_Actions takes nothing returns nothing
       local unit Caster = GetTriggerUnit()
       local unit Summon
@@ -30,6 +37,21 @@ scope LightningCloneCast
       set Summon = null
   endfunction
 
+  private function OnCloneDeath takes nothing returns boolean
+    local unit deathUnit = GetTriggerUnit()
+    local unit killer = GetKillingUnit()
+    if IsUnitIllusion(deathUnit) and GetUnitTypeId(deathUnit) == KAKASHI and AreUnitEnemies(deathUnit, killer) then
+      call AddStunTimed(killer, STUN_DURATION)
+      //call addEffectTarget(killer, STUN_EFFECT, "origin")
+      call DestroyEffect(AddSpecialEffectTarget(STUN_EFFECT_TARGET, killer, "chest"))
+      call DestroyEffect(AddSpecialEffect(STUN_EFFECT_XY, GetUnitX(killer), GetUnitY(killer)))
+      call DestroyEffect(AddSpecialEffect(STUN_EFFECT_XY, GetUnitX(deathUnit), GetUnitY(deathUnit)))
+    endif
+    set deathUnit = null
+    set killer = null
+    return false
+  endfunction
+
   public function Init takes nothing returns nothing
       local integer index = 0
       local trigger t = CreateTrigger()
@@ -40,6 +62,7 @@ scope LightningCloneCast
           exitwhen index == bj_MAX_PLAYER_SLOTS
       endloop
       call TriggerAddAction( t, function Trig_LightningClone_Cast_Actions )
+      call GT_RegisterPlayerEventAction(EVENT_PLAYER_UNIT_DEATH, function OnCloneDeath)
       set t = null
   endfunction
 endscope

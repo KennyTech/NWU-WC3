@@ -1,8 +1,33 @@
-library Effects requires Status,Spells,TerrainPathability
-
-//*************************************************************************************
-//   Just a random library to add effects
-//**************************************************************************************/
+library Effects requires Status, Spells, TerrainPathability/* v1.0.0.0
+*************************************************************************************
+*
+*   Just a random library to add effects
+*
+*************************************************************************************
+*
+*   Funciones
+*
+*       function addEffectEx takes integer unit_id, real x, real y, real z, real a,r eal time, player p returns unit
+*           -   Crea una unidad dummy de tipo unit_id, en la posición (x,y,z) mirando hacia el ángulo a (radian)
+*               para el player p. La unidad vive time segundos.
+*
+*       function addEffect takes unit_id, real x, real y, real z, real a, real time, player p returns unit
+*           -   Wrapper de nombre para addEffectEx
+*
+*       function addEffect takes unit_id, real x, real y, real z, real a, real time returns unit
+*           -   Overload para addEffect. Player corresponde a Player(15)
+*
+*       function addEffect takes unit_id, real x, real y, real a, real time returns unit
+*           -   Overload para addEffect. Player corresponde a Player(15) y se asume que z = 0
+*
+*       function addEffect takes unit_id, real x, real y, real time returns unit
+*           -   Overload para addEffect. Player corresponde a Player(15), se asume que z = 0 y que a = 0
+*
+*       function addEffect takes unit_id, target, real time returns unit
+*           -   Overload para addEffect. Player corresponde a Player(15), se asume que z = 0 y que a = 0, y que (x,y)
+*               corresponde a la posición del target
+*
+*************************************************************************************/
 
     // addEffectEx: Places a dummy unit 
 

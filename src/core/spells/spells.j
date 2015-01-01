@@ -1,5 +1,10 @@
 library Spells requires ChakraArmor,TimerUtils
 {
+
+    boolean AreUnitEnemies(unit u1, unit u2){
+        return IsPlayerEnemy(GetOwningPlayer(u1), GetOwningPlayer(u2))
+    }
+
     boolean Spells_Cancel(){
         if (UnitAbsorbSpell(GetSpellTargetUnit())) {
            call IssuePointOrderById(GetTriggerUnit(), 851983, GetUnitX(GetTriggerUnit()), GetUnitY(GetTriggerUnit()))
