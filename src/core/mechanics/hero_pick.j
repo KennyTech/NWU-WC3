@@ -36,9 +36,10 @@ library HeroPick initializer Init requires TimerUtils
             call ExecuteFunc("Vacuum_Init")
             call ExecuteFunc("Baku_Init")
         elseif UnitType==DEIDARA then//***DEIDARA***
-             call EnableTrigger( gg_trg_SummonClaySpiders )
+            call EnableTrigger( gg_trg_SummonClaySpiders )
             call EnableTrigger( gg_trg_Detonate )
-            call EnableTrigger( gg_trg_C3 )
+            //call EnableTrigger( gg_trg_C3 )
+            call ExecuteFunc("C3_Init")
             call EnableTrigger( gg_trg_FireFly )
         elseif UnitType==GAARA then//***GAARA***
             call EnableTrigger( gg_trg_Avalanche )
