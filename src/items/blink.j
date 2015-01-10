@@ -28,31 +28,45 @@ library Blink initializer Init requires TimerUtils, ItemSystem /* v 1.0.0
         integer length
         timer t
         unit u
+        static method create takes unit u returns thistype
+            thistype this = allocate()
+            this.length = 0
+            this.t = NewTimerEx(this)
+            this.u = u
+            call SaveInteger(HT, GetHandleId(u), BLINK_HASH_KEY, this)
+            return this
+        endmethod
+        method destroy takes nothing returns nothing
+            // Cambiar Disabled por Enabled
+            loop
+                exitwhen length == 0
+                set length = length - 1
+                call ReplaceItem(u, i[length], BLINK_ENABLED)
+                set i[length] = null
+            endloop
+            // Remover valores
+            call RemoveSavedInteger(HT, GetHandleId(u), BLINK_HASH_KEY)
+            call ReleaseTimer(t)
+            t = null
+            u = null
+            length = 0
+            call this.deallocate()
+        endmethod
     endstruct
     
-    function BlinkReset takes ItemData Data returns nothing
-        // Cambiamos los Disabled por Enabled
-        loop
-            exitwhen Data.length == 0
-            set Data.length = Data.length-1
-            call ReplaceItem(Data.u, Data.i[Data.length], BLINK_ENABLED)
-            set Data.i[Data.length] = null
-        endloop
-        // Removemos la Data
-        call RemoveSavedInteger(HT, GetHandleId(Data.u), BLINK_HASH_KEY)
-        // Liberamos timer
-        call ReleaseTimer(Data.t)
-        // Leaks
-        set Data.t = null
-        set Data.u = null
-        set Data.length = 0
-        call Data.destroy()
+    private function BlinkRestore takes ItemData data returns nothing
+        call data.destroy()
     endfunction
     
     private function Expire takes nothing returns nothing
-        local ItemData Data = GetTimerDataEx()
-        if isUnitAlive(Data.u) then
-            call BlinkReset(Data)
+        local ItemData data = GetTimerDataEx()
+        static if TEST_MODE then
+            if !isUnitAlive(data.u) then
+                BJDebugMsg("[Blink] Timer expired for a Death Unit")
+            endif
+        endif
+        if isUnitAlive(data.u) then
+            call data.destroy()
         endif
     endfunction
 
@@ -62,31 +76,31 @@ library Blink initializer Init requires TimerUtils, ItemSystem /* v 1.0.0
             set data = LoadInteger(HT, GetHandleId(u), BLINK_HASH_KEY)
             call PauseTimer(data.t)
             call TimerStart(data.t, BLINK_COOLDOWN, false, function Expire)
+            static if TEST_MODE then
+                call BJDebugMsg("[Blink] Reset timer")
+            endif
         endif
     endfunction
     
-    public function Removal takes unit u returns nothing
-        local integer index=0
-        local integer id=GetHandleId(u)
+    private function Removal takes unit u returns nothing
+        local integer index = 0
+        local integer id = GetHandleId(u)
         local item blink
         local ItemData Data
+        call BJDebugMsg("[Blink] REMOVAL.")
         // Obtener instancia anterior guardada, si es que existe
         if HaveSavedInteger(HT,id,BLINK_HASH_KEY) then
             set Data = LoadInteger(HT,id,BLINK_HASH_KEY)
         // Crear nueva instancia
         else
-            set Data        = ItemData.create()
-            set Data.u      = u
-            set Data.t      = NewTimerEx(Data)
-            set Data.length = 0
-            call SaveInteger(HT, id, BLINK_HASH_KEY, Data)
+            set Data = ItemData.create(u)
         endif
         // Cambiamos los Enabled por Disabled
         loop
             set blink = UnitItemInSlot(u,index)
             if GetItemTypeId(blink) == BLINK_ENABLED then
                 set Data.i[Data.length] = ReplaceItem(u, blink, BLINK_DISABLED)
-                set Data.length=Data.length + 1
+                set Data.length = Data.length + 1
             endif
             set index = index + 1
             exitwhen index == 6
@@ -96,11 +110,11 @@ library Blink initializer Init requires TimerUtils, ItemSystem /* v 1.0.0
             call PauseTimer(Data.t)
             call TimerStart(Data.t, BLINK_COOLDOWN, false, function Expire)
         endif
-        set blink=null
+        set blink = null
     endfunction
     
-    function BlinkRemoval takes unit blinkUnit,player damageSource,player blinkPlayer returns nothing
-        if isHero(blinkUnit) and isUnitAlive(blinkUnit) and IsPlayerEnemy(damageSource,blinkPlayer) and damageSource != blinkPlayer and udg_team1[0]!= damageSource and udg_team2[0]!=damageSource and not isIllusion(blinkUnit) then
+    function BlinkRemoval takes unit blinkUnit, player damageSource, player blinkPlayer returns nothing
+        if isHero(blinkUnit) and isUnitAlive(blinkUnit) and IsPlayerEnemy(damageSource, blinkPlayer) and damageSource != blinkPlayer and udg_team1[0]!= damageSource and udg_team2[0]!=damageSource and not isIllusion(blinkUnit) then
             // Si tiene BLINK_ENABLED, hay que cambiar los items y comenzar el timer
             if UnitCountItemsOfType(blinkUnit, BLINK_ENABLED) > 0 then
                 call Removal(blinkUnit)
@@ -122,17 +136,31 @@ library Blink initializer Init requires TimerUtils, ItemSystem /* v 1.0.0
     *
     **********************************************************************************/
 
-    private function onHeroRevive takes nothing returns nothing
+    private function onHeroRevive takes nothing returns boolean
         unit reviving = GetTriggerUnit()
         if UnitCountItemsOfType(reviving, BLINK_DISABLED) > 0 then
-            BlinkReset(LoadInteger(HT, GetHandleId(reviving), BLINK_HASH_KEY))
+            BlinkRestore(LoadInteger(HT, GetHandleId(reviving), BLINK_HASH_KEY))
+            static if TEST_MODE then
+                call BJDebugMsg("[Blink] hero revived with disabled blink in inventory. Enabling blink.")
+            endif
         endif
+        return false
+    endfunction
+
+    private function onHeroDeath takes nothing returns boolean
+        unit deathHero = GetTriggerUnit()
+        if UnitCountItemsOfType(deathHero, BLINK_DISABLED) > 0 and !IsUnitIllusion(deathHero) then
+            static if TEST_MODE then
+                call BJDebugMsg("[Blink] unit died with disabled blink in inventory. Timer will be reset.")
+            endif
+            call PauseTimer(ItemData(LoadInteger(HT, GetHandleId(deathHero), BLINK_HASH_KEY)).t)
+        endif
+        return false
     endfunction
 
     private function Init takes nothing returns nothing
-        trigger t = CreateTrigger()
-        TriggerRegisterAnyUnitEventBJ( t, EVENT_PLAYER_HERO_REVIVE_FINISH )
-        TriggerAddAction( t, function onHeroRevive )
+        call GT_RegisterPlayerEventAction(EVENT_PLAYER_HERO_REVIVE_FINISH, function onHeroRevive)
+        call GT_RegisterPlayerEventAction(EVENT_PLAYER_UNIT_DEATH, function onHeroDeath)
     endfunction 
 
 endlibrary
