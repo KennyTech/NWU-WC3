@@ -31,6 +31,11 @@ include "src//heroes//kisame//symbiotic_relationship.j"
 include "src//heroes//kisame//waterbubble.j"
 
 /**************************************************************
+		MADARA
+**************************************************************/
+include "src//heroes//madara//god_power.j"
+
+/**************************************************************
 		NEJI
 **************************************************************/
 include "src//heroes//neji//kaiten.j"
