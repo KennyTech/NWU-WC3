@@ -29,6 +29,7 @@ scope ItemStart initializer Init
         ITEM_BELT_OF_STR = 'I06I'
         ITEM_SNAKE_SKIN = 'I00S'
         ITEM_ANBU_CLOAK = 'I06K'
+        ITEM_SOLAR_BLADE = 'I046'
     }
 
     private function Init takes nothing returns nothing
@@ -129,7 +130,7 @@ scope ItemStart initializer Init
         //****** RECIPES 6 ******
         call AddRecipe('I01F','I01E',     0,0,0,0,'I04X')  //AMENONUHOKO
         call AddRecipe('I06N','I06N','I01E',0,0,0,'I02D')  //CONCH SHELL MACE
-        call AddRecipe('I044','I01F',     0,0,0,0,'I046')  //SOLAR BLADE
+        call AddRecipe('I044','I01F',     0,0,0,0, ITEM_SOLAR_BLADE)  //SOLAR BLADE
         call AddRecipe('I048','I01B','I00F',0,0,0,'I04B')  //GOOD GUY'S SUIT
         call AddRecipe('I03W','I032','I01E',0,0,0,'I03X')  //RAGNOROK
         call AddRecipe('I02P','I06I','I06N',0,0,0,'I030')  //IRON CROW

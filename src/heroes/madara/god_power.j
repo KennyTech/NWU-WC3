@@ -1,6 +1,13 @@
 scope GodPower
     
     define private isSusanoMadara(targetTypeId) = (targetTypeId == 'o00L' || targetTypeId == 'o00N' || targetTypeId == 'o00O')
+
+    define
+        private PERIOD        = 0.05
+        private AOE           = 1400
+        private DPS_DAMAGE(u) = 20 + 20 * GetUnitAbilityLevel(u,'A0KC') 
+        private STUN_DURATION = 1.5
+    enddefine
     
     public void onDamage(unit target,unit source,real damage){
         int targetTypeId = GetUnitTypeId(target);
@@ -27,7 +34,7 @@ scope GodPower
             }
         }        
     }
-    
+
     public function Loop takes nothing returns nothing
         local timer t=GetExpiredTimer()
         local integer id=GetHandleId(t)
@@ -44,10 +51,10 @@ scope GodPower
         call AddSpecialEffectTimed(AddSpecialEffect("Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeEmbers.mdl",x+r*Cos(a),y+r*Sin(a)),(6*20-i)/20)
         if Mod(i,10) then
             call SetUnitAnimation(d,"Spell Channel")
-            call UnitDamageArea(u,x,y,1300,(10+20*GetUnitAbilityLevel(u,'A0KC'))/2,DAMAGE_SPELL,"Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeDamageTarget.mdl")
+            call UnitDamageArea(u, x, y, AOE, (DPS_DAMAGE(u))/2, DAMAGE_SPELL, "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeDamageTarget.mdl")
         endif
-        if i==100 then
-            set d=NewFX("Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl",x,y,2000,0,3)
+        if i==100 and not GetHandleBoolean(GetHandleId(d), "GodPower|killed") then
+            set d=NewFX("Abilities\\Spells\\Other\\Volcano\\VolcanoMissile.mdl", x, y, 2000, 0, 3)
             call SetUnitFlyHeight(d,0,2000)
             call SetHandleHandle(id,"w",d)
         endif
@@ -88,9 +95,12 @@ scope GodPower
         call SetUnitAnimation(d,"Spell Channel")
         call SetUnitX(d,x)
         call SetUnitY(d,y)
-        if GetUnitAbilityLevel(u,'A0KC')>0 then
+        if GetUnitAbilityLevel(u, 'A0KC')>0 then // Madara - Rinnegan
             call AddAbility(d,'A0KE')
             call SetHandleInt(idd,"MRinnegan|n",GetUnitAbilityLevel(u,'A0KC'))
+        endif
+        if UnitCountItemsOfType(u, ITEM_SOLAR_BLADE) > 0 then
+            call AddAbility(d, 'A0CU')
         endif
         call SelectUnitForPlayerSingle(d,p)
         call UnitApplyTimedLife(d,'BTLF',6)
@@ -99,7 +109,7 @@ scope GodPower
         call SetHandleHandle(idt,"u",u)
         call SetHandleReal(idt,"hp",GetWidgetLife(u))
         call SetHandleReal(idt,"mp",GetUnitState(u,UNIT_STATE_MANA))
-        call TimerStart(t,0.05,true,function Loop)
+        call TimerStart(t, PERIOD, true, function Loop)
         set t=null
         set d=null
         set u=null
@@ -126,7 +136,7 @@ scope GodPower
             if GetHandleBoolean(idd,"GodPower|killed")==false then
                 set n=GetUnitAbilityLevel(u,'A0KD')
                 call NewFXT("war3mapImported\\NewDirtEXNofire.mdx",GetUnitX(d),GetUnitY(d),0,0,5,1)
-                call UnitDamageStunArea(u,GetUnitX(d),GetUnitY(d),1300,20+n,DAMAGE_SPELL,"Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeDamageTarget.mdl",2.5)
+                call UnitDamageStunArea(u, GetUnitX(d), GetUnitY(d), AOE, DPS_DAMAGE(u), DAMAGE_SPELL, "Abilities\\Spells\\Human\\FlameStrike\\FlameStrikeDamageTarget.mdl", STUN_DURATION)
             endif
             call Clear(d)
             call RemoveUnit(d)
