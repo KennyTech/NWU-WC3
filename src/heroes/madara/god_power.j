@@ -4,7 +4,7 @@ scope GodPower
 
     define
         private PERIOD        = 0.05
-        private AOE           = 1400
+        private AOE           = 1500
         private DPS_DAMAGE(u) = 20 + 20 * GetUnitAbilityLevel(u,'A0KC') 
         private STUN_DURATION = 1.5
     enddefine
