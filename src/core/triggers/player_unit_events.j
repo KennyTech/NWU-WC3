@@ -1,7 +1,8 @@
-library RegisterPlayerUnitEvent
+library RegisterPlayerUnitEvent initializer Init
 
     globals
         private trigger array t
+        private trigger UnitsEnter = CreateTrigger()
     endglobals
     
     function GT_RegisterPlayerEventAction takes playerunitevent p, code c returns nothing
@@ -25,6 +26,17 @@ library RegisterPlayerUnitEvent
             exitwhen i==15
             set i=i+1
         endloop
+    endfunction
+
+    function GT_RegisterUnitEnter takes code c returns nothing
+        call TriggerAddCondition(UnitsEnter, Filter(c))
+    endfunction
+
+    private function Init takes nothing returns nothing
+        local region r = CreateRegion()
+        call RegionAddRect(r, GetWorldBounds())
+        call TriggerRegisterEnterRegion(UnitsEnter, r, null)
+        set r = null
     endfunction
     
 endlibrary
