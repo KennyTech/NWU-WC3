@@ -143,7 +143,9 @@ scope Personal
         endif
         loop
             exitwhen i>udg_HeroAmount
-            set hero = CreateUnit(p,udg_Hero[i],GetRectCenterX(r),GetRectCenterY(r),270)
+            if udg_HeroIsAvailable[i] then
+                set hero = CreateUnit(p,udg_Hero[i],GetRectCenterX(r),GetRectCenterY(r),270)
+            endif
             call SetHeroLevel(hero,6,false)
             call TurnOnOffHeroTriggers(hero,true)
             set i = i + 1
