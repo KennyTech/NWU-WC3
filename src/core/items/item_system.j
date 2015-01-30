@@ -195,11 +195,11 @@ library ItemSystem initializer Init requires ItemData,RecipeSYS,PlayerCore
         local integer index = 0
         local integer count = 0
         loop
+            exitwhen index==UnitInventorySize(u)
             if GetItemTypeId(UnitItemInSlot(u,index))==which then
                 set count = count + 1
             endif
             set index = index + 1
-            exitwhen index==UnitInventorySize(u)
         endloop
         return count 
     endfunction

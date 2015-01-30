@@ -87,7 +87,6 @@ library Blink initializer Init requires TimerUtils, ItemSystem /* v 1.0.0
         local integer id = GetHandleId(u)
         local item blink
         local ItemData Data
-        call BJDebugMsg("[Blink] REMOVAL.")
         // Obtener instancia anterior guardada, si es que existe
         if HaveSavedInteger(HT,id,BLINK_HASH_KEY) then
             set Data = LoadInteger(HT,id,BLINK_HASH_KEY)
@@ -139,7 +138,7 @@ library Blink initializer Init requires TimerUtils, ItemSystem /* v 1.0.0
     private function onHeroRevive takes nothing returns boolean
         unit reviving = GetTriggerUnit()
         if UnitCountItemsOfType(reviving, BLINK_DISABLED) > 0 then
-            BlinkRestore(LoadInteger(HT, GetHandleId(reviving), BLINK_HASH_KEY))
+            call BlinkRestore(LoadInteger(HT, GetHandleId(reviving), BLINK_HASH_KEY))
             static if TEST_MODE then
                 call BJDebugMsg("[Blink] hero revived with disabled blink in inventory. Enabling blink.")
             endif
@@ -147,9 +146,9 @@ library Blink initializer Init requires TimerUtils, ItemSystem /* v 1.0.0
         return false
     endfunction
 
-    private function onHeroDeath takes nothing returns boolean
+    private function onHeroDeath takes nothing returns boolean        
         unit deathHero = GetTriggerUnit()
-        if UnitCountItemsOfType(deathHero, BLINK_DISABLED) > 0 and !IsUnitIllusion(deathHero) then
+        if IsHero(deathHero) and not IsUnitIllusion(deathHero) and UnitCountItemsOfType(deathHero, BLINK_DISABLED) > 0 then
             static if TEST_MODE then
                 call BJDebugMsg("[Blink] unit died with disabled blink in inventory. Timer will be reset.")
             endif
