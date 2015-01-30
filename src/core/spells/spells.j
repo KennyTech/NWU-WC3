@@ -331,8 +331,10 @@ endfunction
         local unit u=GetTimerUnit()
         local integer abil=GetTimerDataEx()
         if u==null then
-            BJDebugMsg("UnitAddAbilityTimedEnd - Null Unit")
-        else    
+            static if TEST_MODE then
+                call BJDebugMsg("UnitAddAbilityTimedEnd - Null Unit")
+            endif
+        else
             call UnitMakeAbilityPermanent(u,false,abil)
             call UnitRemoveAbility(u,abil)
         endif
