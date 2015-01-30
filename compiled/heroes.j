@@ -41,6 +41,11 @@ include "src//heroes//madara//god_power.j"
 include "src//heroes//neji//kaiten.j"
 
 /**************************************************************
+		ONOKI
+**************************************************************/
+include "src//heroes//onoki//onoki_ultimate.j"
+
+/**************************************************************
 		SHINO
 **************************************************************/
 include "src//heroes//shino//bug_shield.j"
