@@ -27,4 +27,9 @@ library UnitTypeHelper{
     boolean isIllusion(unit u){
         return IsUnitIllusion(u)
     }
+
+    define
+        IsHero(u) = isHero(u)
+        IsUnitCourier(u) = UnitTypeCourier(u)
+    enddefine
 }
