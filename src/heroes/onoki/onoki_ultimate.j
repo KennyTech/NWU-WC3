@@ -1,19 +1,21 @@
 scope OnokiUltimate
 
     define{
-        private ABIL_ID = 'A103'
+        private ABIL_ID = 'A0LG'
         private SPELLBOOK_ID = 'A10T'
         private SLOW_ID = 'A10A'
-        private BUFF_ID = 'A10A'
+        private BUFF_ID = 'B10B'
         private ABIL_AOE = 425
         private ABIL_DIEWHEN = 0.1
-        private DAMAGE_FACTOR(LVL) = 0.04+0.01*LVL
+        private CHECK_PERIOD = 0.33
+        private DAMAGE_FACTOR(LVL) = (0.04+0.01*LVL)*CHECK_PERIOD
         private DURATION = 5
         private NORMAL_BLOOD = "Objects\\Spawnmodels\\Undead\\UndeadBlood\\UndeadBloodGargoyle.mdl"
         private DEATH_BLOOD = "Objects\\Spawnmodels\\Human\\HumanBlood\\HumanBloodFootman.mdl"
+        private SEARCH_AOE = 2000 // ENOUGH BIG TO ENUM ALL UNITS WITH THE DEBUFF
     }
     
-    private function damageUnit takes unit source,unit m returns nothing
+    /*private function damageUnit takes unit source,unit m returns nothing
         real max = GetUnitState(m,UNIT_STATE_MAX_LIFE)
         if (GetWidgetLife(m)<max*0.1) then
             call DestroyEffect(AddSpecialEffectTarget(DEATH_BLOOD,m,"chest"))
@@ -79,11 +81,71 @@ scope OnokiUltimate
         t=null
         g=null
         return false
+    endfunction*/
+
+
+    private function onCallback takes nothing returns nothing
+        timer t     = GetExpiredTimer()
+        int h       = GetHandleId(t)
+        unit target = GetUnit(h, 0)
+        unit caster = GetUnit(h, 1)
+
+        if GetUnitAbilityLevel(target, BUFF_ID) == 0 then
+            call ReleaseTimerEx()
+            static if TEST_MODE then
+                call Test_SuccessMsg("OnokiUltimate - DEBUFF of " + GetUnitName(enumUnit) + " has finished")
+            endif
+        else
+            real damage = GetUnitState(target, UNIT_STATE_MAX_LIFE)
+            // Unit is under 10%, then kill it. Else, aplly a factor
+            if (GetWidgetLife(target) < damage * 0.1) then
+                call DestroyEffect(AddSpecialEffectTarget(DEATH_BLOOD, target, "chest"))
+            else
+                damage = damage * DAMAGE_FACTOR(GetUnitAbilityLevel(caster, ABIL_ID))
+                call DestroyEffect(AddSpecialEffectTarget(NORMAL_BLOOD, target, "chest"))
+            endif
+            call Damage_Pure(caster, target, damage)
+        endif
+
+        t = null
+        target = null
+        caster = null
+
+    endfunction
+
+    private function waitForDebuff takes nothing returns nothing
+        unit caster = GetTimerUnit()
+
+        call GroupEnumUnitsInRange(ENUM, GetUnitX(caster), GetUnitY(caster), SEARCH_AOE, null)
+
+        loop
+            exitwhen LoopNull() == true
+            if GetUnitAbilityLevel(enumUnit, BUFF_ID) > 0 then
+                timer t = NewTimer()
+                int h = GetHandleId(t)
+                call SetUnit(h, 0, enumUnit)
+                call SetUnit(h, 1, caster)
+                call TimerStart(t, CHECK_PERIOD, true, function onCallback)
+                static if TEST_MODE then
+                    call Test_SuccessMsg("OnokiUltimate - Started checking DEBUFF of " + GetUnitName(enumUnit))
+                endif
+                t = null
+            endif
+        endloop
+
+        call ReleaseTimerEx()
+
+        caster = null
+
+    endfunction
+
+    private function onSpell takes nothing returns boolean
+        call TimerStart(NewTimerUnit(GetTriggerUnit()), 0, false, function waitForDebuff)
+        return false
     endfunction
 
     public function Init takes nothing returns nothing
         call GT_RegisterSpellEffectEvent(ABIL_ID,function onSpell)
-        call DisableSpellbook(SPELLBOOK_ID)
     endfunction
     
 endscope

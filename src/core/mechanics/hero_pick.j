@@ -173,7 +173,7 @@ library HeroPick initializer Init requires TimerUtils
         elseif UnitType==ONOKI then//***ONOKI***
             call ExecuteFunc("DustRelease_Init")
             call ExecuteFunc("Stalagmite_Init")
-            call ExecuteFunc("OnokiUlti_Init")
+            call ExecuteFunc("OnokiUltimate_Init")
             call ExecuteFunc("DSStalagmiteArmor_Init")
         elseif UnitType==OROCHIMARU then//***OROCHIMARU***
             call EnableTrigger( gg_trg_Orochimaru_Bite )
