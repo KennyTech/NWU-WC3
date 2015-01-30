@@ -1,6 +1,6 @@
 [FrameDef]
 
-UPKEEP_NONE=|cff99ccffv1.3.9e|r
+UPKEEP_NONE=|cff99ccffv1.3.9g|r
 
 KEY_QUESTS=Map Info (|Cfffed312F9|R)
 
@@ -10,7 +10,7 @@ RESOURCE_UBERTIP_UPKEEP=If you find any bugs or have any question or comments se
 
 COLON_GOLD_INCOME_RATE=Latest Version: |cff0066ccnarutowarsunlimited.com/downloads|r
 
-RESOURCE_UBERTIP_UPKEEP_INFO=|n|n|cffafc0deForums: |r|cff0066ccn-w-u.do-forum.com|r
+RESOURCE_UBERTIP_UPKEEP_INFO=|n|n|cffafc0deForums: |r|cff0066ccforum.narutowarsunlimited.com|r
 
 COLON_FOOD=Time
 
