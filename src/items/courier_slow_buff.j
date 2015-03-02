@@ -1,8 +1,8 @@
 scope CourierSlowBuff initializer Init{
 
-	define EMPTY_BOTTLE = 'I066'
-	define SLOW_ABIL    = 'A0LF'
-	define SLOW_BUFF    = 'B04H'
+	define private EMPTY_BOTTLE = 'I066'
+	define private SLOW_ABIL    = 'A0LF'
+	define private SLOW_BUFF    = 'B04H'
 
 	private boolean manipulateItem(){
 
