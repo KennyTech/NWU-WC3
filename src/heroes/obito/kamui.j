@@ -46,7 +46,7 @@ scope Kamui
     private void onDamage(unit target,unit source,real damage){
         if hasKamuiBuff(target) then
             if GetUnitAbilityLevel(target,BranchArmor_BUFF_ID) > 0 then
-                call Damage_Spell(target,source,DAMAGE_RETURN(GetUnitAbilityLevel(target,BranchArmor_ABIL_ID)))
+                call Damage_Pure(target,source,DAMAGE_RETURN(GetUnitAbilityLevel(target,BranchArmor_ABIL_ID)))
             endif
             // DamageSYS--
             
