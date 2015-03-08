@@ -69,7 +69,6 @@ include "src//core//status//status_timed.j"
 		TRIGGERS
 **************************************************************/
 include "src//core//triggers//gt_events.j"
-include "src//core//triggers//player_unit_enter.j"
 include "src//core//triggers//player_unit_events.j"
 
 /**************************************************************
