@@ -53,7 +53,7 @@ scope C3
     local real Y = GetSpellTargetY()
     local effect FX  = AddSpecialEffect("Abilities\\Spells\\Orc\\Bloodlust\\BloodlustTarget.mdl",X,Y)
     local integer SpellLVL = GetUnitAbilityLevel(Caster, GetSpellAbilityId())
-    local integer AOE = 800+50*GetUnitAbilityLevel(Caster, GetSpellAbilityId())
+    local integer AOE = 600+50*GetUnitAbilityLevel(Caster, GetSpellAbilityId())
     local real damage = 110+60*SpellLVL
     local player Owner = GetTriggerPlayer()
     local unit Dummy = CreateUnit(GetOwningPlayer(Caster),'h01A', X,Y, 0)

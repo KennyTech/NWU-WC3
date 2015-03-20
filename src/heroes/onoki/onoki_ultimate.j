@@ -98,7 +98,7 @@ scope OnokiUltimate
         else
             real damage = GetUnitState(target, UNIT_STATE_MAX_LIFE)
             // Unit is under 10%, then kill it. Else, aplly a factor
-            if (GetWidgetLife(target) < damage * 0.1) then
+            if (GetWidgetLife(target) < damage * ABIL_DIEWHEN) then
                 call DestroyEffect(AddSpecialEffectTarget(DEATH_BLOOD, target, "chest"))
             else
                 damage = damage * DAMAGE_FACTOR(GetUnitAbilityLevel(caster, ABIL_ID))
