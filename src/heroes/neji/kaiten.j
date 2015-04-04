@@ -14,6 +14,7 @@ scope Kaiten
         unit caster = GetTriggerUnit()
         real duration = stunDuration(GetUnitAbilityLevel(caster, BYAKUGAN))
         real damage = spellDamage(GetUnitAbilityLevel(caster, KAITEN))
+        proj projectile
 
         UnitAddInvulnerableTimed(caster, 1)
         UnitAddInmuneTimed(caster, 1)
@@ -33,7 +34,8 @@ scope Kaiten
                     call AddStunTimed(target, duration)
                 endif
                 Damage_Spell(caster, target, damage)
-                CreateProj(caster, target, GetUnitX(target) + KNOCKBACK_DISTANCE*Cos(ABU(caster,target)),GetUnitY(target)+KNOCKBACK_DISTANCE*Sin(ABU(caster,target)),0,500,0,false,onLoopFX,0,0,0)
+                projectile       = CreateProj(caster, target, GetUnitX(target) + KNOCKBACK_DISTANCE*Cos(ABU(caster,target)),GetUnitY(target)+KNOCKBACK_DISTANCE*Sin(ABU(caster,target)),0,500,0,false,onLoopFX,0,0,0)
+                projectile.pause = true
             endif
         endloop
         GroupClear(ENUM)
