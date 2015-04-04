@@ -69,13 +69,7 @@ function compileMultiple(){
 *******************************************************************/
 
 function main(){
-	var command = process.argv[2];
-
-	if(command !== '--all'){
-		compileSingle(command);
-	} else {
-		compileMultiple();
-	}
+	compileMultiple();
 }
 
 main();
