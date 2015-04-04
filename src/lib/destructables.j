@@ -1,4 +1,48 @@
-library Destructables
+library Destructables initializer Initialization
+
+/************************************************************************************
+*
+*   Destructable function utilities. 
+*
+*       Public functions
+*       -------------------------
+*
+*           IsDestructableTree(destructable target)
+*               Determines if the target is a tree. Its based on http://www.wc3c.net/showthread.php?t=103927
+*
+************************************************************************************/
+
+    // IsDestructableTree
+
+    define
+        private DUMMY_UNIT_ID = 'hfoo' // footman
+        private HARVEST_ID    = 'Ahrl' // ghouls harvest
+        private OWNING_PLAYER =  15
+    enddefine
+
+    globals
+        private unit dummy = null
+    endglobals
+
+    function IsDestructableTree takes destructable dest returns boolean
+        local boolean result = false
+        if (dest != null) then
+            call PauseUnit(dummy, false)
+            set result = IssueTargetOrder(dummy, "harvest", dest)
+            call PauseUnit(dummy, true) // stops order
+        endif
+        return result
+    endfunction
+
+    private function Initialization takes nothing returns nothing
+        set dummy = CreateUnit(Player(OWNING_PLAYER), DUMMY_UNIT_ID, 0.0, 0.0, 0.0)
+        call ShowUnit(dummy, false) // cannot enumerate
+        call UnitAddAbility(dummy, HARVEST_ID)
+        call UnitAddAbility(dummy, 'Aloc') // unselectable, invulnerable
+        call PauseUnit(dummy, true)
+    endfunction
+
+    // Rest of library
 
     function KillDestructableEnum takes nothing returns nothing
         local integer TreeId = GetDestructableTypeId( GetEnumDestructable() )
@@ -79,6 +123,5 @@ library Destructables
     define
         destPush(d,t) = Dest.push(d,t)
     enddefine
-    
     
 endlibrary

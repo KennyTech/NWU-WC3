@@ -224,7 +224,7 @@ library HeroPick initializer Init requires TimerUtils
             call ExecuteFunc("BugShieldStart_Init")
         elseif UnitType==SHODAIME then//***SHODAIME***
             call EnableTrigger( gg_trg_Sprout )
-            call EnableTrigger( gg_trg_Living_Tree )
+            call ExecuteFunc("LivingTree_Init")
             call EnableTrigger( gg_trg_Forest )
         elseif UnitType==SUIGETSU then//***SUIGETSU***
             call ExecuteFunc("DSSuigetsuSuika_Init")

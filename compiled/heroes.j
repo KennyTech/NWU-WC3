@@ -54,3 +54,8 @@ include "src//heroes//onoki//onoki_ultimate.j"
 		SHINO
 **************************************************************/
 include "src//heroes//shino//bug_shield.j"
+
+/**************************************************************
+		SHODAIME
+**************************************************************/
+include "src//heroes//shodaime//living_tree.j"
