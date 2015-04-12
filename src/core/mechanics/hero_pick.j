@@ -291,6 +291,12 @@ library HeroPick initializer Init requires TimerUtils
             ExecuteFunc("BranchArmor_Init")
             ExecuteFunc("Kamui_Init")
             //BJDebugMsg("obito..")
+        elseif UnitType==KILLER_BEE
+            ExecuteFunc("KB8TailChakra_Init")
+            ExecuteFunc("KBInkCreation_Init")
+            ExecuteFunc("KBDeath_Init")
+            ExecuteFunc("KBLariat_Init")
+            ExecuteFunc("KBSSDance_Init")
         endif
         set triggersEnabled[index]=true
     endfunction

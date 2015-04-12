@@ -1,6 +1,14 @@
 library Spells requires ChakraArmor,TimerUtils
 {
 
+    real GetSpellAngle(){
+        return ABP(GetUnitX(GetTriggerUnit()), GetUnitY(GetTriggerUnit()), GetSpellTargetX(), GetSpellTargetY())
+    }
+
+    real GetSpellDistance(){
+        return DistanceBetweenCoords(GetUnitX(GetTriggerUnit()), GetUnitY(GetTriggerUnit()), GetSpellTargetX(), GetSpellTargetY())
+    }
+
     boolean AreUnitEnemies(unit u1, unit u2){
         return IsPlayerEnemy(GetOwningPlayer(u1), GetOwningPlayer(u2))
     }
@@ -359,11 +367,13 @@ endfunction
         call UnitRemoveAbility(u,i)
     endfunction
     
-    function AddAbility takes unit u,integer i returns nothing
+    function AddAbility takes unit u,integer i returns boolean
         if GetUnitAbilityLevel(u,i)==0 then
             call UnitAddAbility(u,i)
             call UnitMakeAbilityPermanent(u,true,i)
+            return true
         endif
+        return false
     endfunction
     
     function RemoveNegativeBuffs takes unit u returns nothing

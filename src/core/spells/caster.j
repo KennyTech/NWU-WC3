@@ -4,7 +4,8 @@ library CasterSystem initializer init requires TimerUtils
         private group CasterGroup
     endglobals
     
-    define DUMMY_ID = 'DUMY'
+    define DUMMY_ID        = 'DUMY'
+    define NORMAL_DUMMY_ID = 'u00H'
     
     function GetCaster takes nothing returns unit
         return udg_CASTER
@@ -31,7 +32,7 @@ library CasterSystem initializer init requires TimerUtils
     }
     
     nothing CasterCastPoint(real x,real y,integer abilId,integer order,integer level,player owner){
-        unit u=CreateUnit(owner,'u00H',x,y,0)
+        unit u=CreateUnit(owner, NORMAL_DUMMY_ID,x,y,0)
         AddAbilityLevel(u,abilId,level)
         IssuePointOrderById(u,order,x,y)
         UnitApplyTimedLife(u,'BTLF',20)

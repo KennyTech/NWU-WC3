@@ -1,41 +1,41 @@
-library proj requires KT,GroupUtils,Alloc,Effects,Status
-   
+library proj requires KT, GroupUtils, Alloc, Effects
+
     define
-		private PERIOD = 0.03125
-		private ALTURA_PROMEDIO = 50
+        private PERIOD = 0.03125
+        private ALTURA_PROMEDIO = 50
         private DEFAULT_TARGET_COLISION = 50
         private DEFAULT_AOE_COLISION = 250
     enddefine
-    
-	private function interface interfaceFunc takes proj m returns nothing
+
+    private function interface interfaceFunc takes proj m returns nothing
     private function interface colisionFunc takes proj m,unit who returns nothing
-    
+
     function onLoopFX takes proj this returns nothing
         call addTerrainSfx(this.x,this.y)
     endfunction
-    
+
     function onHitRemoveFX takes proj this returns nothing
         call RemoveFX(this.projUnit,0)
     endfunction
-    
+
     function GetUnitBullets takes unit whichUnit returns integer
         return GetHandleInt(GetHandleId(whichUnit),"proj|bullet")
     endfunction
-    
+
     function UnitRemoveBullet takes unit whichUnit returns nothing
         call SetHandleInt(GetHandleId(whichUnit),"proj|bullet",GetUnitBullets(whichUnit)-1)
     endfunction
-    
+
     function UnitAddBullet takes unit whichUnit returns nothing
         call SetHandleInt(GetHandleId(whichUnit),"proj|bullet",GetUnitBullets(whichUnit)+1)
     endfunction
-    
+
     globals
         private proj array projAll [8190]
         private integer array projIndex [8190]
         private integer projSize = 0
     endglobals
-    
+
     function RemoveProjectiles takes unit target returns nothing
         local integer index = projSize
         loop
@@ -50,14 +50,12 @@ library proj requires KT,GroupUtils,Alloc,Effects,Status
             endif
         endloop
     endfunction
-    
-    
-    
+
     struct proj extends array
         implement Alloc
 //=========================================================
         // Para trabajar con spells
-        real    distance        // ----> distancia recorrida por el misil, se va actualizando a medida que avanza.
+        real     distance        // ----> distancia recorrida por el misil, se va actualizando a medida que avanza.
         readonly integer ticks             // ----> cantidad de periodos ejecutados, se va acuatlizando a medida que avanza.
         integer  level          // ----> variable integer a dispocion del usuario
         player   owner          // ----> variable de player a disposicion del usuario. 
@@ -304,15 +302,15 @@ library proj requires KT,GroupUtils,Alloc,Effects,Status
             endif
         endmethod
 //=========================================================    
-		private static method periodic takes nothing returns boolean
+        private static method periodic takes nothing returns boolean
             local thistype this = KT_GetData()
-			local real dx
-			local real dy
+            local real dx
+            local real dy
             local boolean canMove=true
             if IsUnitType(m,UNIT_TYPE_DEAD)==true and allowDead==false then
                 set this.finish = true // STOP WHEN PROJECTILE IS DEAD
             endif
-			if not finish then // MISIL HOMMING
+            if not finish then // MISIL HOMMING
                 if tu!=null and GetUnitTypeId(tu)!=0 then
                     if IsUnitType(tu,UNIT_TYPE_DEAD)==false then
                         set tx=GetUnitX(tu)
@@ -392,9 +390,9 @@ library proj requires KT,GroupUtils,Alloc,Effects,Status
                 else
                     call targetHit()
                 endif
-			endif
-			return false
-		endmethod
+            endif
+            return false
+        endmethod
 //=========================================================
          method Lanzar takes real speed, real arc returns nothing
             local real dx=tx-GetUnitX(m)

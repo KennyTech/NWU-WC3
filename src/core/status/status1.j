@@ -1,4 +1,4 @@
-library Status1 requires TimerUtils,Inmunity
+library Status1 requires TimerUtils, Inmunity
 
     globals
         constant integer ANIMATION = 'STUN'

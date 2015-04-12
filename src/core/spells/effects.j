@@ -1,4 +1,4 @@
-library Effects requires Status, Spells, TerrainPathability/* v1.0.0.0
+library Effects requires Status1, TerrainPathability/* v1.0.0.0
 *************************************************************************************
 *
 *   Just a random library to add effects

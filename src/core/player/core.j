@@ -2,9 +2,11 @@ library PlayerCore
 
     globals
         string array Color
+        string array RealPlayerNames
         private boolean array dropped
         private boolean array Reviving
     endglobals
+
     //=======================================================================
     function ShowTextToForce takes force f,real dur,string msg returns nothing
         if(IsPlayerInForce(GetLocalPlayer(),f))then
@@ -33,6 +35,11 @@ library PlayerCore
     function GetPlayerNameColored takes player p returns string
         return Color[GetPlayerId(p)]+GetPlayerName(p)+"|r"
     endfunction
+
+    function GetRealPlayerName takes player p returns string
+        return RealPlayerNames[GetPlayerId(p)]
+    endfunction
+
     //=======================================================================
     function GetPlayerStringColored takes player p, string s returns string
         return Color[GetPlayerId(p)]+s+"|r"
@@ -120,6 +127,18 @@ library PlayerCore
             set udg_team2[3]  = Player(9)
             set udg_team2[4]  = Player(10)
             set udg_team2[5]  = Player(11)
+            set RealPlayerNames[0]  = GetPlayerName(Player(0))
+            set RealPlayerNames[1]  = GetPlayerName(Player(1))
+            set RealPlayerNames[2]  = GetPlayerName(Player(2))
+            set RealPlayerNames[3]  = GetPlayerName(Player(3))
+            set RealPlayerNames[4]  = GetPlayerName(Player(4))
+            set RealPlayerNames[5]  = GetPlayerName(Player(5))
+            set RealPlayerNames[6]  = GetPlayerName(Player(6))
+            set RealPlayerNames[7]  = GetPlayerName(Player(7))
+            set RealPlayerNames[8]  = GetPlayerName(Player(8))
+            set RealPlayerNames[9]  = GetPlayerName(Player(9))
+            set RealPlayerNames[10] = GetPlayerName(Player(10))
+            set RealPlayerNames[11] = GetPlayerName(Player(11))
             set Color[0]  = "|CFFFF0303" // red
             set Color[1]  = "|CFF0042FF" // blue
             set Color[2]  = "|CFF1CE6B9" // teal

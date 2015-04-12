@@ -95,10 +95,7 @@ scope Players
         set udg_PlayerCircle[GetPlayerId(udg_team2[3])]=gg_unit_n01K_0072
         set udg_PlayerCircle[GetPlayerId(udg_team2[4])]=gg_unit_n01K_0084
         set udg_PlayerCircle[GetPlayerId(udg_team2[5])]=gg_unit_n01K_0080
-        debug BJDebugMsg("CircleName")
-        debug BJDebugMsg(GetUnitName(gg_unit_n01K_0019))
-        debug BJDebugMsg("Id")
-        debug BJDebugMsg(I2S(GetPlayerId(udg_team1[1])))
+
         set i=1
         if GetLocalPlayer()==Player(i)then
             call SetUnitVertexColor(udg_PlayerCircle[GetPlayerId(Player(i))],255,255,255,255)

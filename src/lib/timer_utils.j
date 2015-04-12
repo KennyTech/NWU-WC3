@@ -1,6 +1,7 @@
-library TimerUtils requires SimError
+library TimerUtils
 
     globals
+        hashtable HT=InitHashtable()
         public hashtable HashTable = InitHashtable()
         private hashtable FAUX = InitHashtable()
         private integer timerCount = 0

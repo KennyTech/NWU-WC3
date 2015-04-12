@@ -4,7 +4,6 @@ library Spell requires proj
         spell enumSpell
         proj  enumProj
         player NEUTRAL=Player(15)
-        hashtable HT=InitHashtable()
     endglobals
 
     function Cone takes real a, real b, real o returns boolean

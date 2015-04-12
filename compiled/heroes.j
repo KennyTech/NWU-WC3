@@ -23,6 +23,15 @@ include "src//heroes//kakashi//sharingan_learn.j"
 include "src//heroes//kankuro//sanshouo.j"
 
 /**************************************************************
+		KILLER_BEE
+**************************************************************/
+include "src//heroes//killer_bee//eight_tail_chakra.j"
+include "src//heroes//killer_bee//ink_creation_jutsu.j"
+include "src//heroes//killer_bee//killer_bee_death.j"
+include "src//heroes//killer_bee//lariat.j"
+include "src//heroes//killer_bee//serven_sword_dance.j"
+
+/**************************************************************
 		KISAME
 **************************************************************/
 include "src//heroes//kisame//samehada_feast.j"
