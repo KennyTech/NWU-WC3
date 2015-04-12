@@ -58,7 +58,8 @@ scope Testers{
             call DisplayTimedTextToPlayer(p, 0, 0, 8, GetObjectName('e01L'))
         } else {
             call RegisterHeroToPlayer(CreateUnit(p, KILLER_BEE, x, y, 0), p)
-        }        
+            call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)-250)
+        }
 
     }
 
