@@ -12,23 +12,23 @@ scope TargetSpellFix initializer init{
 
     private void Actions(){
         unit u = GetTriggerUnit()
-        real x = GetOrderPointX()
-        real y = GetOrderPointY()
-        int  i = GetIssuedOrderId()
         rect r = getRect(u)
+        real x = GetSpellTargetX()
+        real y = GetSpellTargetY()
+        int i  = GetSpellAbilityId()
 
-        if (r != null and !RectContainsCoords(r, x, y) and i != ORDER_move and i != ORDER_attackground and i != ORDER_smart){
+        if (r != null and !RectContainsCoords(r, x, y) and (i == SASUKE_T or i == BEE_R)){
             call AbortOrder(u)
-            static if TEST_MODE then
-                call BJDebugMsg("[ORDER] You cannot order your hero to cast a spell outside map")
-            endif
+            debug call BJDebugMsg("[ORDER] You cannot order your hero to cast a spell outside map")
         }
+
         u = null
+        r = null
     }
 
     private void init(){
         trigger t = CreateTrigger()
-        TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER )
+        TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CAST )
         TriggerAddAction(t, function Actions)
     }
 
