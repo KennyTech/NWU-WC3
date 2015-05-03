@@ -8,13 +8,13 @@ scope KonohaVictory initializer Init
     endfunction
 
     function Trig_Victory_Konoha_Func001002 takes nothing returns nothing
+        call MMD_FlagPlayer(GetEnumPlayer(), MMD_FLAG_WINNER)
         call CustomVictoryBJ( GetEnumPlayer(), true, true )
-        call FlagPlayer(GetEnumPlayer(), FLAG_WINNER)
     endfunction
 
     function Trig_Victory_Konoha_Func002002 takes nothing returns nothing
+        call MMD_FlagPlayer(GetEnumPlayer(), MMD_FLAG_LOSER)
         call CustomDefeatBJ( GetEnumPlayer(), "TRIGSTR_2271" )
-        call FlagPlayer(GetEnumPlayer(), MMD_FLAG_LOSER)
     endfunction
 
     function Trig_Victory_Konoha_Actions takes nothing returns nothing

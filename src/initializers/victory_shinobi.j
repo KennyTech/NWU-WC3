@@ -8,13 +8,13 @@ scope VictoryShinobi initializer Init
     endfunction
 
     function Trig_Victory_Shinobi_Func001002 takes nothing returns nothing
+        call MMD_FlagPlayer(GetEnumPlayer(), MMD_FLAG_LOSER)
         call CustomDefeatBJ( GetEnumPlayer(), "TRIGSTR_4684" )
-        call FlagPlayer(GetEnumPlayer(), MMD_FLAG_LOSER)
     endfunction
 
     function Trig_Victory_Shinobi_Func002002 takes nothing returns nothing
+        call MMD_FlagPlayer(GetEnumPlayer(), MMD_FLAG_WINNER)
         call CustomVictoryBJ( GetEnumPlayer(), true, true )
-        call FlagPlayer(GetEnumPlayer(), MMD_FLAG_WINNER)
     endfunction
 
     function Trig_Victory_Shinobi_Actions takes nothing returns nothing
