@@ -165,7 +165,7 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
         //set ABILITY[STATUS_ENTANGLE]        = 'A505'
         //set ABILITY[STATUS_INVISIBILITY]    = 'A507'
         //set ABILITY[STATUS_GHOST]           = 'A508'
-        //set ABILITY[STATUS_DOOM]            = 'A509'
+        set ABILITY[STATUS_DOOM]              = 'A0LJ'
         //set ABILITY[STATUS_SPELL_IMMUNITY]  = 'A50B'
         //set ABILITY[STATUS_HEX]             = 'A50C'
         //set ABILITY[STATUS_NEVER_MISS]      = 'A50F'
@@ -179,7 +179,7 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
         
         set BUFF[STATUS_STUN]                 = 'B02R'
         set BUFF[STATUS_SILENCE]              = 'BNsi'
-        //set BUFF[STATUS_DOOM]               = 'B509'
+        set BUFF[STATUS_DOOM]                 = 'B04D'
         set BUFF[STATUS_DISARM_BOTH]          = 'B02B'
         //set BUFF[STATUS_DISARM_MELEE]       = 'B503'
         //set BUFF[STATUS_DISARM_RANGE]       = 'B504'
@@ -195,7 +195,7 @@ library Status initializer Init  requires AbilityPreload, CasterSystem, OrderCre
         //set ORDER[STATUS_DISARM_MELEE]      = 852585
         //set ORDER[STATUS_DISARM_RANGE]      = 852585
         //set ORDER[STATUS_ENTANGLE]          = 852106
-        //set ORDER[STATUS_DOOM]              = 852583
+        set ORDER[STATUS_DOOM]              = 852583
         //set ORDER[STATUS_HEX]               = 852502
         //set ORDER[STATUS_BANISH]            = 852486
         //set ORDER[STATUS_PHASE]             = 852129
