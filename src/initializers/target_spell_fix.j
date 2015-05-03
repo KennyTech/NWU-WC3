@@ -27,9 +27,7 @@ scope TargetSpellFix initializer init{
     }
 
     private void init(){
-        trigger t = CreateTrigger()
-        TriggerRegisterAnyUnitEventBJ(t, EVENT_PLAYER_UNIT_SPELL_CAST )
-        TriggerAddAction(t, function Actions)
+        call GT_RegisterPlayerEventAction(EVENT_PLAYER_UNIT_SPELL_CAST, function Actions)
     }
 
 }
