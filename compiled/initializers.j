@@ -1,5 +1,8 @@
+include "src//initializers//chibaku_item_silence.j"
 include "src//initializers//clone_gem_fix.j"
 include "src//initializers//creeps_init.j"
 include "src//initializers//cs.j"
+include "src//initializers//konoha_victory.j"
 include "src//initializers//target_spell_fix.j"
 include "src//initializers//trompeta.j"
+include "src//initializers//victory_shinobi.j"

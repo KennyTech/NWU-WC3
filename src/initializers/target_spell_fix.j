@@ -10,7 +10,7 @@ scope TargetSpellFix initializer init{
         return null
     }
 
-    private void Actions(){
+    private boolean Actions(){
         unit u = GetTriggerUnit()
         rect r = getRect(u)
         real x = GetSpellTargetX()
@@ -24,6 +24,7 @@ scope TargetSpellFix initializer init{
 
         u = null
         r = null
+        return false
     }
 
     private void init(){

@@ -2,3 +2,15 @@ define{
     SASUKE_T = 'A07T'
     BEE_R    = 'A0LI'
 }
+
+define{
+	ITEM_TP_ABILITY             = 'A0H1'
+	ITEM_IRON_FAN_ABILITY       = 'A066'
+	ITEM_GELEL_ABILITY          = 'A0IG'
+	ITEM_ASSASSIN_CLOAK_ABILITY = 'A0DW'
+	ITEM_HAKU_OVERCOAT          = 'A0B2'
+	ITEM_HEXAGONAL_CRYSTAL      = 'A0CB'
+	ITEM_HOSHIKAGE              = 'A06B'
+	ITEM_KAGUYA_ARMOR           = 'A0FJ'
+	ITEM_PROBAGATION            = 'A0C2'
+}
