@@ -8,7 +8,8 @@ scope OnokiUltimate
         private ABIL_AOE = 425
         private ABIL_DIEWHEN = 0.1
         private CHECK_PERIOD = 0.33
-        private DAMAGE_FACTOR(LVL) = (0.04+0.01*LVL)*CHECK_PERIOD
+        private DAMAGE_PERCENT(LVL) = (0.04+0.01*LVL)
+        private DAMAGE_FACTOR(LVL)  = DAMAGE_PERCENT(LVL)*CHECK_PERIOD
         private DURATION = 5
         private NORMAL_BLOOD = "Objects\\Spawnmodels\\Undead\\UndeadBlood\\UndeadBloodGargoyle.mdl"
         private DEATH_BLOOD = "Objects\\Spawnmodels\\Human\\HumanBlood\\HumanBloodFootman.mdl"
@@ -97,7 +98,7 @@ scope OnokiUltimate
             endif
         else
             real damage = GetUnitState(target, UNIT_STATE_MAX_LIFE)
-            // Unit is under 10%, then kill it. Else, aplly a factor
+            // Unit is under x%, then kill it. Else, aplly a factor
             if (GetWidgetLife(target) < damage * ABIL_DIEWHEN) then
                 call DestroyEffect(AddSpecialEffectTarget(DEATH_BLOOD, target, "chest"))
             else
