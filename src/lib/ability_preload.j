@@ -24,6 +24,10 @@ library AbilityPreload
         endif
         debug call BJDebugMsg("spellbook")
     endfunction
+
+    function UnitPreload takes integer id returns nothing
+        call RemoveUnit(CreateUnit(Player(15), id, 0, 0, 0))
+    endfunction
     
     private module PreloadModule
         private static method onInit takes nothing returns nothing

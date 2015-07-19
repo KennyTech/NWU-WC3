@@ -196,6 +196,12 @@ scope SharinganCopyCast
       elseif utype=='O001' then//ZABUSA
          set Ability = 'A0A5'
          set CD = 15
+      elseif utype == SAI then
+        set Ability = 'CW33'
+        set CD = 26 - 4 * SpellLVL
+      elseif utype == KILLER_BEE then
+        set Ability = 'CW01'
+        set CD = 18 - 2 * SpellLVL
       endif
 
       call UnitAddAbility( Caster, Ability )

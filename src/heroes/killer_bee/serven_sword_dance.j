@@ -1,4 +1,4 @@
-scope KBSSDance
+scope KBSSDance initializer Init
 
     globals
         private constant integer SPELL_ID   = 'CW00'    // Ability ID of "Killer Bee - Seven Sword Dance"
@@ -6,7 +6,7 @@ scope KBSSDance
         private constant integer ULT_ID     = 'CW03'    // Ability ID of "Killer Bee - 8-Tail Chakra" // Needed to apply bonus damage in ult form
         private constant integer SLOW_ID    = 'CW04'    // Ability ID of "Killer Bee - Dummy Ink Slow" // Needed to deal slow effect
         private constant integer AURA_ID    = 'CW07'    // Ability ID of "Killer Bee - 8-Tail Chakra Aura" // Movespeed Aura
-        private constant integer DUMMY      = 'cw00'    // Unit ID of "FX Killer Bee" // Needed for afterimage dummy SX + dummy caster
+        private constant integer DUMMY_ID1  = 'cw00'    // Unit ID of "FX Killer Bee" // Needed for afterimage dummy SX + dummy caster
         private constant integer DUMMY_ID2  = 'h01K'    // Unit ID of "FX Killer Bee" // Needed for afterimage dummy SX + dummy caster
         private constant integer BUFF_ID    = 'BK01'    // Buff ID of "Ink Creation" // Needed to deal slow effect
         private constant string sfx1 = "war3mapImported\\SevenSwordDance.mdx"   // Normal effect of this ability (SFX credits: Judash)
@@ -30,14 +30,15 @@ scope KBSSDance
         local real x = GetUnitX(c)
         local real y = GetUnitY(c)
         local item i
-        local real angle = GetUnitFacing(c)
-        local real x2 = x+100*Cos(angle*bj_DEGTORAD) // Don't let Bee exit map 
-        local real y2 = y+100*Sin(angle*bj_DEGTORAD)
+        local real angle = LoadReal(HT, id, 3)
+        local real x2 = x+110*Cos(angle*bj_DEGTORAD) // Don't let Bee exit map 
+        local real y2 = y+110*Sin(angle*bj_DEGTORAD)
         
         set cycle = cycle + 1 // In ult form - move killer bee forward 
-        if cycle <= 4 and RectContainsCoords(GetPlayableMapRect(),x2,y2)then // Don't let Bee exit map
-            call SetUnitX(c,x+37.5*Cos(angle*bj_DEGTORAD)) // Move Killer Bee without disturbing order
-            call SetUnitY(c,y+37.5*Sin(angle*bj_DEGTORAD)) // 150 distance forward 
+        if cycle <= 3 and RectContainsCoords(GetPlayableMapRect(),x2,y2)then // Don't let Bee exit map
+            call SetUnitX(c,x+50*Cos(angle*bj_DEGTORAD)) // Move Killer Bee without disturbing order
+            call SetUnitY(c,y+50*Sin(angle*bj_DEGTORAD)) // 150 distance forward 
+            call SetUnitAnimationByIndex( c , 9 ) // play alternate walk animation in ult form
         else
             set i = CreateItem('afac', x, y) // Random Item is created to detect nearest pathable area
             set x = GetItemX(i)
@@ -50,7 +51,6 @@ scope KBSSDance
             call DestroyTimer(t)
         endif
         
-        //call SaveUnitHandle(HT, id, 1, c)
         call SaveReal(HT, id, 2, cycle)
                
         set c = null
@@ -69,6 +69,7 @@ scope KBSSDance
         local real a = GetUnitFacing(c)
         local real n = 0
         local real dmg
+        local boolean destroyedclone = false
         local integer level = GetUnitAbilityLevel(c, SPELL_ID)
         local integer ult_level = 0
         local timer t = CreateTimer()
@@ -78,18 +79,20 @@ scope KBSSDance
             set ult_level = GetUnitAbilityLevel (c, ULT_ID)
             call SaveUnitHandle(HT, id, 1, c) // save Dummy(replacement Killer B)
             call SaveReal(HT, id, 2, 0) // save cycle as 0
-            call TimerStart(t,0.03,true,function Dash) // Dash in ult form
+            call SaveReal(HT, id, 3, a) // save angle
+            call TimerStart(t,0.02,true,function Dash) // Dash in ult form
+            call TriggerSleepAction (0.10)
+        else
+            call SetUnitVertexColor(c,255,255,255,0) // Make Killer B 100% transparent during this time (for SFX effect)
         endif
         
-        call TriggerSleepAction (0.10) 
         set x = GetUnitX(c)
         set y = GetUnitY(c)
-        set d = CreateUnit(GetOwningPlayer(c),DUMMY,x,y,a) // create Killer B illusion dummy
+        set d = CreateUnit(GetOwningPlayer(c),DUMMY_ID1,x,y,a) // create Killer B illusion dummy
         call Fade(d) // Fade effect for afterimage dummy
         call SetUnitTimeScale(d, 2.00) // Speed up Dummy animation speed
-        call SetUnitVertexColor(c,255,255,255,0) // Make Killer B 100% transparent during this time (for SFX effect)
-
-        if GetUnitAbilityLevel(c, AURA_ID) == 0 then // If in normal form, we play normal SX
+        
+        if ult_level == 0 then // If in normal form, we play normal SX
             call DestroyEffect(AddSpecialEffect(sfx1,x,y)) // Create Sword SFX and Destroy It
             call SetUnitAnimationByIndex(c , 2 ) // normal attack animation - caster
             call SetUnitAnimationByIndex(d , 2 ) // dummy
@@ -115,19 +118,20 @@ scope KBSSDance
         exitwhen u == null
             if IsUnitEnemy(u,GetOwningPlayer(c)) then
             
-                set dmg = (40+level*20) + (GetHeroAgi(c, true) * 2.0) // 60/80/100/120 + 200% AGI dmg 
+                set dmg = (20+level*20) + (GetHeroAgi(c, true) * 1.8) // 40/60/80/100 + 180% AGI dmg 
                 
-                if GetUnitAbilityLevel(c, AURA_ID) > 0 and IsUnitIllusion(u) then   // If in ult form, remove 15/20/25% hp off clones
-                    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) - (GetUnitState(u, UNIT_STATE_MAX_LIFE) * (0.10+(0.05*ult_level))))
+                if ult_level > 0 and IsUnitIllusion(u) and destroyedclone == false then   // If in ult form, kill up to 1 clone
+                    set destroyedclone = true
+                    call KillUnit(u)
                 endif
                 
                 if IsUnitType(u,UNIT_TYPE_STRUCTURE) then    // If target is structure, 50% damage
                     set dmg = dmg/2
                 endif
                 
-                set dmg = dmg*(1.25-n*0.25) // 25% less dmg to all enemies per extra target in range
+                set dmg = dmg*(1.15-n*0.15) // 15% less dmg to all enemies per extra target in range
                 
-                if dmg <= 10+(level*10) + 5*GetUnitAbilityLevel(c, AURA_ID) then // This ability deals a minimum of 20/30/40/50 dmg +5 minimum dmg/lvl in ult form
+                if dmg <= 10+(level*10) + 5*ult_level then // This ability deals a minimum of 20/30/40/50 dmg +5 minimum dmg/lvl in ult form
                     set dmg = (10+(level*10)) + 5*GetUnitAbilityLevel(c, AURA_ID)
                 endif
                 
@@ -165,15 +169,12 @@ scope KBSSDance
     
     //===========================================================================
 
-    public function Init takes nothing returns nothing
+    private function Init takes nothing returns nothing
         local trigger t = CreateTrigger()
         call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
         call TriggerAddCondition(t, Condition(function Conditions))
         call TriggerAddAction(t, function Actions)
         set t = null
-
-        // Preload
-        call AbilityPreload(SLOW_ID)
     endfunction
 
 endscope

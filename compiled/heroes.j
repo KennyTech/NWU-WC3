@@ -60,6 +60,14 @@ include "src//heroes//obito//kamui.j"
 include "src//heroes//onoki//onoki_ultimate.j"
 
 /**************************************************************
+		SAI
+**************************************************************/
+include "src//heroes//sai//sai_ink_blink.j"
+include "src//heroes//sai//sai_lion.j"
+include "src//heroes//sai//sai_tiger.j"
+include "src//heroes//sai//sai_tiger_cast_anim.j"
+
+/**************************************************************
 		SHINO
 **************************************************************/
 include "src//heroes//shino//bug_shield.j"

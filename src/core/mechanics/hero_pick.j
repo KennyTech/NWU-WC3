@@ -192,6 +192,11 @@ library HeroPick initializer Init requires TimerUtils
             call ExecuteFunc("RaikagePasive_Init")
             call ExecuteFunc("RaikagePrimero_Init")
             call ExecuteFunc("DSRaikagePassive_Init")
+        elseif UnitType==SAI then
+            call ExecuteFunc("SaiInkBlink_Init")
+            call ExecuteFunc("SaiLion_Init")
+            call ExecuteFunc("SaiTiger_Init")
+            call ExecuteFunc("SaiTigerCatAnim_Init")
         elseif UnitType==SAKON then//***SAKON***
             call EnableTrigger( gg_trg_Charge )
             call EnableTrigger( gg_trg_Sakon_Curse )

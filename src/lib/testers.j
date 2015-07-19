@@ -6,7 +6,7 @@ scope Testers{
     endglobals
 
     define
-        private TESTERS_LENGTH = 9
+        private TESTERS_LENGTH = 13
         private PLAYERS_LENGTH = 11
     enddefine
 
@@ -52,12 +52,14 @@ scope Testers{
 
         if(command == "-killerbee"){
             heroId = KILLER_BEE
+        } elseif (command == "-sai"){
+            heroId = SAI
         }
 
         if(IsHeroChoosen(heroId)){
             call DisplayTimedTextToPlayer(p, 0, 0, 8, GetObjectName('e01L'))
         } else {
-            call RegisterHeroToPlayer(CreateUnit(p, KILLER_BEE, x, y, 0), p)
+            call RegisterHeroToPlayer(CreateUnit(p, heroId, x, y, 0), p)
             call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)-250)
         }
 
@@ -75,7 +77,11 @@ scope Testers{
         testers[6] = "Cherrywater"
         testers[7] = "frankshotsauce"
         testers[8] = "MashiroMuritaka"
-        testers[9] = "WorldEdit" // I have to test somehow eh :P
+        testers[9] = "WorldEdit"
+        testers[10] = "ArOuNDThaWOrLD" 
+        testers[11] = "pronoob" 
+        testers[12] = "XkreshSWx"
+        testers[13] = "Azog(" 
 
         // Register commands ONLY for testers
 
@@ -96,7 +102,7 @@ scope Testers{
             
             if(isTester[playerId]){
                 call TriggerRegisterPlayerChatEvent(t, Player(playerId), "-", false)
-                call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 8, GetObjectName('e01K'))
+                call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 8, GetObjectName('e01K')+"\n|cff6495ed-killerbee\n-sai|r")
             }
 
             playerId++

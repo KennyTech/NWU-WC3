@@ -4,9 +4,8 @@ scope ChibakuItemSilence initializer Init{
 
         int id = GetIssuedOrderId()
 
-        if(id >= ORDER_useslot1 and id <= ORDER_useslot6){
+        if(id >= ORDER_useslot1 and id <= ORDER_useslot6 and GetUnitAbilityLevel(GetTriggerUnit(), 'B00X') > 0){
             call AbortOrder(GetTriggerUnit())
-            debug call BJDebugMsg("USANDO ITEM CTM")
         }
 
         return false

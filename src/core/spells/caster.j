@@ -38,6 +38,14 @@ library CasterSystem initializer init requires TimerUtils
         UnitApplyTimedLife(u,'BTLF',20)
         u=null
     }
+
+    nothing CasterCastInmmediate(integer abilId, integer order, integer level, real x, real y, player owner){
+        unit u=CreateUnit(owner, NORMAL_DUMMY_ID,x,y,0)
+        AddAbilityLevel(u,abilId,level)
+        IssueImmediateOrderById(u,order)
+        UnitApplyTimedLife(u,'BTLF',20)
+        u=null
+    }
     
     define
         CasterCast(t,a,o) = CasterCastTarget(t,a,o,1,null)
