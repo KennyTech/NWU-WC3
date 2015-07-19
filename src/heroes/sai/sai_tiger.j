@@ -1,11 +1,12 @@
 scope SaiTiger
 
-    globals
-        private constant integer SPELL_ID   = 'CW42'
-        private constant integer DUMMY_ID1   = 'cw04' 
-        private constant string SFX         = "Objects\\Spawnmodels\\Orc\\Orcblood\\OrdBloodWyvernRider.mdl"
-        private constant string SFX_TARGET  = "Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl"
-    endglobals
+    define
+        private SPELL_ID       = 'CW42'
+        private DUMMY_ID1      = 'cw04' 
+        private SFX            = "Objects\\Spawnmodels\\Orc\\Orcblood\\OrdBloodWyvernRider.mdl"
+        private SFX_TARGET     = "Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl"
+        private MAX_TICKS_GROW = 14 // Max number of iterations to make Tiger Grow
+    enddefine
     
     private function onHit takes proj this returns nothing
         call Fade(this.projUnit)
@@ -17,12 +18,13 @@ scope SaiTiger
 
     private function PursueLoop takes proj this returns nothing
         local unit dummy
+        local real scale = RMinBJ(0.2 + this.ticks * 0.07, 0.2 * MAX_TICKS_GROW * 0.07 )
         if this.ticks < 14 then
-            call SetUnitScale(this.projUnit, 0.2 + this.ticks * 0.07, 0.2 + this.ticks * 0.07, 0.2 + this.ticks * 0.07)
+            call SetUnitScale(this.projUnit, scale, scale, scale)
         endif
         if ModuloInteger(this.ticks, 3) == 0 then // Every 3 ticks create a sfx
             set dummy = CreateUnit(this.owner, DUMMY_ID1, this.x, this.y, GetUnitFacing(this.projUnit))
-            call SetUnitScale(dummy, 0.2 + this.ticks * 0.07, 0.2 +this.ticks * 0.07, 0.2 + this.ticks * 0.07)
+            call SetUnitScale(dummy, scale, scale, scale)
             call SetUnitAnimationByIndex(dummy , 3)
             call SetUnitTimeScale(dummy, 3)
             call Fade(dummy)
