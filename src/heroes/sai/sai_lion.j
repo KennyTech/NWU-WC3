@@ -115,7 +115,7 @@ scope SaiLion
         else
             call DestroyEffect(AddSpecialEffect(SFX,x3,y3))
             call RemoveUnit(lion1)
-            call UnitDamageTarget(c,target1,50*level, true, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS ) // Deals 50/100/150/200 spell dmg
+            call Damage_Spell(c,target1,50 * level) // Deals 50/100/150/200 spell dmg
             set dummy = CreateUnit(GetOwningPlayer(c), DUMMY_ID2, x3, y3, 0)
             call UnitApplyTimedLife(dummy,'BTLF',0.2)
             call UnitAddAbility(dummy, SLOW_ID)
@@ -136,9 +136,9 @@ scope SaiLion
             call DestroyEffect(AddSpecialEffect(SFX,x4,y4))
             call RemoveUnit(lion2)
             if target1 != target2 then
-                call UnitDamageTarget(c,target2,50*level, true, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS )
+                call Damage_Spell(c,target2,50*level)
             else
-                call UnitDamageTarget(c,target2,0.5*(50*level), true, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS )
+                call Damage_Spell(c,target2,0.5*(50*level))
             endif
             set dummy = CreateUnit(GetOwningPlayer(c), DUMMY_ID2, x4, y4, 0)
             call UnitApplyTimedLife(dummy,'BTLF',0.2)
