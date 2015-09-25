@@ -6,7 +6,6 @@ library DamageEvent initializer Init
 
     define
         private SURVIVAL = 'A065'
-        private AMOUNT = 500000
         private MAGIC_DETECT = 'A0I0'
         private REFRESH_TRIGGER = true
         private TRIGGER_REFRESH_PERIOD = 300 // 5 min

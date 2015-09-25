@@ -6,7 +6,6 @@ scope Testers{
     endglobals
 
     define
-        private TESTERS_LENGTH = 13
         private PLAYERS_LENGTH = 11
     enddefine
 
@@ -29,12 +28,22 @@ scope Testers{
         return false
     }
 
+    private int command2heroId(string command){
+        if(command == "-killerbee"){
+            return KILLER_BEE
+        } elseif (command == "-sai"){
+            return SAI
+        } elseif (command == "-han"){
+            return HAN
+        }
+        return 0
+    }
+
     private void onCommand(){
 
         player p = GetTriggerPlayer()
         string name = GetPlayerName(p)
-        string command=StringCase(GetEventPlayerChatString(), false)
-        int heroId
+        string command = StringCase(GetEventPlayerChatString(), false)
         real x
         real y
 
@@ -50,17 +59,15 @@ scope Testers{
             y = GetRectCenterY(gg_rct_Shinobi_Hero_Spawn)
         }
 
-        if(command == "-killerbee"){
-            heroId = KILLER_BEE
-        } elseif (command == "-sai"){
-            heroId = SAI
-        }
+        int heroId = command2heroId(command)
 
-        if(IsHeroChoosen(heroId)){
-            call DisplayTimedTextToPlayer(p, 0, 0, 8, GetObjectName('e01L'))
-        } else {
-            call RegisterHeroToPlayer(CreateUnit(p, heroId, x, y, 0), p)
-            call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)-250)
+        if(heroId>0){
+            if(IsHeroChoosen(heroId)){
+                call DisplayTimedTextToPlayer(p, 0, 0, 8, GetObjectName('e01L'))
+            } else {
+                call RegisterHeroToPlayer(CreateUnit(p, heroId, x, y, 0), p)
+                call SetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD,GetPlayerState(p,PLAYER_STATE_RESOURCE_GOLD)-250)
+            }
         }
 
     }
@@ -82,6 +89,11 @@ scope Testers{
         testers[11] = "pronoob" 
         testers[12] = "XkreshSWx"
         testers[13] = "Azog(" 
+        testers[14] = "Profe"
+        testers[15] = "Nuts)"
+        testers[16] = "SSJGOKU"
+        testers[17] = "GhostBusters2"
+        int TESTERS_LENGTH = 17
 
         // Register commands ONLY for testers
 

@@ -19,6 +19,7 @@ library Fade
         else
             call RemoveUnit(LoadUnitHandle(HASH, id, 1))
             call FlushChildHashtable(HASH, GetHandleId(t))
+            call PauseTimer(t)
             call DestroyTimer(t)
         endif
         set t = null

@@ -5,6 +5,16 @@
 include "src//heroes//deidara//c3.j"
 
 /**************************************************************
+		HAN
+**************************************************************/
+include "src//heroes//han//han_boil_release_off.j"
+include "src//heroes//han//han_boil_release_on.j"
+include "src//heroes//han//han_globals.j"
+include "src//heroes//han//han_steam_wall_off.j"
+include "src//heroes//han//han_steam_wall_on.j"
+include "src//heroes//han//han_tsunoori.j"
+
+/**************************************************************
 		KAKASHI
 **************************************************************/
 include "src//heroes//kakashi//chidori.j"
@@ -66,6 +76,7 @@ include "src//heroes//sai//sai_ink_blink.j"
 include "src//heroes//sai//sai_lion.j"
 include "src//heroes//sai//sai_tiger.j"
 include "src//heroes//sai//sai_tiger_cast_anim.j"
+include "src//heroes//sai//sai_tiger_learn.j"
 
 /**************************************************************
 		SHINO

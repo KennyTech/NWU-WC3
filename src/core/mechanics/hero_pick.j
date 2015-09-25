@@ -196,6 +196,7 @@ library HeroPick initializer Init requires TimerUtils
             call ExecuteFunc("SaiInkBlink_Init")
             call ExecuteFunc("SaiLion_Init")
             call ExecuteFunc("SaiTiger_Init")
+            call ExecuteFunc("SaiTigerLearn_Init")
             call ExecuteFunc("SaiTigerCatAnim_Init")
         elseif UnitType==SAKON then//***SAKON***
             call EnableTrigger( gg_trg_Charge )
@@ -290,18 +291,24 @@ library HeroPick initializer Init requires TimerUtils
             call ExecuteFunc("SmokeScreen_Init")
             call EnableTrigger( gg_trg_Blink_Strike )
             call EnableTrigger( gg_trg_Track_Learn )
-        elseif UnitType==OBITO
+        elseif UnitType==OBITO then
             ExecuteFunc("ChakraChains_Init")
             ExecuteFunc("FlameBattle_Init")
             ExecuteFunc("BranchArmor_Init")
             ExecuteFunc("Kamui_Init")
             //BJDebugMsg("obito..")
-        elseif UnitType==KILLER_BEE
+        elseif UnitType==KILLER_BEE then
             ExecuteFunc("KB8TailChakra_Init")
             ExecuteFunc("KBInkCreation_Init")
             ExecuteFunc("KBDeath_Init")
             ExecuteFunc("KBLariat_Init")
             ExecuteFunc("KBSSDance_Init")
+        elseif UnitType==HAN then
+            ExecuteFunc("HanBoilReleaseOff_Init")
+            ExecuteFunc("HanBoilReleaseOn_Init")
+            ExecuteFunc("HanSteamWallOff_Init")
+            ExecuteFunc("HanSteamWallOn_Init")
+            ExecuteFunc("HanTsunoori_Init")
         endif
         set triggersEnabled[index]=true
     endfunction
