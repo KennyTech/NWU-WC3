@@ -30,7 +30,7 @@ define
     KIDOMARU='H00Z'
     TENTEN='H010'
     TEMARI='H009'
-    DEIDARA='E00H'
+    DEIDARA='C005'
     KIMIMARO='E001'
     NARUTO='H00V'
     KIBA='E00F'

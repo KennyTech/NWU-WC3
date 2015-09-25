@@ -210,7 +210,7 @@ library HeroPreload /*
         set udg_Hero[32] = DEIDARA
         set udg_HeroIcon[32] = "ReplaceableTextures\\CommandButtons\\BTNDeida.blp"
         set udg_HeroMainStat[32] = INT_HERO
-        set udg_HeroIsAvailable[32] = true
+        set udg_HeroIsAvailable[32] = false
         set HeroeName[32] = "Deidara"
         // ==========
         set udg_Hero[33] = KIMIMARO

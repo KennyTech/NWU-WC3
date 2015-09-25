@@ -2,7 +2,13 @@
 /**************************************************************
 		DEIDARA
 **************************************************************/
-include "src//heroes//deidara//c3.j"
+include "src//heroes//deidara//dei_c3_ult.j"
+include "src//heroes//deidara//dei_clay_spider.j"
+include "src//heroes//deidara//dei_katsu_cast.j"
+include "src//heroes//deidara//dei_katsu_learn.j"
+include "src//heroes//deidara//dei_katsu_ready.j"
+include "src//heroes//deidara//dei_mine_death.j"
+include "src//heroes//deidara//dei_mine_throw.j"
 
 /**************************************************************
 		HAN

@@ -21,9 +21,7 @@ scope CloneGemFix initializer onInit
     private function onEnter takes nothing returns boolean
         local unit u = GetSummonedUnit()
         if IsUnitIllusion(u) and GetUnitAbilityLevel(u, TRUE_SIGH) > 0 then
-            static if TEST_MODE then
-                call Test_SuccessMsg("REMOVING TRUE_SIGH FROM CLONE")
-            endif
+            debug call Test_Success("REMOVING TRUE_SIGH FROM CLONE")
             call UnitRemoveAbility(u, TRUE_SIGH)
         endif
         set u = null

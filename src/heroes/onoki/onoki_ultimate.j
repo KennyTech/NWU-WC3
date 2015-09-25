@@ -93,9 +93,7 @@ scope OnokiUltimate
 
         if GetUnitAbilityLevel(target, BUFF_ID) == 0 then
             call ReleaseTimerEx()
-            static if TEST_MODE then
-                call Test_SuccessMsg("OnokiUltimate - DEBUFF of " + GetUnitName(enumUnit) + " has finished")
-            endif
+            debug call Test_Success("OnokiUltimate - DEBUFF of " + GetUnitName(enumUnit) + " has finished")
         else
             real damage = GetUnitState(target, UNIT_STATE_MAX_LIFE)
             // Unit is under x%, then kill it. Else, aplly a factor
@@ -128,7 +126,7 @@ scope OnokiUltimate
                 call SetUnit(h, 1, caster)
                 call TimerStart(t, CHECK_PERIOD, true, function onCallback)
                 static if TEST_MODE then
-                    call Test_SuccessMsg("OnokiUltimate - Started checking DEBUFF of " + GetUnitName(enumUnit))
+                    call Test_Success("OnokiUltimate - Started checking DEBUFF of " + GetUnitName(enumUnit))
                 endif
                 t = null
             endif

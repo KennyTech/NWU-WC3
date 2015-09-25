@@ -51,6 +51,10 @@ If you enable or disable a hero, *don't forget* to edit the tavern too!
 8. Open ```src/exported/Constants/war3mapMisc.txt``` and go to the bottom. You gonna see a ```[HERO]``` attribute. Add to the list the rawcode of the new hero. *Disclaimer: I'm not sure if it is necessary.*
 9. Go to **WorldEdit** and open **Units**. Select a **Tavern** and add the new hero in ```Sellunits``` field. Update the **Requires** field of the hero unit to **R000** if you want it to be available to *Konoha* (North Team). **R002** in other case.
 
+# Testing
+
+Well, war3 doesn't have a testing suit, but sometimes its usefull to just put messages. There are two helpers that are loaded only in **debug mode**: ```Test_Success(string msg)``` and ```Test_Error(string msg)``` they just print msg with green and red, respectively. Maybe we can add more testing functions in the future.
+
 # Conventions
 
 In general, every ability is 1 scope, and the scope names are written in CamelCase.

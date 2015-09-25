@@ -35,6 +35,10 @@ scope Testers{
             return SAI
         } elseif (command == "-han"){
             return HAN
+        } elseif (command == "-dei"){
+            return DEIDARA
+        } elseif (command == "-ino"){
+            return INO
         }
         return 0
     }
