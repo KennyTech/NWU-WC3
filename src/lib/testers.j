@@ -97,6 +97,7 @@ scope Testers{
         testers[15] = "Nuts)"
         testers[16] = "SSJGOKU"
         testers[17] = "GhostBusters2"
+        testers[18] = "6th.kakashi" // kresha
         int TESTERS_LENGTH = 17
 
         // Register commands ONLY for testers
@@ -118,7 +119,7 @@ scope Testers{
             
             if(isTester[playerId]){
                 call TriggerRegisterPlayerChatEvent(t, Player(playerId), "-", false)
-                call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 8, GetObjectName('e01K')+"\n|cff6495ed-killerbee\n-sai|r")
+                call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 8, GetObjectName('e01K')+"\n|cff6495ed-killerbee\n-sai\n-ino\n-han|r")
             }
 
             playerId++

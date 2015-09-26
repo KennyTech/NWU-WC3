@@ -23,7 +23,7 @@ define
     ROCKLEE='N00Y'
     SAKON='N00V'
     HAKU='H000'
-    INO='H017'
+    INO='C004'
     CHOUJI='N00U'
     KABUTO='U006'
     KANKURO='H011'

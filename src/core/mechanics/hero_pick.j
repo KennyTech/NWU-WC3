@@ -70,10 +70,17 @@ library HeroPick initializer Init requires TimerUtils
             call ExecuteFunc("HinataByakugan_Init")
             call EnableTrigger( gg_trg_Hinata_Ultimate )
         elseif UnitType==INO then//***INO***
-            call ExecuteFunc("InoHold_Init")
+            call ExecuteFunc("InoDash_Init")
+            call ExecuteFunc("InoKunaiCast_Init")
+            call ExecuteFunc("InoKunaiLearn_Init")
+            call ExecuteFunc("InoKunaiRecharge_Init")
+            call ExecuteFunc("InoMindUlt_Init")
+            call ExecuteFunc("InoUltAtkCounter_Init")
+            debug call Test_Success("Ino Initialized")
+            /*call ExecuteFunc("InoHold_Init")
             call EnableTrigger( gg_trg_Ino_Ninpou )
             call EnableTrigger( gg_trg_Ino_Ultimate )
-            call EnableTrigger( gg_trg_Ino_Ultimate_Learn )
+            call EnableTrigger( gg_trg_Ino_Ultimate_Learn )*/
         elseif UnitType==ITACHI then//***ITACHI***
             call EnableTrigger( gg_trg_Itachi_Blink )
             call EnableTrigger( gg_trg_Amateratsu )

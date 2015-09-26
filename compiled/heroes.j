@@ -21,6 +21,17 @@ include "src//heroes//han//han_steam_wall_on.j"
 include "src//heroes//han//han_tsunoori.j"
 
 /**************************************************************
+		INO
+**************************************************************/
+include "src//heroes//ino//ino_dash.j"
+include "src//heroes//ino//ino_globals.j"
+include "src//heroes//ino//ino_kunai_cast.j"
+include "src//heroes//ino//ino_kunai_learn.j"
+include "src//heroes//ino//ino_kunai_recharge.j"
+include "src//heroes//ino//ino_mind_ult.j"
+include "src//heroes//ino//ino_ult_atk_counter.j"
+
+/**************************************************************
 		KAKASHI
 **************************************************************/
 include "src//heroes//kakashi//chidori.j"
