@@ -117,7 +117,7 @@ scope Testers{
             
             if(isTester[playerId]){
                 call TriggerRegisterPlayerChatEvent(t, Player(playerId), "-", false)
-                call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 8, GetObjectName('e01K')+"\n-ino\n-han\n-karin|r")
+                call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 8, GetObjectName('e01K')+"\n-ino\n-han\n-karin\n-dei|r")
             }
 
             playerId++

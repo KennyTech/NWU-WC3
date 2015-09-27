@@ -1,12 +1,13 @@
 scope KBLariat
 
     globals
-        private constant integer SPELL_ID   = 'A0LI' // ID of ability: "Killer B - Lariat v2"
+        private constant integer SPELL_ID   = 'CW02' // ID of ability: "Killer B - Lariat v2"
         private constant integer ULT_ID     = 'CW03' // ID of ability: "Killer B - 8-Tail Chakra"
         private constant integer AURA_ID    = 'CW07' // ID of ability: "Killer B - 8-Tail Chakra Aura"
         private constant integer STUN_ID    = 'CW99' // ID of ability: "Killer B - Lariat Stun"
         private constant integer DUMMY_ID1  = 'cw00' // ID of unit: "SX KillerB" (dummy unit - afterimage)
         private constant string EFFECT      = "Abilities\\Weapons\\Bolt\\BoltImpact.mdl" // Lightning effect
+        private constant real STUN_DURATION = 1.2
     endglobals
     
     private function Conditions takes nothing returns boolean
@@ -134,10 +135,7 @@ scope KBLariat
                     set enemy_facing = GetUnitFacing(u)
             
                     if GetAngleDifference(impact_angle, enemy_facing) <= 80 and IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) == false then // allow 80 degrees backstab stun
-                        set dc = CreateUnit(GetOwningPlayer(c), 'h01K', x, y, 0) // spawn dummy caster
-                        call UnitApplyTimedLife(dc,'BTLF',1.0)
-                        call UnitAddAbility(dc, STUN_ID)
-                        call IssueTargetOrder(dc, "firebolt", u)
+                        call AddStunTimed(u, STUN_DURATION)
                     endif
                     // =======================================
                     

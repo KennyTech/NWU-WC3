@@ -18,7 +18,7 @@ scope SaiTiger
 
     private function PursueLoop takes proj this returns nothing
         local unit dummy
-        local real scale = RMinBJ(0.2 + this.ticks * 0.07, 0.2 * MAX_TICKS_GROW * 0.07 )
+        local real scale = RMinBJ(0.2 + this.ticks * 0.07, 0.2 + MAX_TICKS_GROW * 0.07 )
         if this.ticks < 14 then
             call SetUnitScale(this.projUnit, scale, scale, scale)
         endif
