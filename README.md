@@ -57,6 +57,27 @@ Well, war3 doesn't have a testing suit, but sometimes its usefull to just put me
 
 # Conventions
 
-In general, every ability is 1 scope, and the scope names are written in CamelCase.
+## Abilitites
 
-core/mechanics/hero_pick.j --> don't try to 
+- 1 ability, 1 scope. 
+- File names are in *snake_case* and scope names in *CamelCase*. For example, Killer bee's lariat scope name is BeeLariat and file name is bee_lariat.j
+- For constants use **cjass** define functions.
+- By level configuration such damage, durations, etc. should be defined inside a define function. Example:
+Instead of having this:
+	``` 
+		// Ability
+		Damage_Spell(source, target, lvl*25)
+	```
+Do this:
+	``` 
+		// Configuracion section ...
+		define SpellDamage(lvl) = lvl*25
+		// Ability
+		Damage_Spell(source, target, SpellDamage(lvl)) 
+
+	```
+It helps to keep everything configurable in config. section.
+- Instead of using ``` scope NAME initializer Init ``` and ``` private function Init ... ``` do ```scope NAME``` and ``` public function Init ... ```. Refer to "How to add a Hero" section to learn how to call the Init function when needed.
+
+# TODO
+Finish this readme :)
