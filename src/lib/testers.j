@@ -29,11 +29,7 @@ scope Testers{
     }
 
     private int command2heroId(string command){
-        if(command == "-killerbee"){
-            return KILLER_BEE
-        } elseif (command == "-sai"){
-            return SAI
-        } elseif (command == "-han"){
+        if (command == "-han"){
             return HAN
         } elseif (command == "-dei"){
             return DEIDARA
@@ -121,7 +117,7 @@ scope Testers{
             
             if(isTester[playerId]){
                 call TriggerRegisterPlayerChatEvent(t, Player(playerId), "-", false)
-                call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 8, GetObjectName('e01K')+"\n|cff6495ed-killerbee\n-sai\n-ino\n-han\n-karin|r")
+                call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 8, GetObjectName('e01K')+"\n-ino\n-han\n-karin|r")
             }
 
             playerId++
