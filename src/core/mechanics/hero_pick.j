@@ -324,6 +324,18 @@ library HeroPick initializer Init requires TimerUtils
             ExecuteFunc("HanSteamWallOff_Init")
             ExecuteFunc("HanSteamWallOn_Init")
             ExecuteFunc("HanTsunoori_Init")
+        elseif UnitType==KARIN then
+            ExecuteFunc("KarinEasterEgg_Init")
+            ExecuteFunc("KarinEye_Init")
+            ExecuteFunc("KarinIdBounty_Init")
+            ExecuteFunc("KarinIdDebuff_Init")
+            ExecuteFunc("KarinIdentify_Init")
+            ExecuteFunc("KarinKFA_Init")
+            ExecuteFunc("KarinKFD_Init")
+            ExecuteFunc("KarinLFC_Init")
+            ExecuteFunc("KarinLFS_Init")
+            ExecuteFunc("Karin_Init")
+            debug Test_Success("Karin initialized")
         endif
         set triggersEnabled[index]=true
     endfunction
@@ -569,6 +581,27 @@ library HeroPick initializer Init requires TimerUtils
     //       call ForForce( GetPlayersAll(), function RandomHerosForAllPlayers )
         endif
     endfunction
+
+    static if DEBUG_MODE then
+        function HeroPick takes player p, integer unitType returns nothing
+            local unit Unit
+            local real X
+            local real Y
+            if GetPlayerId(p) + 1 < 7 then
+                set X = GetRectCenterX(gg_rct_Konoha_Hero_Spawn)
+                set Y = GetRectCenterY(gg_rct_Konoha_Hero_Spawn)
+            else
+                set X = GetRectCenterX(gg_rct_Shinobi_Hero_Spawn)
+                set Y = GetRectCenterY(gg_rct_Shinobi_Hero_Spawn)
+            endif
+            set Unit = CreateUnit(p, unitType, X, Y, 0)
+            call SetUnitX(Unit, X)
+            call SetUnitY(Unit, Y)
+            if GetLocalPlayer() == p then
+                call PanCameraToTimed(X, Y, 0)
+            endif
+        endfunction
+    endif
 
     private function Init takes nothing returns nothing
         local integer index = 0

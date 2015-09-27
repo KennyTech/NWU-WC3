@@ -1,11 +1,9 @@
 library proj requires KT, GroupUtils, Alloc, Effects
 
-    define
-        private PERIOD = 0.03125
-        private ALTURA_PROMEDIO = 50
-        private DEFAULT_TARGET_COLISION = 50
-        private DEFAULT_AOE_COLISION = 250
-    enddefine
+    private real PERIOD = 0.03125
+    define private ALTURA_PROMEDIO = 50
+    define private DEFAULT_TARGET_COLISION = 50
+    define private DEFAULT_AOE_COLISION = 250
 
     private function interface interfaceFunc takes proj m returns nothing
     private function interface colisionFunc takes proj m,unit who returns nothing

@@ -39,6 +39,8 @@ scope Testers{
             return DEIDARA
         } elseif (command == "-ino"){
             return INO
+        } elseif (command == "-karin"){
+            return KARIN
         }
         return 0
     }
@@ -119,7 +121,7 @@ scope Testers{
             
             if(isTester[playerId]){
                 call TriggerRegisterPlayerChatEvent(t, Player(playerId), "-", false)
-                call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 8, GetObjectName('e01K')+"\n|cff6495ed-killerbee\n-sai\n-ino\n-han|r")
+                call DisplayTimedTextToPlayer(Player(playerId), 0, 0, 8, GetObjectName('e01K')+"\n|cff6495ed-killerbee\n-sai\n-ino\n-han\n-karin|r")
             }
 
             playerId++

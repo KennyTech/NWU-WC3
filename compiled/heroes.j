@@ -50,6 +50,21 @@ include "src//heroes//kakashi//sharingan_learn.j"
 include "src//heroes//kankuro//sanshouo.j"
 
 /**************************************************************
+		KARIN
+**************************************************************/
+include "src//heroes//karin//karin_easter_egg.j"
+include "src//heroes//karin//karin_eye.j"
+include "src//heroes//karin//karin_globals.j"
+include "src//heroes//karin//karin_identify.j"
+include "src//heroes//karin//karin_id_bounty.j"
+include "src//heroes//karin//karin_id_debuff.j"
+include "src//heroes//karin//karin_init.j"
+include "src//heroes//karin//karin_kfa.j"
+include "src//heroes//karin//karin_kfd.j"
+include "src//heroes//karin//karin_lfc.j"
+include "src//heroes//karin//karin_lfs.j"
+
+/**************************************************************
 		KILLER_BEE
 **************************************************************/
 include "src//heroes//killer_bee//eight_tail_chakra.j"

@@ -51,4 +51,5 @@ define
     KILLER_BEE='C000'
     SAI='C002'
     HAN='C003'
+    KARIN='C001'
 enddefine
