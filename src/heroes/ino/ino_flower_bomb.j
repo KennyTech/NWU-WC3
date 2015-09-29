@@ -230,7 +230,7 @@ scope InoFlowerBomb
             loop
                 set u = FirstOfGroup(g)
             exitwhen u == null
-                if IsUnitEnemy(u,p) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==false and IsUnitType(u,UNIT_TYPE_DEAD)==false and IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) == false then                
+                if IsUnitEnemy(u,GetOwningPlayer(c)) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==false and IsUnitType(u,UNIT_TYPE_DEAD)==false and IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) == false then                
                     call AddStunTimed(u, 2.0)
                 endif
                 call GroupRemoveUnit(g,u)
