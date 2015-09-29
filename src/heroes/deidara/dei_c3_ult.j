@@ -5,7 +5,9 @@ scope DeiC3Ult
         private constant integer FIRE_ID    = 'cw09' // FX C3 Fireground
         private constant integer DUMMY_ID1  = 'cw16' // FX Bird Drop C3 Ult 
         private constant integer BOOM_ID    = 'cw21' // FX Explosion 
-        private constant integer AOE        = 350 // Boom AoE Size
+        private constant integer AOE        = 400    // Boom AoE Size
+        private constant integer DUMMY_ID2  = 'cw99' // For placing Clay Counter
+        private constant integer SLOW_ID    = 'CW68' // For placing Clay Counter
         private constant string SFX         = "Abilities\\Spells\\Orc\\Bloodlust\\BloodlustTarget.mdl" // indicator
         private constant string SFX2        = "Abilities\\Spells\\Other\\BreathOfFire\\BreathOfFireTarget.mdl"
         private constant hashtable HT       = InitHashtable()
@@ -98,9 +100,9 @@ scope DeiC3Ult
                 set u = FirstOfGroup(g)
             exitwhen u == null
                 if IsUnitEnemy(u,p) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==false and IsUnitType(u,UNIT_TYPE_DEAD)==false then                
-                    call Damage_Spell(c,u,(30+10*level))
+                    call Damage_Spell(c,u,(35+15*level))
                 elseif IsUnitType(u,UNIT_TYPE_STRUCTURE)==true and IsUnitType(u,UNIT_TYPE_DEAD)==false then
-                    call Damage_Spell(c,u,(22.5+7.5*level))
+                    call Damage_Spell(c,u,(30+12.5*level))
                 endif
                 call GroupRemoveUnit(g, u)
             endloop
