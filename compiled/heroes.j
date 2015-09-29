@@ -119,3 +119,9 @@ include "src//heroes//shino//bug_shield.j"
 		SHODAIME
 **************************************************************/
 include "src//heroes//shodaime//living_tree.j"
+
+/**************************************************************
+		YAMATO
+**************************************************************/
+include "src//heroes//yamato//yamato_box.j"
+include "src//heroes//yamato//yamato_clone.j"

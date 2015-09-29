@@ -275,7 +275,7 @@ library HeroPick initializer Init requires TimerUtils
             call ExecuteFunc("EarthSlam_Init")
             call ExecuteFunc("HealTarget_Init")
         elseif UnitType==YAMATO then//***YAMATO***
-            call EnableTrigger( gg_trg_Caja )
+            call ExecuteFunc("YamatoBox_Init")
             call EnableTrigger( gg_trg_Yamato_Ulti_FX )
             call ExecuteFunc("YamatoClone_Init")
         elseif UnitType==YUGITO then//***YUGITO***
