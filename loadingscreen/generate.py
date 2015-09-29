@@ -1,4 +1,5 @@
 from PIL import Image
+import os
 
 W = 1024
 H = 768
@@ -8,6 +9,9 @@ w, h = im.size
 
 if w != W or h != H:
 	im = im.resize((W, H))
+
+if not os.path.exists('output'):
+    os.makedirs('output')
 
 im.crop((0, 0, 512, 512)).save('output/TL.png')
 im.crop((512, 0, 1024, 512)).save('output/TR.png')
