@@ -2,7 +2,7 @@ scope HanTsunoori
 
     globals
         private constant integer SPELL_ID           = 'CW48' 
-        private constant integer STUN_ID            = 'CW51' 
+        //private constant integer STUN_ID            = 'CW51' 
         private constant integer KNOCKBACK_COUNT    = 'CW55'
         private constant integer DUMMY_ID1          = 'cw06'  
         private constant integer DUMMY_ID2          = 'h01K'  
@@ -113,13 +113,14 @@ scope HanTsunoori
             set u = FirstOfGroup(g)
             exitwhen u == null
                 if IsUnitInGroup(u,GG) == false and IsUnitEnemy(u,GetOwningPlayer(c)) and IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) == false then 
-                    call Damage_Spell(c,u,50+(100*level)) // deals physical damage (+bonus in ult form)
-                    set d = CreateUnit(GetOwningPlayer(c), DUMMY_ID2, x, y, 0)
+                    call Damage_Spell(c,u,50+(100*level)) 
+                    /*set d = CreateUnit(GetOwningPlayer(c), DUMMY_ID2, x, y, 0)
                     call UnitApplyTimedLife(d,'BTLF',0.3)
                     call UnitAddAbility(d, STUN_ID)
                     call SetUnitAbilityLevel(d, STUN_ID, level)
                     call IssueTargetOrder(d, "thunderbolt", u)
-                    call UnitAddAbility(u, KNOCKBACK_COUNT)
+                    call UnitAddAbility(u, KNOCKBACK_COUNT)*/
+                    call AddStunTimed(u, 1+0.5*level)
                     call GroupRemoveUnit(g,u)
                     call GroupAddUnit(GG,u) // Don't let enemy get damaged again
                     call SaveGroupHandle(HT, id, 4, GG)
