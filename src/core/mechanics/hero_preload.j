@@ -335,7 +335,7 @@ library HeroPreload /*
         // ===========
         set udg_Hero[53] = KARIN
         set udg_HeroIcon[53] = "ReplaceableTextures\\CommandButtons\\BTNKarin.blp"
-        set udg_HeroMainStat[53] = STR_HERO
+        set udg_HeroMainStat[53] = INT_HERO
         set udg_HeroIsAvailable[53] = false
         set HeroeName[53] = "Karin"
         // ===========
