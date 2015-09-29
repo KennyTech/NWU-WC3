@@ -106,16 +106,7 @@ scope InoKunaiCast
             
             set dummy = CreateUnit(p,DUMMY_ID1,x,y,angle)
             call Fade(dummy)
-            if level == 2 then
-                call UnitAddAbility(dummy, 'AItf') // +15
-            elseif level == 3 then
-                call UnitAddAbility(dummy, 'AItx') // +20
-                call UnitAddAbility(dummy, 'AItn') // +10
-            elseif level == 4 then
-                call UnitAddAbility(dummy, 'AItx') // +20
-                call UnitAddAbility(dummy, 'AItf') // +15
-                call UnitAddAbility(dummy, 'AItn') // +10
-            endif
+            call DamageBonus(dummy, 15*level) // Dummy has 20 base atk = +35/50/65/80
             call IssueTargetOrder(dummy, "attack", CurrentPick)
             call SetUnitTimeScale(dummy, 2)
         
