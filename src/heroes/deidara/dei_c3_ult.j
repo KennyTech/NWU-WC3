@@ -43,6 +43,7 @@ scope DeiC3Ult
         local unit u
         local rect r
         local boolexpr local_boolean
+        local unit dummy
         
         call SaveReal(HT,id,4,ticks)
         
@@ -114,6 +115,7 @@ scope DeiC3Ult
             call FlushChildHashtable(HT, id)
         endif
         
+        set dummy = null
         set u = null
         set t = null
         set d = null
