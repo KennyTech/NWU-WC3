@@ -99,7 +99,9 @@ scope Testers{
         testers[19] = "GumGumNo"
         testers[20] = "kaze"
         testers[21] = "6th.kakashi"
-        int TESTERS_LENGTH = 21
+        testers[22] = "milotic"
+        testers[23] = "Seven-Tails-Fu"
+        int TESTERS_LENGTH = 23
 
         // Register commands ONLY for testers
 
