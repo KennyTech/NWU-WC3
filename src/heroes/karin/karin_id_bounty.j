@@ -3,7 +3,7 @@ scope KarinIdBounty
     private function Conditions takes nothing returns boolean
         local integer i = 0
         loop
-            exitwhen i > 12
+            exitwhen i > 11
             if IsUnitInGroup(GetDyingUnit(), KarinIDGroup[i]) then
                 return true
             endif
@@ -22,7 +22,7 @@ scope KarinIdBounty
         local integer i = 0
         
         loop
-            exitwhen i > 12
+            exitwhen i > 11
     
             if IsUnitInGroup(u, KarinIDGroup[i]) then
             
