@@ -76,6 +76,7 @@ library HeroPick initializer Init requires TimerUtils
             call ExecuteFunc("InoKunaiRecharge_Init")
             call ExecuteFunc("InoMindUlt_Init")
             call ExecuteFunc("InoUltAtkCounter_Init")
+            call ExecuteFunc("InoFlowerBomb_Init")
             debug call Test_Success("Ino Initialized")
             /*call ExecuteFunc("InoHold_Init")
             call EnableTrigger( gg_trg_Ino_Ninpou )
