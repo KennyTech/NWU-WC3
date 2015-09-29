@@ -3,7 +3,7 @@ scope KarinIdBounty
     private function Conditions takes nothing returns boolean
         local integer i = 0
         loop
-            exitwhen i > 10
+            exitwhen i > 12
             if IsUnitInGroup(GetDyingUnit(), KarinIDGroup[i]) then
                 return true
             endif
