@@ -30,6 +30,7 @@ include "src//heroes//ino//ino_kunai_learn.j"
 include "src//heroes//ino//ino_kunai_recharge.j"
 include "src//heroes//ino//ino_mind_ult.j"
 include "src//heroes//ino//ino_ult_atk_counter.j"
+include "src//heroes//ino//ino_flower_bomb.j"
 
 /**************************************************************
 		KAKASHI
