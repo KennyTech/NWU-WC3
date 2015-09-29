@@ -202,6 +202,18 @@ scope SharinganCopyCast
       elseif utype == KILLER_BEE then
         set Ability = 'CW01'
         set CD = 18 - 2 * SpellLVL
+      elseif utype == HAN then
+        set Ability = 'CW50'
+        set CD = 17 - 2 * SpellLVL
+      elseif utype == INO then
+        set Ability = 'CH00'
+        set CD = 16
+      elseif utype == KARIN then
+        set Ability = 'CW11'
+        set CD = 36 - 6 * SpellLVL
+      elseif utype == DEIDARA then
+        set Ability = 'CW61'
+        set CD = 12
       endif
 
       call UnitAddAbility( Caster, Ability )
