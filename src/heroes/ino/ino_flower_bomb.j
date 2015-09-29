@@ -3,7 +3,6 @@ scope InoFlowerBomb
     globals
         private constant integer SPELL_ID   = 'CH00' 
         private constant integer ACID_ID    = 'CW77'
-        private constant integer DUMMY_ID   = 'cw99' 
         private constant integer BOMB_ID    = 'cw22'
         private constant integer BOMB_ID2   = 'cw23'
         private constant integer TARG_ID    = 'cw25' // To throw Acid Bomb at (enemy)
@@ -153,7 +152,7 @@ scope InoFlowerBomb
             endloop
             
             set u = CreateUnit(Player(12),TARG_ID,x,y,0) // neutral-hostile Target for Acid Bomb
-            set dummy = CreateUnit(p,DUMMY_ID,x,y,0) // Acid bomb caster
+            set dummy = CreateUnit(p,"cw99",x,y,0) // Acid bomb caster
             call UnitApplyTimedLife(u,'BTLF',0.2)
             call UnitAddAbility(dummy, ACID_ID)
             call SetUnitAbilityLevel(dummy, ACID_ID, level)
