@@ -1,6 +1,6 @@
 [FrameDef]
 
-UPKEEP_NONE=|cff99ccffv1.3.9l|r
+UPKEEP_NONE=|cff99ccffv1.3.9m|r
 
 KEY_QUESTS=Map Info (|Cfffed312F9|R)
 
