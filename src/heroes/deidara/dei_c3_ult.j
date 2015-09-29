@@ -74,8 +74,15 @@ scope DeiC3Ult
                 if IsUnitEnemy(u,p) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==false and IsUnitType(u,UNIT_TYPE_DEAD)==false then                
                     call Damage_Spell(c,u,(150+100*level))
                     call DestroyEffect(AddSpecialEffect(SFX2,GetUnitX(u),GetUnitY(u))) 
+                    
+                    // Add Clay Counter
+                    set dummy = CreateUnit(p, DUMMY_ID2, x, y, 0)
+                    call UnitApplyTimedLife(dummy,'BTLF',0.5)
+                    call UnitAddAbility(dummy, SLOW_ID)
+                    call IssueTargetOrder(dummy, "slow", u)
+                        
                 elseif IsUnitType(u,UNIT_TYPE_STRUCTURE)==true and IsUnitType(u,UNIT_TYPE_DEAD)==false then
-                    call Damage_Spell(c,u,(112.5+75*level))
+                    call Damage_Spell(c,u,(125+87.5*level))
                 endif
                 call GroupRemoveUnit(g, u)
             endloop
