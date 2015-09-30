@@ -93,10 +93,10 @@ scope InoKunaiCast
         endif
         
         //==============================================================================
-        call GetClosestUnitsInRange(x,y,675,1, b1)
+        call GetClosestUnitsInRange(x,y,775,1, b1)
         
         if CurrentPick == null then
-            call GetClosestUnitsInRange(x,y,675,1, b2)
+            call GetClosestUnitsInRange(x,y,775,1, b2)
         endif
         
         if CurrentPick != null then
