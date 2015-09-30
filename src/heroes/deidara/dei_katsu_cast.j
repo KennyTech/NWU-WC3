@@ -24,7 +24,7 @@ scope DeiKatsuCast
         local integer level = GetUnitAbilityLevel(c, SPELL_ID)
         local unit dummy
         
-        call GroupEnumUnitsInRange(g,x,y,2000,null)
+        call GroupEnumUnitsInRange(g,x,y,1750,null)
         loop
             set u = FirstOfGroup(g)
         exitwhen u == null
