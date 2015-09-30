@@ -1,0 +1,1 @@
+1. Dash reset kunai charges as intended but should not reset if kunai ability is level 0.
