@@ -59,7 +59,7 @@ scope KarinLFC
             set u = FirstOfGroup(g)
             exitwhen u == null
                 if IsUnitAlly(u, GetOwningPlayer(LF_Karin[i])) and IsUnit(u, LF_Karin[i]) == false and IsUnitType(u, UNIT_TYPE_HERO) == true then // Heal allied heroes 
-                    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + 10*level + GetUnitState(u, UNIT_STATE_MAX_LIFE) * 0.005+0.005*level ) // 10/20/30 hp + 1/1.5/2% max hp per 0.5s tick heal
+                    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + 10*level + (GetUnitState(u, UNIT_STATE_MAX_LIFE) * 0.005+0.005*level) ) // 10/20/30 hp + 1.5/2/2.5% max hp per 0.5s tick heal
                 endif                
                 call GroupRemoveUnit(g,u)
             endloop
