@@ -140,7 +140,7 @@ scope KBLariat
                     // =======================================
                     
                     call DestroyEffect(AddSpecialEffect (EFFECT, x2, y2)) // special effect
-                    call Damage_Spell(c,u,30+(60*level)+(10*ult_level)) // deals physical damage (+bonus in ult form)
+                    call Damage_Spell(c,u,(60*level)+(10*ult_level)) // deals physical damage (+bonus in ult form)
                     call GroupAddUnit(GG,u) // Don't let enemy get damaged again
                     set KB_dash = true
                     call SaveGroupHandle(HT, id, 5, GG)
