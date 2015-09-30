@@ -1,3 +1,47 @@
 1. Ino Dash reset kunai charges as intended but should not reset if kunai ability is level 0.
 2. Sai Ult doesn't cast animation.
 3. Ino throw bomb doesn't cast animation.
+
+PLAN (THIS WILL CHANGE OVER TIME, ONLY ROUGH SCHEDULE):
+NWU 1.3.9m
+----------
+**Official new heroes:** Killer B, Sai
+**Test heroes:** Dei, Ino, Han, Karin
+
+**Release ETA:**
+Sept 29
+
+---
+
+NWU 1.3.9n
+------
+
+**New heroes:** Dei, Ino, Han, Karin 
+**Test heroes:** Guren, Mifune, Fu
+
+**Release ETA:**
+Mid October
+
+---
+
+NWU 1.3.9o
+------
+
+**New heroes:** Chiyo, ???
+**Revamped heroes:** Neji, Itachi
+
+**Release ETA:**
+Mid November
+
+---
+
+NWU 1.3.9p
+------
+
+**New heroes:** Shizune, ???
+**Revamped heroes:** Madara, ???
+
+**Release ETA:**
+Early December
+
+---
