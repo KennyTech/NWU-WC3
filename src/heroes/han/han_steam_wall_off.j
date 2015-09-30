@@ -20,7 +20,7 @@ scope HanSteamWallOff
         local real x = GetUnitX(c)
         local real y = GetUnitY(c)
         local player p = GetTriggerPlayer()
-        local rect r = Rect(SteamWallX[GetPlayerId(p)]+500,SteamWallY[GetPlayerId(p)]+500,SteamWallX[GetPlayerId(p)]-500,SteamWallY[GetPlayerId(p)]-500)
+        local rect r = Rect(x+1000,y+1000,x-1000,y-1000) //Temp-fix
         
         call TriggerSleepAction(0.2)
         call EnumDestructablesInRect(r, null, function Removal)
