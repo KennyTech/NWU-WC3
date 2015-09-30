@@ -130,8 +130,16 @@ scope Testers{
         testers[50] = "Ryus"
         testers[51] = "Miecio777"
         testers[52] = "Amaterasu"
+        testers[53] = "Lucifer."
+        testers[54] = "anakin94"
+        testers[55] = "GhostBusters2"
+        testers[56] = "bq."
+        testers[57] = "sawczenqo."
+        testers[58] = "the_karma"
+        testers[59] = "Hunterfire"
+        testers[60] = "Ka1n"
         
-        int TESTERS_LENGTH = 52
+        int TESTERS_LENGTH = 60
 
         // Register commands ONLY for testers
 
