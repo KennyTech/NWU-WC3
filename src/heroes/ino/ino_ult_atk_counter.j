@@ -16,13 +16,12 @@ scope InoUltAtkCounter
         local string s = I2S(n)
         
         call SetUnitUserData(u, n+1)
-        if SubString(s, 1, 2) == "6" or SubString(s, 2, 3) == "6" or SubString(s, 1, 2) == "7" or SubString(s, 1, 2) == "7" then
+        if SubString(s, 1, 2) == "6" or SubString(s, 2, 3) == "6" then
             if IsUnitEnemy(u,Player(1)) then
                 call SetUnitOwner(u,Player(CREEP_PLAYER_1),true)
             else
                 call SetUnitOwner(u,Player(CREEP_PLAYER_2),true)
             endif
-            call TriggerSleepAction(0.75)
             call SetUnitState(u,UNIT_STATE_LIFE,5)
             call UnitDamageTarget(InoUltCaster[(n/10)-1],u,100, false, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_MAGIC, WEAPON_TYPE_WHOKNOWS)
         endif
