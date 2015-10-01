@@ -154,7 +154,7 @@ scope InoFlowerBomb
             set u = CreateUnit(Player(12),TARG_ID,x,y,0) // neutral-hostile Target for Acid Bomb
             set dummy = CreateUnit(p,'cw99',x,y,0) // Acid bomb caster
             call UnitApplyTimedLife(u,'BTLF',0.2)
-            all UnitApplyTimedLife(dummy,'BTLF',4.0)
+            all UnitApplyTimedLife(dummy,'BTLF',4.0) // Forgot to remove this dummy causing perma vision
             call UnitAddAbility(dummy, ACID_ID)
             call SetUnitAbilityLevel(dummy, ACID_ID, level)
             call IssueTargetOrder(dummy, "acidbomb", u)
