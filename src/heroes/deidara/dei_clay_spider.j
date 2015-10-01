@@ -79,8 +79,8 @@ scope DeiClaySpider
                         call UnitAddAbility(dummy, SLOW_ID)
                         call IssueTargetOrder(dummy, "slow", u)
                         
-                    elseif IsUnitEnemy(u,p) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==true and IsUnitType(u,UNIT_TYPE_DEAD)==false then
-                        call Damage_Spell(c,u,(15+15*level))
+                    //elseif IsUnitEnemy(u,p) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==true and IsUnitType(u,UNIT_TYPE_DEAD)==false then
+                    //    call Damage_Spell(c,u,(15+15*level))
                                     
                     endif
                     call GroupRemoveUnit(g, u)
