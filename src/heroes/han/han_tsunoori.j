@@ -152,6 +152,7 @@ scope HanTsunoori
             call SetUnitAnimationByIndex( c , 8 )
             call SetUnitVertexColor(c, 255,255,255,255)
             call SetUnitPathing( c, true )
+            call UnitRemoveInmunity(c)
             call PauseTimer(t)
             call DestroyTimer(t)
             call FlushChildHashtable(HT, id)
@@ -195,6 +196,7 @@ scope HanTsunoori
         call SetUnitVertexColor(c,255,255,255,0)
         
         call TriggerSleepAction(0.1)
+        call UnitAddInmunity(c)
         call TimerStart(t,0.03125,true,function DashSkewer) // Start the dash
         
         set GG = null
