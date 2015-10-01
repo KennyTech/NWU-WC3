@@ -11,7 +11,9 @@ scope SaiTiger
     private function onHit takes proj this returns nothing
         call Fade(this.projUnit)
         call UnitDamageTarget(this.caster, this.targetUnit,(175+75*this.level)+(GetUnitState(this.targetUnit, UNIT_STATE_MAX_LIFE)*(0.05+0.05*this.level)), true, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS ) // Deals 250/325/400 + 10/15/20% target hp in spell dmg
-        call AddStunTimed(this.targetUnit, 2 + 0.5 * this.level)
+        if IsUnitType(this.targetUnit, UNIT_TYPE_MAGIC_IMMUNE) == false then
+            call AddStunTimed(this.targetUnit, 2 + 0.5 * this.level)
+        endif
         call DestroyEffect(AddSpecialEffectTarget(SFX_TARGET, this.targetUnit, "chest"))
         call DestroyEffect(AddSpecialEffect(SFX, this.x, this.y))
     endfunction
