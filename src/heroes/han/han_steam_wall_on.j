@@ -53,6 +53,7 @@ scope HanSteamWallOn
         else
             call EnumDestructablesInRect(r, null, function Removal)
             call SetPlayerAbilityAvailable(p,SPELL_ID, true)
+            call UnitRemoveInmunity(c)
             call UnitRemoveAbility(c, ID_CANCEL)
             call FlushChildHashtable(HT,id)
             call PauseTimer(t)
@@ -91,6 +92,10 @@ scope HanSteamWallOn
         
         call SaveReal(HT, id, 4, ticks)
     
+        if ticks == 4 then
+            call UnitAddInmunity(c)
+        endif
+        
         if ticks == 9 then // play Han Dash effect (delayed effect - syncs with 16 ticks)
             set dummy = CreateUnit(GetOwningPlayer(c), DUMMY, x, y, cast_angle)
             call UnitApplyTimedLife(dummy,'BTLF',1.0)
@@ -168,6 +173,7 @@ scope HanSteamWallOn
         // Cancel if Han dies mid-air
         if IsUnitType(c, UNIT_TYPE_DEAD) == true then
             call SetUnitPathing(c, true )
+            call UnitRemoveInmunity(c)
             call FlushChildHashtable(HT,id)
             call PauseTimer(t)
             call DestroyTimer(t)
