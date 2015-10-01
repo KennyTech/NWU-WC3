@@ -59,8 +59,8 @@ scope DeiMineDeath
                 else
                     call Damage_Spell(d,u,(15*level))
                 endif
-            elseif IsUnitEnemy(u,p) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==true and IsUnitType(u,UNIT_TYPE_DEAD)==false then
-                call Damage_Spell(d,u,(7.5*level))
+            //elseif IsUnitEnemy(u,p) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==true and IsUnitType(u,UNIT_TYPE_DEAD)==false then
+            //    call Damage_Spell(d,u,(7.5*level))
             endif
             call GroupRemoveUnit(g,u)
         endloop
