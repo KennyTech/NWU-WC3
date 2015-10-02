@@ -8,7 +8,7 @@ scope InoFlowerBomb
         private constant integer TARG_ID    = 'cw25' // To throw Acid Bomb at (enemy)
         private constant real MISSILE_SPEED = 700
         private constant real KNOCKBACK_SPEED = 600
-        private constant real BOOM_AOE      = 350
+        private constant real BOOM_AOE      = 300
         private constant real STUN_AOE      = 128
         private constant string SFX         = "Objects\\Spawnmodels\\Other\\NeutralBuildingExplosion\\NeutralBuildingExplosion.mdl"
         private constant hashtable HT       = InitHashtable()
@@ -29,7 +29,7 @@ scope InoFlowerBomb
         local unit u = LoadUnitHandle(HT, id, 1)
         local real dist = LoadReal(HT, id, 2)
         local real angle = LoadReal(HT, id, 3)
-        local real distmax = 240
+        local real distmax = 280
         local real x = GetUnitX(u)
         local real y = GetUnitY(u)
         local unit temp_u
@@ -238,7 +238,7 @@ scope InoFlowerBomb
             endloop
             
             set temp_u = CreateUnit(GetOwningPlayer(c),BOMB_ID2,x,y,angle)
-            call UnitApplyTimedLife(temp_u,'BTLF',1.3)
+            call UnitApplyTimedLife(temp_u,'BTLF',1.7)
             call SetUnitScale(temp_u,1.3+0.3*level,1.3+0.3*level,1.3+0.3*level)
             call SetUnitState(temp_u, UNIT_STATE_LIFE, 1)
             
@@ -246,7 +246,7 @@ scope InoFlowerBomb
             call SaveInteger(HT, explode_id, 2, level)
             call SaveUnitHandle(HT, explode_id, 3, c)
             
-            call TimerStart(explode_timer,1.2,false,function Explode)
+            call TimerStart(explode_timer,1.6,false,function Explode)
             
             call RemoveUnit(bomb)
             
