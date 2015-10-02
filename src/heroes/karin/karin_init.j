@@ -9,14 +9,7 @@ scope KarinInit
 
     //===========================================================================
     public function Init takes nothing returns nothing
-        local integer i = 0
-        loop
-        exitwhen i > 12
-            set KarinChainGroup[i] = CreateGroup()
-            set KarinIDGroup[i] = CreateGroup()
-            set LF_Karin_Timer[i] = CreateTimer()
-            set i = i + 1
-        endloop
+        set HeroKarin = GetLastCreatedUnit()
         call DisableSpellbook(BOOK_ID)
         debug Test_Success(SCOPE_PREFIX + " loaded")
     endfunction
