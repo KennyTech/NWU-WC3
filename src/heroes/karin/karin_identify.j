@@ -1,4 +1,4 @@
-scope KarinIdentify // REVAMP WORK IN PROGRESS
+scope KarinIdentify // REVAMPED
 
     globals
         private constant integer SPELL_ID     = 'CW09'
@@ -24,7 +24,7 @@ scope KarinIdentify // REVAMP WORK IN PROGRESS
             call UnitRemoveAbility(u, SPELL_ID3)
         endloop
         
-        call ReleaseTimerEx(t)
+        call ReleaseTimerEx()
         
         set t = null
         set u = null
@@ -110,11 +110,18 @@ scope KarinIdentify // REVAMP WORK IN PROGRESS
             endif
         endif
     endfunction
+    
+    private function onActivate takes nothing returns nothing
+        set HeroKarin = GetTriggerUnit()
+    endfunction 
 
 //===========================================================================
 
     public function Init takes nothing returns nothing
         call GT_RegisterSpellEffectEvent('CW09',function onSpell)
+        call GT_RegisterSpellEffectEvent('CW10',function onActivate)
+        call GT_RegisterSpellEffectEvent('CW11',function onActivate)
+        call GT_RegisterSpellEffectEvent('CW14',function onActivate)
         call GT_RegisterPlayerEventAction(EVENT_PLAYER_UNIT_DEATH, function onDeath)
         call RegisterDamageResponse(onDamage)
     endfunction
