@@ -15,8 +15,8 @@ scope KarinKFA  // WIP - NON-FUNCTIONAL
         local integer level = GetUnitAbilityLevel(HeroKarin, SPELL_ID)
         
         if Damage_IsAttack() and GetUnitAbilityLevel(HeroKarin,'BK04')>0 then
-            call UnitRemoveAbility(damageSource,'BK04')
-        endif
+        
+        call UnitRemoveAbility(HeroKarin,'BK04')
         
         set KF_Level = level // For Drain later
         
@@ -24,13 +24,13 @@ scope KarinKFA  // WIP - NON-FUNCTIONAL
         loop
             set u = FirstOfGroup(ENUM)
         exitwhen u == null
-            if u == damagedUnit or IsUnitType(damagedUnit, UNIT_TYPE_HERO) == true then
+            if u == damagedUnit or IsUnitType(damagedUnit, UNIT_TYPE_HERO) == true and IsUnitEnemy(u, GetOwningPlayer(HeroKarin)) then
                 set d = CreateUnit(GetOwningPlayer(HeroKarin), DUMMY, x, y, 0)
                 call UnitApplyTimedLife(d,'BTLF',1.0)
                 call UnitAddAbility(d, D_SPELL_ID)
                 call SetUnitAbilityLevel(d, D_SPELL_ID, level)
                 call IssueTargetOrder(d, "entanglingroots", u)
-            elseif IsUnitEnemy(u, HeroKarin) then
+            elseif IsUnitEnemy(u, GetOwningPlayer(HeroKarin)) then
                 set d = CreateUnit(GetOwningPlayer(HeroKarin), DUMMY, x, y, 0)
                 call UnitApplyTimedLife(d,'BTLF',1.0)
                 call UnitAddAbility(d, D_SPELL_ID2)
@@ -39,6 +39,8 @@ scope KarinKFA  // WIP - NON-FUNCTIONAL
             endif
             call GroupRemoveUnit(ENUM,u)
         endloop
+        
+        endif
     
         set u = null
         set d = null
