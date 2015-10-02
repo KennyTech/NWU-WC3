@@ -14,7 +14,7 @@ scope KarinLFC
         return IsUnitType(GetFilterUnit(), UNIT_TYPE_DEAD) == false
     endfunction
     
-    private function TimerActions takes nothing returns nothing // Periodic healing
+    private function onExpire takes nothing returns nothing // Periodic healing
         local timer t = GetExpiredTimer()
         local integer id = GetHandleId(t)
         local unit u
@@ -49,7 +49,7 @@ scope KarinLFC
         set t = null
     endfunction
     
-    private function Actions takes nothing returns nothing
+    private function onSpell takes nothing returns nothing
         local timer t       = NewTimer()
         local integer id    = GetHandleId(t)
         
@@ -57,18 +57,13 @@ scope KarinLFC
         call TriggerSleepAction(0.2)
         call UnitAddAbility(HeroKarin, 'A0LN')
         call SaveInteger(HT,id,1,80)
-        call TimerStart(t, 0.125, true, function TimerActions)
+        call TimerStart(t, 0.125, true, function onExpire)
     endfunction
 
 //===========================================================================
 
     public function Init takes nothing returns nothing
-        local trigger t = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
-        call TriggerAddCondition(t, Condition(function Conditions))
-        call TriggerAddAction(t, function Actions)
-        set t = null
-        debug Test_Success(SCOPE_PREFIX + " loaded")
+        call GT_RegisterSpellEffectEvent('CW14',function onSpell)
     endfunction
 
 endscope
