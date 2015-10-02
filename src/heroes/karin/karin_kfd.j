@@ -22,7 +22,7 @@ scope KarinKFD
         call SetUnitState(c, UNIT_STATE_MANA, GetUnitState(c, UNIT_STATE_MANA) - 50*KF_Level)
         
         call SetTextTagText(tt,"-" + I2S(50*KF_Level),.024)
-        call SetTextTagPos(tt,x-16.,y+stacks*20,.0)
+        call SetTextTagPos(tt,x-16.,y*20,.0)
         call SetTextTagColor(tt,82,82,255,255)
         call SetTextTagVelocity(tt,.0,.04)
 
