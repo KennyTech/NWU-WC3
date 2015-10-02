@@ -1,14 +1,9 @@
-scope KarinIdentify
+scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
 
     globals
-        private constant integer SPELL_ID    = 'CW09'    // Ability ID of "Karin - Identify" 
         private constant integer SPELL_ID2    = 'CW17'    // Ability ID of "Karin - Identify Aura" 
         private constant integer SPELL_ID3    = 'CW16'    // Ability ID of "Identify Armor Reduce (Karin)"  
     endglobals
-    
-    private function Conditions takes nothing returns boolean
-        return GetSpellAbilityId() == SPELL_ID
-    endfunction
 
     private function EnemyFilter takes nothing returns boolean
         return IsUnitType(GetFilterUnit(), UNIT_TYPE_DEAD) == false and IsUnitType(GetFilterUnit(),UNIT_TYPE_STRUCTURE) == false
@@ -39,18 +34,18 @@ scope KarinIdentify
         set u = null
     endfunction
     
-    private function Actions takes nothing returns nothing // Actions upon start of channeling 
+    private function OnSpell takes nothing returns nothing 
         local group g = CreateGroup()
         local real x = GetSpellTargetX()
         local real y = GetSpellTargetY()
         local unit c = GetTriggerUnit()
         local unit u
-        local timer t = CreateTimer()
+        local timer t = NewTimer()
         local integer id = GetHandleId(t)
         local integer level = GetUnitAbilityLevel(c, SPELL_ID)
         local group idGroup = CreateGroup()
         
-        set Karin[GetPlayerId(GetOwningPlayer(c))] = c
+        set Karin = c
         
         call GroupEnumUnitsInRange(g,x,y,250+level*25,function EnemyFilter) // Enumerate enemies to identify
         loop
@@ -76,16 +71,16 @@ scope KarinIdentify
         set t = null
         set idGroup = null
     endfunction
+    
+    private function OnDeath takes nothing returns nothing 
+    
+    endfunction
 
 //===========================================================================
 
     public function Init takes nothing returns nothing
-        local trigger t = CreateTrigger()
-        call TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
-        call TriggerAddCondition(t, Condition(function Conditions))
-        call TriggerAddAction(t, function Actions)
-        set t = null
-        debug Test_Success(SCOPE_PREFIX + " loaded")
+        call GT_RegisterSpellEffectEvent('CW09',function onSpell)
+        call GT_RegisterPlayerEventAction(EVENT_PLAYER_UNIT_DEATH, function onDeath)
     endfunction
 
 endscope
