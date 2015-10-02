@@ -1,6 +1,7 @@
-scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
+scope KarinIdentify // REVAMP WORK IN PROGRESS
 
     globals
+        private constant integer SPELL_ID     = 'CW09'
         private constant integer SPELL_ID2    = 'CW17'    // Ability ID of "Karin - Identify Aura" 
         private constant integer SPELL_ID3    = 'CW16'    // Ability ID of "Identify Armor Reduce (Karin)"  
     endglobals
@@ -18,27 +19,25 @@ scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
             set u = FirstOfGroup(KarinIDGroup)
         exitwhen u == null
             call GroupRemoveUnit(KarinIDGroup, u)
-            call DisplayTextToForce( GetPlayersAll(), GetUnitName(u) + " <-- flushing this unit")
+            //call DisplayTextToForce( GetPlayersAll(), GetUnitName(u) + " <-- flushing this unit")
             call UnitRemoveAbility(u, SPELL_ID2)
             call UnitRemoveAbility(u, SPELL_ID3)
         endloop
         
-        call ReleaseTimer(t)
+        call ReleaseTimerEx(t)
         
         set t = null
         set u = null
     endfunction
     
-    private function OnSpell takes nothing returns nothing 
-        local group g = CreateGroup()
+    private function onSpell takes nothing returns nothing 
         local real x = GetSpellTargetX()
         local real y = GetSpellTargetY()
         local unit c = GetTriggerUnit()
         local unit u
         local timer t = NewTimer()
         local integer id = GetHandleId(t)
-        local integer level = GetUnitAbilityLevel(c, SPELL_ID)
-        local group idGroup = CreateGroup()
+        local integer level = GetUnitAbilityLevel(c,SPELL_ID)
         
         set HeroKarin = c
         
@@ -48,7 +47,7 @@ scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
         exitwhen u == null
             if IsUnitEnemy(u, GetOwningPlayer(c)) and IsUnitIllusion(u) == false and GetUnitDefaultMoveSpeed(u) >= 150 then // Enemy, not clone, not ward
                 call GroupAddUnit(KarinIDGroup, u) // For Bounty Death later
-                call DisplayTextToForce( GetPlayersAll(), GetUnitName(u) + " <-- added unit to bounty creep")
+                //call DisplayTextToForce( GetPlayersAll(), GetUnitName(u) + " <-- added unit to bounty creep")
                 call UnitAddAbility(u, SPELL_ID2)
                 call UnitAddAbility(u, SPELL_ID3)
             endif
@@ -62,7 +61,7 @@ scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
         set t = null
     endfunction
     
-    private function OnDeath takes nothing returns nothing 
+    private function onDeath takes nothing returns nothing 
         local unit u = GetDyingUnit()
         local integer gold 
         local texttag tt = CreateTextTag()
@@ -97,20 +96,20 @@ scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
             // If killer isn't Karin and creep was not denied, give gold to Karin
             if p != GetOwningPlayer(HeroKarin) and IsPlayerAlly(p, GetOwningPlayer(HeroKarin)) then 
                 call AdjustPlayerStateBJ(gold, GetOwningPlayer(HeroKarin), PLAYER_STATE_RESOURCE_GOLD )
-                call SetTextTagVisibility(tt,GetLocalPlayer()==GetOwningPlayer(HeroKarin)
+                call SetTextTagVisibility(tt,GetLocalPlayer()==GetOwningPlayer(HeroKarin))
             endif
+        endif
         
     endfunction
     
     private function onDamage takes unit damagedUnit, unit damageSource, real damage returns nothing
         if Damage_IsAttack() and IsUnitInGroup(damageSource, KarinIDGroup) then
-            if GetUnitAbilityLevel(damageSource, SPELL_ID3) < 2*GetUnitAbilityLevel(damageSource, SPELL_ID3) then
+            if GetUnitAbilityLevel(damageSource, SPELL_ID3) <= 2*GetUnitAbilityLevel(HeroKarin, SPELL_ID) then
+                //call DisplayTextToForce( GetPlayersAll(), I2S(GetUnitAbilityLevel(damageSource, SPELL_ID3)) + " < " + I2S(2*GetUnitAbilityLevel(HeroKarin, SPELL_ID)))
                 call SetUnitAbilityLevel(damageSource, SPELL_ID3, GetUnitAbilityLevel(damageSource, SPELL_ID3) + 1)
             endif
         endif
     endfunction
-    
-endscope
 
 //===========================================================================
 
