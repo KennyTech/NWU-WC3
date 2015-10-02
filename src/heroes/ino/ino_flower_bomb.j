@@ -11,6 +11,7 @@ scope InoFlowerBomb
         private constant real BOOM_AOE      = 300
         private constant real STUN_AOE      = 128
         private constant string SFX         = "Objects\\Spawnmodels\\Other\\NeutralBuildingExplosion\\NeutralBuildingExplosion.mdl"
+        private constant string SFX2        = "Abilities\\Spells\\NightElf\\ManaBurn\\ManaBurnTarget.mdl"
         private constant hashtable HT       = InitHashtable()
     endglobals
     
@@ -241,6 +242,7 @@ scope InoFlowerBomb
             call UnitApplyTimedLife(temp_u,'BTLF',1.7)
             call SetUnitScale(temp_u,1.3+0.3*level,1.3+0.3*level,1.3+0.3*level)
             call SetUnitState(temp_u, UNIT_STATE_LIFE, 1)
+            call DestroyEffect(AddSpecialEffect(SFX2,x,y))
             
             call SaveUnitHandle(HT, explode_id, 1, temp_u)
             call SaveInteger(HT, explode_id, 2, level)
