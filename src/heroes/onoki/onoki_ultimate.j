@@ -94,7 +94,7 @@ scope OnokiUltimate
         if GetUnitAbilityLevel(target, BUFF_ID) == 0 then
             call ReleaseTimerEx()
             debug call Test_Success("OnokiUltimate - DEBUFF of " + GetUnitName(enumUnit) + " has finished")
-        else
+        elseif IsUnitType(target, UNIT_TYPE_MAGIC_IMMUNE) == false then
             real damage = GetUnitState(target, UNIT_STATE_MAX_LIFE)
             // Unit is under x%, then kill it. Else, aplly a factor
             if (GetWidgetLife(target) < damage * ABIL_DIEWHEN) then
