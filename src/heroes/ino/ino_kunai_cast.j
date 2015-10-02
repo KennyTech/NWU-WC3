@@ -72,6 +72,7 @@ scope InoKunaiCast
         local real x2 
         local real y2 
         local real angle
+        local integer damage
         
         call TriggerSleepAction(0.01) // Prevents uncontrollable bug
         
@@ -106,7 +107,9 @@ scope InoKunaiCast
             
             set dummy = CreateUnit(p,DUMMY_ID1,x,y,angle)
             call Fade(dummy)
-            call DamageBonus(dummy, 15*level) // Dummy has 20 base atk = +35/50/65/80
+            
+            set damage = R2I(GetUnitDamage(c, udg_HeroMainStat[GetUnitPointValue(c)]))
+            call DamageBonus(dummy, GetUnitDamage(c, 0, damage)) // Based on Ino's ATK?
             call IssueTargetOrder(dummy, "attack", CurrentPick)
             call SetUnitTimeScale(dummy, 2)
         
