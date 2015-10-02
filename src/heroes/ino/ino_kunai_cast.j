@@ -108,8 +108,8 @@ scope InoKunaiCast
             set dummy = CreateUnit(p,DUMMY_ID1,x,y,angle)
             call Fade(dummy)
             
-            set damage = R2I(GetUnitDamage(c, udg_HeroMainStat[GetUnitPointValue(c)]))
-            call DamageBonus(dummy, GetUnitDamage(c, 0, damage)) // Based on Ino's ATK?
+            set damage = R2I(GetUnitDamage(c, 0, udg_HeroMainStat[GetUnitPointValue(c)]))
+            call DamageBonus(dummy, damage) // Based on Ino's ATK?
             call IssueTargetOrder(dummy, "attack", CurrentPick)
             call SetUnitTimeScale(dummy, 2)
         
