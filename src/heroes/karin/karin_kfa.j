@@ -1,4 +1,4 @@
-scope KarinKFA  // WIP - NON-FUNCTIONAL
+scope KarinKFA  
 
     globals
         private constant integer SPELL_ID       = 'CW11'    // "Karin - Kongou Fuusa"
@@ -20,7 +20,7 @@ scope KarinKFA  // WIP - NON-FUNCTIONAL
         
         set KF_Level = level // For Drain later
         
-        call GroupEnumUnitsInRange(ENUM,x,y,225,null) // Enumerate # of enemies to seal
+        call GroupEnumUnitsInRange(ENUM,x,y,250,null) // Enumerate # of enemies to seal
         loop
             set u = FirstOfGroup(ENUM)
         exitwhen u == null
