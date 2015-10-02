@@ -3,6 +3,7 @@ scope KarinLFC
     globals
         private constant integer SPELL_ID = 'CW14'    // Ability ID of "Karin - Life Force" 
         private constant string EFFECT    = "Objects\\Spawnmodels\\Human\\HumanBlood\\HeroBloodElfBlood.mdl"
+        private constant hashtable HT     = InitHashtable()
     endglobals
     
     private function Conditions takes nothing returns boolean
@@ -16,80 +17,47 @@ scope KarinLFC
     private function TimerActions takes nothing returns nothing // Periodic healing
         local timer t = GetExpiredTimer()
         local integer id = GetHandleId(t)
-        local group g = CreateGroup()
         local unit u
         local real x
         local real y
-        local real manaPercent
-        local real lifePercent
-        local integer i = LoadInteger(HT, id, 1)
-        local integer level = LoadInteger(HT, id, 2)
-        local integer n = 0
+        local integer level = GetUnitAbilityLevel(HeroKarin,SPELL_ID)
         
-        set LF_Karin_Timer[i] = GetExpiredTimer()
-        set x = GetUnitX(LF_Karin[i])
-        set y = GetUnitY(LF_Karin[i])
-        set manaPercent = ( GetUnitState(LF_Karin[i], UNIT_STATE_MANA) / GetUnitState(LF_Karin[i], UNIT_STATE_MAX_MANA) ) * 100
-        set lifePercent = ( GetUnitState(LF_Karin[i], UNIT_STATE_LIFE) / GetUnitState(LF_Karin[i], UNIT_STATE_MAX_LIFE) ) * 100
-        
-        call GroupEnumUnitsInRange(g,x,y,25+125*level,function DamageFilter) // Enumerate # of allies to heal in 150/275/400 AoE
-        loop
-            set u = FirstOfGroup(g)
-        exitwhen u == null
-            if IsUnitAlly(u,GetOwningPlayer(LF_Karin[i])) and IsUnitType(u, UNIT_TYPE_HERO) == true then
-                if GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) and IsUnit(u, LF_Karin[i]) == false then
-                set n = n + 1
-                endif
-            endif
-            call GroupRemoveUnit(g,u)
-        endloop
-        
-        // call DisplayTextToForce( GetPlayersAll(), "n = " + R2S(n) )
-        
-        if n == 0 and manaPercent > 5 then // If no allied heroes in range and over 5% mana, heal self at the cost of mana
-            call SetUnitState(LF_Karin[i], UNIT_STATE_LIFE, GetUnitState(LF_Karin[i], UNIT_STATE_LIFE) + 10*level + GetUnitState(LF_Karin[i], UNIT_STATE_MAX_LIFE) * 0.005+0.005*level ) // Heal Karin for 10/20/30 + 1/1.5/2% per 0.5s tick
-            call SetUnitState(LF_Karin[i], UNIT_STATE_MANA, GetUnitState(LF_Karin[i], UNIT_STATE_MANA) - GetUnitState(LF_Karin[i], UNIT_STATE_MAX_MANA) * 0.025 ) // Deplete her mana by 2.5% per 0.5s tick
-
-        elseif n > 0 and lifePercent > 3 + (2*n) then // If allied heroes in range, heal them at cost of Karin's life            
-            call SetUnitState(LF_Karin[i], UNIT_STATE_LIFE, GetUnitState(LF_Karin[i], UNIT_STATE_LIFE) - GetUnitState(LF_Karin[i], UNIT_STATE_MAX_LIFE) * (0.01+0.01*n) ) // Decrease Karin's health by 2% per tick (+1% per extra hero)
-            call DestroyEffect(AddSpecialEffect (EFFECT, x, y))
+        local integer DUR = LoadInteger(HT,id,1) - 1
+        call SaveInteger(HT,id,1,DUR)
             
-            call GroupEnumUnitsInRange(g,x,y,25+125*level,function DamageFilter) // Enumerate allies to heal in 150/275/400 AoE
+        if DUR > 0 then
+        
+            set x = GetUnitX(HeroKarin)
+            set y = GetUnitY(HeroKarin)
+        
+            call GroupEnumUnitsInRange(ENUM,x,y,500+level*100,function DamageFilter) // Enumerate # of allies to heal
             loop
-            set u = FirstOfGroup(g)
+                set u = FirstOfGroup(ENUM)
             exitwhen u == null
-                if IsUnitAlly(u, GetOwningPlayer(LF_Karin[i])) and IsUnit(u, LF_Karin[i]) == false and IsUnitType(u, UNIT_TYPE_HERO) == true then // Heal allied heroes 
-                    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + 10*level + (GetUnitState(u, UNIT_STATE_MAX_LIFE) * 0.005+0.005*level) ) // 10/20/30 hp + 1.5/2/2.5% max hp per 0.5s tick heal
-                endif                
-                call GroupRemoveUnit(g,u)
+                if IsUnitAlly(u,GetOwningPlayer(HeroKarin)) and GetUnitState(u, UNIT_STATE_LIFE) < GetUnitState(u, UNIT_STATE_MAX_LIFE) and IsUnitType(HeroKarin, UNIT_TYPE_STUNNED) == false and IsUnitType(HeroKarin, UNIT_TYPE_POLYMORPHED) == false then
+                    call SetUnitState(u, UNIT_STATE_LIFE, GetUnitState(u, UNIT_STATE_LIFE) + 3.75*level)
+                endif
+                call GroupRemoveUnit(ENUM,u)
             endloop
+        
         else 
-            call IssueImmediateOrder(LF_Karin[i], "stop")
-            call PauseTimer(LF_Karin_Timer[i])
-            call DestroyTimer(LF_Karin_Timer[i])
-            call FlushChildHashtable(HT, id)
-            set n = 0
+            call UnitRemoveAbility(HeroKarin, 'A0LN')
+            call ReleaseTimerEx()
         endif
     
-        set n = 0
-        set g = null
         set u = null
         set t = null
     endfunction
     
-    private function Actions takes nothing returns nothing // Actions upon start of channeling 
-        local integer i = GetPlayerId(GetTriggerPlayer())
-        local integer id
+    private function Actions takes nothing returns nothing
+        local timer t       = NewTimer()
+        local integer id    = GetHandleId(t)
         
-        set LF_Karin[i] = GetTriggerUnit()
-        set LF_Karin_Timer[i] = CreateTimer()
-        
-        set id = GetHandleId(LF_Karin_Timer[i])
-        
-        call SaveInteger(HT, id, 1, i) // saving player number
-        call SaveInteger(HT, id, 2, GetUnitAbilityLevel(LF_Karin[i], SPELL_ID)) // saving ability level
-        
-        call TimerStart(LF_Karin_Timer[i], 0.5, true, function TimerActions)
+        set HeroKarin = GetTriggerUnit()
+        call TriggerSleepAction(0.2)
+        call UnitAddAbility(HeroKarin, 'A0LN')
+        call SaveInteger(HT,id,1,80)
+        call TimerStart(t, 0.125, true, function TimerActions)
     endfunction
 
 //===========================================================================
