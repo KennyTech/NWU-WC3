@@ -101,12 +101,23 @@ scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
             endif
         
     endfunction
+    
+    private function onDamage takes unit damagedUnit, unit damageSource, real damage returns nothing
+        if Damage_IsAttack() and IsUnitInGroup(damageSource, KarinIDGroup) then
+            if GetUnitAbilityLevel(damageSource, SPELL_ID3) < 2*GetUnitAbilityLevel(damageSource, SPELL_ID3) then
+                call SetUnitAbilityLevel(damageSource, SPELL_ID3, GetUnitAbilityLevel(damageSource, SPELL_ID3) + 1)
+            endif
+        endif
+    endfunction
+    
+endscope
 
 //===========================================================================
 
     public function Init takes nothing returns nothing
         call GT_RegisterSpellEffectEvent('CW09',function onSpell)
         call GT_RegisterPlayerEventAction(EVENT_PLAYER_UNIT_DEATH, function onDeath)
+        call RegisterDamageResponse(onDamage)
     endfunction
 
 endscope
