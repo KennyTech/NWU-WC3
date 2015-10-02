@@ -2,7 +2,6 @@ scope KarinLFC
 
     globals
         private constant integer SPELL_ID = 'CW14'    // Ability ID of "Karin - Life Force" 
-        private constant string EFFECT    = "Objects\\Spawnmodels\\Human\\HumanBlood\\HeroBloodElfBlood.mdl"
         private constant hashtable HT     = InitHashtable()
     endglobals
     
