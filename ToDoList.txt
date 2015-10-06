@@ -1,40 +1,56 @@
-1. Ino Dash reset kunai charges as intended but should not reset if kunai ability is level 0.
-2. Sai Ult doesn't cast animation.
-3. Ino throw bomb doesn't cast animation.
-4. Recode Karin (W, T)
-5. Make Han spell immune in leap and ult dash (like Choji jump)
-
 PLAN (THIS WILL CHANGE OVER TIME, ONLY ROUGH SCHEDULE):
 
-NWU 1.3.9n
-------
-
-**New Official Heroes:** Dei, Han 
-**Test heroes:** Karin, Ino
-
-**Release ETA:**
-Early October
-
----
-
-NWU 1.3.9o
+NWU 1.4.0a
 ------
 
 **New heroes:** N/A
-**Revamped heroes:** Itachi
+**Revamped heroes:** Neji
 
 **Release ETA:**
-Early November
+Mid-Late October
 
 ---
 
-NWU 1.3.9p
+NWU 1.4.0b
 ------
 
-**New heroes:** +1 
-**Revamped heroes:** Neji, Madara
+**New heroes:** N/A
+**Revamped heroes:** Madara, Itachi
 
 **Release ETA:**
-Early December
+N/A
+
+---
+
+NWU 1.4.0d
+------
+
+**New heroes:** Hidan, Sasori
+**Revamped heroes:** TBA
+
+**Release ETA:**
+N/A
+
+---
+
+NWU 1.4.0e
+------
+
+**New heroes:** Konan, Zetsu
+**Revamped heroes:** TBA
+
+**Release ETA:**
+N/A
+
+---
+
+NWU 1.4.0f
+------
+
+**New heroes:** Ashura Naruto, Indra Sasuke, Sage Kabuto
+**Revamped heroes:** TBA
+
+**Release ETA:**
+N/A
 
 ---
