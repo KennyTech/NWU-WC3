@@ -1,56 +1,45 @@
-PLAN (THIS WILL CHANGE OVER TIME, ONLY ROUGH SCHEDULE):
-
-NWU 1.4.0a
-------
-
-**New heroes:** N/A
-**Revamped heroes:** Neji
-
-**Release ETA:**
-Mid-Late October
-
----
+NWU is nearing 8mb limit and reaching the finalized version.
+Here are the plans to the end of the year!
 
 NWU 1.4.0b
 ------
 
 **New heroes:** N/A
 **Revamped heroes:** Madara, Itachi
+**Release ETA:** TBA
 
-**Release ETA:**
-N/A
+---
+
+NWU 1.4.0c
+------
+
+**New heroes:** Hidan, Sasori
+**Revamped heroes:** TBA
+**Release ETA:** TBA
 
 ---
 
 NWU 1.4.0d
 ------
 
-**New heroes:** Hidan, Sasori
+**New heroes:** Konan, Zetsu
 **Revamped heroes:** TBA
-
-**Release ETA:**
-N/A
+**Release ETA:** TBA
 
 ---
 
 NWU 1.4.0e
 ------
 
-**New heroes:** Konan, Zetsu
+**New heroes:** 2 Community Decided Heroes
 **Revamped heroes:** TBA
-
-**Release ETA:**
-N/A
+**Release ETA:** TBA
 
 ---
 
 NWU 1.4.0f
 ------
 
-**New heroes:** Ashura Naruto, Indra Sasuke, Sage Kabuto
+**New heroes:** Ashura Naruto, Indra Sasuke, (Sage Kabuto)
 **Revamped heroes:** TBA
-
-**Release ETA:**
-N/A
-
----
+**Release ETA:** TBA
