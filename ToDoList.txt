@@ -40,6 +40,6 @@ NWU 1.4.0e
 NWU 1.4.0f
 ------
 
-**New heroes:** Ashura Naruto, Indra Sasuke, (Sage Kabuto)
+**New heroes:** Ashura Naruto, Indra Sasuke, Kaguya Ōtsutsuki
 **Revamped heroes:** TBA
 **Release ETA:** TBA
