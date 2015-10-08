@@ -6,7 +6,9 @@ scope InoKunaiRecharge
         private constant integer SPELL_ID3   = 'CW72' // 3 charge
         private constant integer SPELL_ID4   = 'CW73' // Disabled
         private constant integer SPELL_ID5   = 'CW74' // Learn
-        private constant integer CREEP_PLAYER_1 = 1 // Red = 0
+        private constant integer SPELL_ID6   = 'A0LP' // 4
+        private constant integer SPELL_ID7   = 'A0LQ' // 5
+        private constant integer CREEP_PLAYER_1 = 0 // Red = 0
         private constant integer CREEP_PLAYER_2 = 6 // Green = 6
         private constant string SFX          = "Abilities\\Spells\\Undead\\ReplenishMana\\SpiritTouchTarget.mdl"
     endglobals
@@ -40,6 +42,14 @@ scope InoKunaiRecharge
                     call UnitRemoveAbility(u, SPELL_ID2)
                     call UnitAddAbility(u, SPELL_ID3)
                     call SetUnitAbilityLevel(u, SPELL_ID3, level)
+                elseif GetUnitAbilityLevel(u, SPELL_ID3) > 0 then
+                    call UnitRemoveAbility(u, SPELL_ID3)
+                    call UnitAddAbility(u, SPELL_ID6)
+                    call SetUnitAbilityLevel(u, SPELL_ID6, level)
+                elseif GetUnitAbilityLevel(u, SPELL_ID6) > 0 then
+                    call UnitRemoveAbility(u, SPELL_ID6)
+                    call UnitAddAbility(u, SPELL_ID7)
+                    call SetUnitAbilityLevel(u, SPELL_ID7, level)                
                 endif
             endif
             call GroupRemoveUnit(g, u)

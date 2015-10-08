@@ -10,11 +10,11 @@ scope InoKunaiLearn
     
      private function Actions takes nothing returns nothing
         local unit u = GetTriggerUnit()
-        if GetUnitAbilityLevel(u, 'CW70') == 0 and GetUnitAbilityLevel(u, 'CW71') == 0 and GetUnitAbilityLevel(u, 'CW72') == 0 and GetUnitAbilityLevel(u, 'CW73') == 0 then
-            call UnitAddAbility(u,'CW72')
+        if GetUnitAbilityLevel(u, 'CW70') == 0 and GetUnitAbilityLevel(u, 'CW71') == 0 and GetUnitAbilityLevel(u, 'CW72') == 0 and GetUnitAbilityLevel(u, 'CW73') == 0 and GetUnitAbilityLevel(u, 'A0LP') == 0 and GetUnitAbilityLevel(u, 'A0LQ') == 0 then
+            call UnitAddAbility(u,'A0LQ')
         endif
-        if GetUnitAbilityLevel(u, 'CW72') > 0 then
-            call SetUnitAbilityLevel(u, 'CW72', GetUnitAbilityLevel(u, LEARN_ID))
+        if GetUnitAbilityLevel(u, 'A0LQ') > 0 then
+            call SetUnitAbilityLevel(u, 'A0LQ', GetUnitAbilityLevel(u, LEARN_ID))
         endif
         set u = null
     endfunction

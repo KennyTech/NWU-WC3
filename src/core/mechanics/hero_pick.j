@@ -328,13 +328,10 @@ library HeroPick initializer Init requires TimerUtils
         elseif UnitType==KARIN then
             ExecuteFunc("KarinEasterEgg_Init")
             ExecuteFunc("KarinEye_Init")
-            ExecuteFunc("KarinIdBounty_Init")
-            ExecuteFunc("KarinIdDebuff_Init")
             ExecuteFunc("KarinIdentify_Init")
             ExecuteFunc("KarinKFA_Init")
             ExecuteFunc("KarinKFD_Init")
             ExecuteFunc("KarinLFC_Init")
-            ExecuteFunc("KarinLFS_Init")
             ExecuteFunc("KarinInit_Init")
             debug Test_Success("Karin initialized")
         endif

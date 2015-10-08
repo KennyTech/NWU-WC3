@@ -8,9 +8,10 @@ scope InoFlowerBomb
         private constant integer TARG_ID    = 'cw25' // To throw Acid Bomb at (enemy)
         private constant real MISSILE_SPEED = 700
         private constant real KNOCKBACK_SPEED = 600
-        private constant real BOOM_AOE      = 300
+        private constant real BOOM_AOE      = 325
         private constant real STUN_AOE      = 128
         private constant string SFX         = "Objects\\Spawnmodels\\Other\\NeutralBuildingExplosion\\NeutralBuildingExplosion.mdl"
+        private constant string SFX2        = "Abilities\\Spells\\NightElf\\ManaBurn\\ManaBurnTarget.mdl"
         private constant hashtable HT       = InitHashtable()
     endglobals
     
@@ -29,7 +30,7 @@ scope InoFlowerBomb
         local unit u = LoadUnitHandle(HT, id, 1)
         local real dist = LoadReal(HT, id, 2)
         local real angle = LoadReal(HT, id, 3)
-        local real distmax = 280
+        local real distmax = 240
         local real x = GetUnitX(u)
         local real y = GetUnitY(u)
         local unit temp_u
@@ -131,6 +132,9 @@ scope InoFlowerBomb
             call DestroyEffect(AddSpecialEffect(SFX,x-150,y+150))
             call DestroyEffect(AddSpecialEffect(SFX,x-150,y-150))
             
+            // Kill trees
+            call EnumDestructablesInCircle(BOOM_AOE,x,y, function KillDestructableEnum)
+            
             // Boom Damage and Knockback
             call GroupEnumUnitsInRange(g,x,y,BOOM_AOE,null)
             loop
@@ -154,7 +158,7 @@ scope InoFlowerBomb
             set u = CreateUnit(Player(12),TARG_ID,x,y,0) // neutral-hostile Target for Acid Bomb
             set dummy = CreateUnit(p,'cw99',x,y,0) // Acid bomb caster
             call UnitApplyTimedLife(u,'BTLF',0.2)
-            all UnitApplyTimedLife(dummy,'BTLF',4.0) // Forgot to remove this dummy causing perma vision
+            call UnitApplyTimedLife(dummy,'BTLF',1) // Forgot to remove this dummy causing perma vision
             call UnitAddAbility(dummy, ACID_ID)
             call SetUnitAbilityLevel(dummy, ACID_ID, level)
             call IssueTargetOrder(dummy, "acidbomb", u)
@@ -194,6 +198,10 @@ scope InoFlowerBomb
         local group g = CreateGroup()
         local unit u
     
+        if dist == 0 then
+            call SetUnitAnimation(c,"attack")
+        endif
+        
         if dist + 50 < distmax then
             set dist = dist + MISSILE_SPEED/32 
         elseif dist < distmax then
@@ -231,7 +239,7 @@ scope InoFlowerBomb
             loop
                 set u = FirstOfGroup(g)
             exitwhen u == null
-                if IsUnitEnemy(u,GetOwningPlayer(c)) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==false and IsUnitType(u,UNIT_TYPE_DEAD)==false and IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) == false then                
+                if IsUnitEnemy(u,GetOwningPlayer(c)) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==false and IsUnitType(u,UNIT_TYPE_DEAD)==false and IsUnitType(u, UNIT_TYPE_MAGIC_IMMUNE) == false and UnitAbsorbSpell(u) == false then                
                     call AddStunTimed(u, 2.0)
                 endif
                 call GroupRemoveUnit(g,u)
@@ -241,6 +249,7 @@ scope InoFlowerBomb
             call UnitApplyTimedLife(temp_u,'BTLF',1.7)
             call SetUnitScale(temp_u,1.3+0.3*level,1.3+0.3*level,1.3+0.3*level)
             call SetUnitState(temp_u, UNIT_STATE_LIFE, 1)
+            call DestroyEffect(AddSpecialEffect(SFX2,x,y))
             
             call SaveUnitHandle(HT, explode_id, 1, temp_u)
             call SaveInteger(HT, explode_id, 2, level)
@@ -285,6 +294,8 @@ scope InoFlowerBomb
         local real dist = (SquareRoot((x-x_cast)*(x-x_cast)+(y-y_cast)*(y-y_cast)))
         
         //call DisplayTextToForce(GetPlayersAll(), "id: " + I2S(id))
+        
+        call SetUnitAnimation(c,"attack")
         
         set bomb = CreateUnit(GetOwningPlayer(c),BOMB_ID,x_cast,y_cast,angle)
         

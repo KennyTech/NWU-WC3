@@ -122,10 +122,11 @@ scope InoMindUlt
         local boolexpr b1
         local integer level = GetUnitAbilityLevel(c, SPELL_ID)
         local integer n = GetPlayerId(p)
+        local integer damage
         
         // Create Range Checker Visual
-        set dummy = CreateUnit(p, 'cw19', x-37.5, y-107.5, 0)
-        call SetUnitVertexColor(dummy,255,255,255,50) 
+        set dummy = CreateUnit(p, 'cw19', x-27.5, y-122.5, 0)
+        call SetUnitVertexColor(dummy,255,100,200,25) 
         call SetUnitTimeScale(dummy, 0.5)
         call UnitApplyTimedLife(dummy,'BTLF',0.8)
         
@@ -139,26 +140,24 @@ scope InoMindUlt
         call TimerStart(t,0.125,true,function Loop) 
         
         // Grab enemy creeps to take control of
-        call GroupEnumUnitsInRange(g,x,y,725,null)
+        call GroupEnumUnitsInRange(g,x,y,925,null)
         loop
             set u = FirstOfGroup(g)
         exitwhen u == null
             if IsUnitEnemy(u,p) and IsUnitType(u,UNIT_TYPE_DEAD)==false and IsUnitVisible(u,p) == true and IsUnitType(u, UNIT_TYPE_STRUCTURE) == false and IsUnitType(u, UNIT_TYPE_HERO) == false and GetPlayerId(GetOwningPlayer(u)) == CREEP_PLAYER_1 or GetPlayerId(GetOwningPlayer(u)) == CREEP_PLAYER_2 then            
                 
-                // Add +4/8/12 bonus dmg and +150/300 max hp
-                if level == 1 then
-                    call UnitAddAbility(u, 'AIti') // +4 dmg
-                elseif level == 2 then
-                    call UnitAddAbility(u, 'AItl') // +8 dmg
+                set damage = R2I(GetUnitDamage(c, 0, udg_HeroMainStat[GetUnitPointValue(c)])*0.04*level)
+                call DamageBonus(u, damage) 
+            
+                if level == 2 then
                     call UnitAddAbility(u, 'AIlf') // Add 150 hp
-                else 
-                    call UnitAddAbility(u, 'AItc') // +12 dmg
+                elseif level == 3 then
                     call UnitAddAbility(u, 'AIl2') // Add 300 hp
                 endif
                 
                 // Change ownership, keep old player color
                 set OriginalPlayer = GetOwningPlayer(u)
-                call SetUnitOwner(u, p, true)
+                call SetUnitOwner(u, p, false)
                 call SetUnitUserData(u, n*10 +10)
                 
                 // Add Bloodlust

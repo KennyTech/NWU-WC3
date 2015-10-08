@@ -100,7 +100,7 @@ scope DeiClaySpider
                 set u = FirstOfGroup(g)
             exitwhen u == null
                 if IsUnitEnemy(u,p) and IsUnitType(u,UNIT_TYPE_DEAD)==false then                
-                    call Damage_Spell(c,u,(30+30*level))
+                    call Damage_Spell(c,u,(30+40*level))
                 
                     // Add Clay Counter
                     set dummy = CreateUnit(p, DUMMY_ID2, x, y, 0)

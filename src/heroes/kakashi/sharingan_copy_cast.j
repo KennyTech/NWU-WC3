@@ -209,7 +209,7 @@ scope SharinganCopyCast
         set Ability = 'CH00'
         set CD = 16
       elseif utype == KARIN then
-        set Ability = 'CW11'
+        set Ability = 'CW10'
         set CD = 36 - 6 * SpellLVL
       elseif utype == DEIDARA then
         set Ability = 'CW61'

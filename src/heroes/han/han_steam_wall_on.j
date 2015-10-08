@@ -40,12 +40,12 @@ scope HanSteamWallOn
         call SaveInteger(HT, id, 3, n)
         
         if n > 0 then
-            call GroupEnumUnitsInRange(g,x,y,350,null)
+            call GroupEnumUnitsInRange(g,x2,y2,350,null)
             loop
                 set u = FirstOfGroup(g)
             exitwhen u == null
                 if IsUnitEnemy(u,p) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==false and IsUnitType(u,UNIT_TYPE_DEAD)==false then                
-                    call Damage_Spell(c,u,(40+40*level)/total_ticks)
+                    call Damage_Spell(c,u,(30+30*level)/total_ticks)
                     call DestroyEffect(AddSpecialEffect(SFX1,GetUnitX(u),GetUnitY(u))) 
                 endif
                 call GroupRemoveUnit(g, u)
@@ -133,13 +133,13 @@ scope HanSteamWallOn
             call SetUnitX(c, x)
             call SetUnitY(c, y)
             
-            // Deal 1/3 the damage instantly first, other 2/3 in damage over time later
+            // Deal 1/4 the damage instantly first, other 3/4 in damage over time later
             call GroupEnumUnitsInRange(g,x,y,350,null)
             loop
                 set u = FirstOfGroup(g)
             exitwhen u == null
                 if IsUnitEnemy(u,p) and IsUnitType(u,UNIT_TYPE_STRUCTURE)==false and IsUnitType(u,UNIT_TYPE_DEAD)==false then                
-                    call Damage_Spell(c,u,(20+20*level))
+                    call Damage_Spell(c,u,(10+10*level))
                     call DestroyEffect(AddSpecialEffect(SFX1,GetUnitX(u),GetUnitY(u))) 
                 endif
                 call GroupRemoveUnit(g, u)

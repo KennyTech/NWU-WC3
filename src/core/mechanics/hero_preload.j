@@ -168,7 +168,7 @@ library HeroPreload /*
         set udg_Hero[25] = INO
         set udg_HeroIcon[25] = "ReplaceableTextures\\CommandButtons\\BTNIcon-Ino.blp"
         set udg_HeroMainStat[25] = INT_HERO
-        set udg_HeroIsAvailable[25] = false
+        set udg_HeroIsAvailable[25] = true
         set HeroeName[25] = "Ino"
         // ==========
         set udg_Hero[26] = CHOUJI
@@ -210,7 +210,7 @@ library HeroPreload /*
         set udg_Hero[32] = DEIDARA
         set udg_HeroIcon[32] = "ReplaceableTextures\\CommandButtons\\BTNDeida.blp"
         set udg_HeroMainStat[32] = INT_HERO
-        set udg_HeroIsAvailable[32] = false
+        set udg_HeroIsAvailable[32] = true
         set HeroeName[32] = "Deidara"
         // ==========
         set udg_Hero[33] = KIMIMARO
@@ -330,7 +330,7 @@ library HeroPreload /*
         set udg_Hero[52] = HAN
         set udg_HeroIcon[52] = "ReplaceableTextures\\CommandButtons\\BTNHan.blp"
         set udg_HeroMainStat[52] = STR_HERO
-        set udg_HeroIsAvailable[52] = false
+        set udg_HeroIsAvailable[52] = true
         set HeroeName[52] = "Han"
         // ===========
         set udg_Hero[53] = KARIN

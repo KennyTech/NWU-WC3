@@ -4,10 +4,14 @@ scope InoKunaiCast
         private constant integer SPELL_ID1   = 'CW70' // 1 charge
         private constant integer SPELL_ID2   = 'CW71' // 2 charge
         private constant integer SPELL_ID3   = 'CW72' // 3 charge
+        private constant integer SPELL_ID6   = 'A0LP' // 4
+        private constant integer SPELL_ID7   = 'A0LQ' // 5
         private constant integer SPELL_ID4   = 'CW73' // Disabled
         private constant integer SPELL_ID5   = 'CW74' // Learn
         private constant integer DUMMY_ID1   = 'cw18'
         private constant hashtable HT        = InitHashtable()
+        private constant string SFX          = "Abilities\\Spells\\Other\\Incinerate\\IncinerateBuff.mdl"
+        private unit CASTER
         private unit CurrentPick
         private real CenterX = 0
         private real CenterY = 0
@@ -17,15 +21,15 @@ scope InoKunaiCast
     endglobals
     
     private function Conditions takes nothing returns boolean
-        return GetSpellAbilityId() == SPELL_ID1 or GetSpellAbilityId() == SPELL_ID2 or GetSpellAbilityId() == SPELL_ID3 
+        return GetSpellAbilityId() == SPELL_ID1 or GetSpellAbilityId() == SPELL_ID2 or GetSpellAbilityId() == SPELL_ID3 or GetSpellAbilityId() == SPELL_ID6 or GetSpellAbilityId() == SPELL_ID7 
     endfunction
 
     private function EnemyFilter takes nothing returns boolean
-        return IsUnitType(GetFilterUnit(), UNIT_TYPE_DEAD) == false and IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(GetTriggerUnit())) == true and IsUnitVisible(GetFilterUnit(),GetOwningPlayer(GetTriggerUnit())) == true and IsUnitType(GetFilterUnit(), UNIT_TYPE_MAGIC_IMMUNE) == false
+        return IsUnitType(GetFilterUnit(), UNIT_TYPE_DEAD) == false and IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(CASTER)) == true and IsUnitVisible(GetFilterUnit(),GetOwningPlayer(CASTER)) == true
     endfunction
     
     private function EnemyFilterHeroPriority takes nothing returns boolean
-        return IsUnitType(GetFilterUnit(), UNIT_TYPE_DEAD) == false and IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(GetTriggerUnit())) == true and IsUnitVisible(GetFilterUnit(),GetOwningPlayer(GetTriggerUnit())) == true and IsUnitType(GetFilterUnit(), UNIT_TYPE_MAGIC_IMMUNE) == false and IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true
+        return IsUnitType(GetFilterUnit(), UNIT_TYPE_DEAD) == false and IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(CASTER)) == true and IsUnitVisible(GetFilterUnit(),GetOwningPlayer(CASTER)) == true and IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true
     endfunction
 
     private function Enum takes nothing returns nothing
@@ -58,9 +62,11 @@ scope InoKunaiCast
         return ResultingGroup
     endfunction
     
-    private function Actions takes nothing returns nothing
-        local unit c = GetTriggerUnit()
+    private function onExpire takes nothing returns nothing
+        local timer t = GetExpiredTimer()
+        local integer id = GetHandleId(t)
         local unit u
+        local unit c = LoadUnitHandle(HT,id,1)
         local group g = CreateGroup()
         local real x = GetUnitX(c)
         local real y = GetUnitY(c)
@@ -72,24 +78,34 @@ scope InoKunaiCast
         local real x2 
         local real y2 
         local real angle
+        local integer damage
+        local integer spell_id = LoadInteger(HT,id,2)
         
-        call TriggerSleepAction(0.01) // Prevents uncontrollable bug
-        
+        //call DisplayTextToForce(GetPlayersAll(), "Kunai - spell id: " + I2S(spell_id))
+          
         set b1 = Filter(function EnemyFilterHeroPriority)
         set b2 = Filter(function EnemyFilter)
         
-        if GetSpellAbilityId() == SPELL_ID1 then // Use last charge
+        if spell_id == SPELL_ID1 then // Use last charge
             call UnitRemoveAbility(c, SPELL_ID1) // Remove current
             call UnitAddAbility(c, SPELL_ID4) // Add disabled
             call SetUnitAbilityLevel(c, SPELL_ID4, level)
-        elseif GetSpellAbilityId() == SPELL_ID2 then // Use 2nd charge
+        elseif spell_id == SPELL_ID2 then // Use 2nd charge
             call UnitRemoveAbility(c, SPELL_ID2) // Remove current 
             call UnitAddAbility(c, SPELL_ID1) // Add 1 charge remaining
             call SetUnitAbilityLevel(c, SPELL_ID1, level)
-        else // Use 3rd charge
+        elseif spell_id == SPELL_ID3 then // Use 3rd charge
             call UnitRemoveAbility(c, SPELL_ID3) // Remove current
             call UnitAddAbility(c, SPELL_ID2) // Add 2 charge remaining
             call SetUnitAbilityLevel(c, SPELL_ID2, level)
+        elseif spell_id == SPELL_ID6 then
+            call UnitRemoveAbility(c, SPELL_ID6) // Remove current
+            call UnitAddAbility(c, SPELL_ID3) // Add 2 charge remaining
+            call SetUnitAbilityLevel(c, SPELL_ID3, level)
+        elseif spell_id == SPELL_ID7 then
+            call UnitRemoveAbility(c, SPELL_ID7) // Remove current
+            call UnitAddAbility(c, SPELL_ID6) // Add 2 charge remaining
+            call SetUnitAbilityLevel(c, SPELL_ID6, level)     
         endif
         
         //==============================================================================
@@ -100,24 +116,43 @@ scope InoKunaiCast
         endif
         
         if CurrentPick != null then
+            call DestroyEffect(AddSpecialEffect(SFX,x,y))
             set x2 = GetUnitX(CurrentPick)
             set y2 = GetUnitY(CurrentPick)
             set angle = bj_RADTODEG*Atan2(y2-y,x2-x)
             
             set dummy = CreateUnit(p,DUMMY_ID1,x,y,angle)
             call Fade(dummy)
-            call DamageBonus(dummy, 15*level) // Dummy has 20 base atk = +35/50/65/80
+            
+            set damage = R2I(GetUnitDamage(c, 0, udg_HeroMainStat[GetUnitPointValue(c)])*(0.2+0.1*level))
+            call DamageBonus(dummy, damage) // 30/40/50/60% atk
             call IssueTargetOrder(dummy, "attack", CurrentPick)
             call SetUnitTimeScale(dummy, 2)
-        
         endif
-        
         
         set p = null
         set u = null
         set g = null
         set c = null
+        set t = null
         set dummy = null
+        
+    endfunction
+    
+    private function Actions takes nothing returns nothing
+        local timer t = CreateTimer()
+        local integer id = GetHandleId(t)
+        local unit c = GetTriggerUnit()
+        local integer spell_id = GetSpellAbilityId()
+        
+        call SaveUnitHandle(HT,id,1,c)
+        call SaveInteger(HT,id,2,spell_id)
+        set CASTER = c
+        
+        call TimerStart(t, 0.03125, false, function onExpire)
+        
+        set c = null
+        set t = null
     endfunction
     
     //=== Event ========================================================================

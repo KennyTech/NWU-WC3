@@ -9,7 +9,6 @@ scope KarinInit
 
     //===========================================================================
     public function Init takes nothing returns nothing
-        set HeroKarin = GetLastCreatedUnit()
         call DisableSpellbook(BOOK_ID)
         debug Test_Success(SCOPE_PREFIX + " loaded")
     endfunction

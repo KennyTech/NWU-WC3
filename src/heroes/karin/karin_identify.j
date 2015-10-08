@@ -1,9 +1,29 @@
-scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
+scope KarinIdentify // REVAMPED
 
     globals
+        private constant integer SPELL_ID     = 'CW09'
         private constant integer SPELL_ID2    = 'CW17'    // Ability ID of "Karin - Identify Aura" 
         private constant integer SPELL_ID3    = 'CW16'    // Ability ID of "Identify Armor Reduce (Karin)"  
     endglobals
+    
+    // Custom GOLD TEXT
+    public function TT_GOLD takes unit whichUnit, integer bounty, player killer returns nothing
+    local texttag tt = CreateTextTag()
+    local string text = "+" + I2S(bounty)
+    local real x = GetUnitX(whichUnit)
+    local real y = GetUnitY(whichUnit)
+    call SetTextTagText(tt, text, 0.024)
+    call SetTextTagPos(tt, x-1, y+20, 0.0)
+    call SetTextTagColor(tt, 255, 220, 0, 255)
+    call SetTextTagVelocity(tt, 0.0, 0.03)
+    call SetTextTagVisibility(tt, GetLocalPlayer()==killer and IsUnitVisible(whichUnit,GetLocalPlayer()))
+    call SetTextTagFadepoint(tt, 2.0)
+    call SetTextTagLifespan(tt, 3.0)
+    call SetTextTagPermanent(tt, false)
+    call DestroyEffect(AddSpecialEffect("UI\\Feedback\\GoldCredit\\GoldCredit.mdl", x, y))
+    set text = null
+    set tt = null
+    endfunction
 
     private function EnemyFilter takes nothing returns boolean
         return IsUnitType(GetFilterUnit(), UNIT_TYPE_DEAD) == false and IsUnitType(GetFilterUnit(),UNIT_TYPE_STRUCTURE) == false
@@ -18,7 +38,7 @@ scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
             set u = FirstOfGroup(KarinIDGroup)
         exitwhen u == null
             call GroupRemoveUnit(KarinIDGroup, u)
-            call DisplayTextToForce( GetPlayersAll(), GetUnitName(u) + " <-- flushing this unit")
+            //call DisplayTextToForce( GetPlayersAll(), GetUnitName(u) + " <-- flushing this unit")
             call UnitRemoveAbility(u, SPELL_ID2)
             call UnitRemoveAbility(u, SPELL_ID3)
         endloop
@@ -29,16 +49,14 @@ scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
         set u = null
     endfunction
     
-    private function OnSpell takes nothing returns nothing 
-        local group g = CreateGroup()
-        local real x = GetSpellTargetX()
-        local real y = GetSpellTargetY()
-        local unit c = GetTriggerUnit()
+    private function onSpell takes nothing returns nothing 
+        local real x        = GetSpellTargetX()
+        local real y        = GetSpellTargetY()
+        local unit c        = GetTriggerUnit()
         local unit u
-        local timer t = NewTimer()
-        local integer id = GetHandleId(t)
-        local integer level = GetUnitAbilityLevel(c, SPELL_ID)
-        local group idGroup = CreateGroup()
+        local timer t       = NewTimer()
+        local integer id    = GetHandleId(t)
+        local integer level = GetUnitAbilityLevel(c,SPELL_ID)
         
         set HeroKarin = c
         
@@ -48,7 +66,7 @@ scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
         exitwhen u == null
             if IsUnitEnemy(u, GetOwningPlayer(c)) and IsUnitIllusion(u) == false and GetUnitDefaultMoveSpeed(u) >= 150 then // Enemy, not clone, not ward
                 call GroupAddUnit(KarinIDGroup, u) // For Bounty Death later
-                call DisplayTextToForce( GetPlayersAll(), GetUnitName(u) + " <-- added unit to bounty creep")
+                //call DisplayTextToForce( GetPlayersAll(), GetUnitName(u) + " <-- added unit to bounty creep")
                 call UnitAddAbility(u, SPELL_ID2)
                 call UnitAddAbility(u, SPELL_ID3)
             endif
@@ -62,60 +80,61 @@ scope KarinIdentify // REVAMP WORK IN PROGRESS -non-functional atm!
         set t = null
     endfunction
     
-    private function OnDeath takes nothing returns nothing 
+    private function onDeath takes nothing returns nothing 
         local unit u = GetDyingUnit()
         local integer gold 
-        local texttag tt = CreateTextTag()
         local real x = GetUnitX(u)
         local real y = GetUnitY(u)
         local player p = GetOwningPlayer(GetKillingUnit())
         
         if IsUnitInGroup(GetDyingUnit(), KarinIDGroup) then
+        
+            call UnitRemoveAbility(u, SPELL_ID2)
+            call UnitRemoveAbility(u, SPELL_ID3)
             
             set gold = GetHeroLevel(HeroKarin) // Gold based on Karin's level
                 
             if IsUnitType(u, UNIT_TYPE_HERO) == true then
                 set gold = gold*6
             endif
-            
-            call SetTextTagText(tt,"+" + I2S(gold),.024)
-            call SetTextTagPos(tt,x-16.,y+20,.0)
-            call SetTextTagColor(tt,255,220,0,255)
-            call SetTextTagVelocity(tt,.0,.03)
-            call SetTextTagFadepoint(tt,2.)
-            call SetTextTagLifespan(tt,3.)
-            call SetTextTagPermanent(tt,false)
                 
-            call GroupRemoveUnit(KarinIDGroup, u)
+            call GroupRemoveUnit(KarinIDGroup, u)     
            
             // If Karin or her ally kills, give gold
             if IsPlayerAlly(p, GetOwningPlayer(HeroKarin)) then 
                 call AdjustPlayerStateBJ(gold, p, PLAYER_STATE_RESOURCE_GOLD )
-                call SetTextTagVisibility(tt,GetLocalPlayer()==p)
+                call TT_GOLD(u,gold,p)
             endif 
             
             // If killer isn't Karin and creep was not denied, give gold to Karin
             if p != GetOwningPlayer(HeroKarin) and IsPlayerAlly(p, GetOwningPlayer(HeroKarin)) then 
                 call AdjustPlayerStateBJ(gold, GetOwningPlayer(HeroKarin), PLAYER_STATE_RESOURCE_GOLD )
-                call SetTextTagVisibility(tt,GetLocalPlayer()==GetOwningPlayer(HeroKarin)
+                call TT_GOLD(u,gold,GetOwningPlayer(HeroKarin))
             endif
+        endif
         
     endfunction
     
     private function onDamage takes unit damagedUnit, unit damageSource, real damage returns nothing
         if Damage_IsAttack() and IsUnitInGroup(damageSource, KarinIDGroup) then
-            if GetUnitAbilityLevel(damageSource, SPELL_ID3) < 2*GetUnitAbilityLevel(damageSource, SPELL_ID3) then
+            if GetUnitAbilityLevel(damageSource, SPELL_ID3) <= 2*GetUnitAbilityLevel(HeroKarin, SPELL_ID) then
+                //call DisplayTextToForce( GetPlayersAll(), I2S(GetUnitAbilityLevel(damageSource, SPELL_ID3)) + " < " + I2S(2*GetUnitAbilityLevel(HeroKarin, SPELL_ID)))
                 call SetUnitAbilityLevel(damageSource, SPELL_ID3, GetUnitAbilityLevel(damageSource, SPELL_ID3) + 1)
             endif
         endif
     endfunction
     
-endscope
+    private function onActivate takes nothing returns nothing
+        set HeroKarin = GetTriggerUnit()
+    endfunction 
 
 //===========================================================================
 
     public function Init takes nothing returns nothing
         call GT_RegisterSpellEffectEvent('CW09',function onSpell)
+        call GT_RegisterSpellEffectEvent('CW10',function onActivate)
+        call GT_RegisterSpellEffectEvent('CW11',function onActivate)
+        call GT_RegisterSpellEffectEvent('CW14',function onActivate)
         call GT_RegisterPlayerEventAction(EVENT_PLAYER_UNIT_DEATH, function onDeath)
         call RegisterDamageResponse(onDamage)
     endfunction

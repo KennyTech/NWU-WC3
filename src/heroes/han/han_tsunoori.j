@@ -118,8 +118,8 @@ scope HanTsunoori
                     call UnitApplyTimedLife(d,'BTLF',0.3)
                     call UnitAddAbility(d, STUN_ID)
                     call SetUnitAbilityLevel(d, STUN_ID, level)
-                    call IssueTargetOrder(d, "thunderbolt", u)
-                    call UnitAddAbility(u, KNOCKBACK_COUNT)*/
+                    call IssueTargetOrder(d, "thunderbolt", u)*/
+                    call UnitAddAbility(u, KNOCKBACK_COUNT)
                     call AddStunTimed(u, 1+0.5*level)
                     call GroupRemoveUnit(g,u)
                     call GroupAddUnit(GG,u) // Don't let enemy get damaged again

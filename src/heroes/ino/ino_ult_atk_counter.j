@@ -16,7 +16,7 @@ scope InoUltAtkCounter
         local string s = I2S(n)
         
         call SetUnitUserData(u, n+1)
-        if SubString(s, 1, 2) == "6" or SubString(s, 2, 3) == "6" then
+        if SubString(s, 1, 2) == "8" or SubString(s, 2, 3) == "8" then
             if IsUnitEnemy(u,Player(1)) then
                 call SetUnitOwner(u,Player(CREEP_PLAYER_1),true)
             else

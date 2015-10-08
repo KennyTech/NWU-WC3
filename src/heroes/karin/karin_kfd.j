@@ -14,27 +14,19 @@ scope KarinKFD
         local unit c = GetTriggerUnit()
         local real x = GetUnitX(c)
         local real y = GetUnitY(c)
-        local texttag tt // =CreateTextTag()
+        local texttag tt = CreateTextTag()
         
-        set tt = CreateTextTag()
         call DestroyEffect(AddSpecialEffect (EFFECT, x, y))
-        call Damage_Spell(HeroKarin,c,25*KF_Level)
         call SetUnitState(c, UNIT_STATE_MANA, GetUnitState(c, UNIT_STATE_MANA) - 50*KF_Level)
         
-        call SetTextTagText(tt,"-" + I2S(50*KF_Level),.024)
-        call SetTextTagPos(tt,x-16.,y+stacks*20,.0)
-        call SetTextTagColor(tt,82,82,255,255)
-        call SetTextTagVelocity(tt,.0,.04)
-
-        call SetTextTagVisibility(tt,false)
-    
+        call ManaBurnEx(c,50*KF_Level,false)
+        
+        call Damage_Spell(HeroKarin,c,25*KF_Level)
+        
         if (IsVisibleToPlayer(x, y, GetLocalPlayer()) == true) then
             call SetTextTagVisibility(tt, true)
         endif
         
-        call SetTextTagFadepoint(tt,2.)
-        call SetTextTagLifespan(tt,5.)
-        call SetTextTagPermanent(tt,false) 
         
         set tt = null
         set c = null

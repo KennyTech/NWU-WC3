@@ -29,12 +29,12 @@ scope Testers{
     }
 
     private int command2heroId(string command){
-        if (command == "-han"){
-            return HAN
-        } elseif (command == "-dei"){
-            return DEIDARA
-        } elseif (command == "-ino"){
-            return INO
+        if (command == "-karin"){
+            return KARIN
+        } elseif (command == "-karin"){
+            return KARIN
+        } elseif (command == "-karin"){
+            return KARIN
         } elseif (command == "-karin"){
             return KARIN
         }
@@ -78,68 +78,9 @@ scope Testers{
 
         string array testers
         testers[0] = "muZk"
-        testers[1] = "Nurarihyon"
-        testers[2] = "Masamune"
-        testers[3] = "reborn2956"
-        testers[4] = "Gemini"
-        testers[5] = "Black.Widow"
-        testers[6] = "Cherrywater"
-        testers[7] = "frankshotsauce"
-        testers[8] = "MashiroMuritaka"
-        testers[9] = "WorldEdit"
-        testers[10] = "ArOuNDThaWOrLD" 
-        testers[11] = "pronoob" 
-        testers[12] = "XkreshSWx"
-        testers[13] = "Azog(" 
-        testers[14] = "Profe"
-        testers[15] = "Nuts)"
-        testers[16] = "SSJGOKU"
-        testers[17] = "GhostBusters2"
-        testers[18] = "6th.kakashi"
-        testers[19] = "GumGumNo"
-        testers[20] = "kaze"
-        testers[21] = "H20"
-        testers[22] = "Milotic"
-        testers[23] = "Seven-Tails-Fu"
-        testers[24] = "GhostRidder"
-        testers[25] = "UnMi"
-        testers[26] = "Hyakuei"
-        testers[27] = "Ace"
-        testers[28] = "34preist34"
-        testers[29] = "chlamydia"
-        testers[30] = "Miss[t]Nin"
-        testers[31] = "Mew"
-        testers[32] = "milan84"
-        testers[33] = "Borngolden"
-        testers[34] = "HelionPrime"
-        testers[35] = "Crabdancerking"
-        testers[36] = "dar_end"
-        testers[37] = "coolhopper"
-        testers[38] = "matdas"
-        testers[39] = "a_dam_god"
-        testers[40] = "Souseiseki"
-        testers[41] = "rob_eats_noobs"
-        testers[42] = "MashiroMuritaka"
-        testers[43] = "SonofOdin"
-        testers[44] = "Montana"
-        testers[45] = "Axell"
-        testers[46] = "aphotik"
-        testers[47] = "Colgrim"
-        testers[48] = "S.Holmes"
-        testers[49] = "gon-"
-        testers[50] = "Ryus"
-        testers[51] = "Miecio777"
-        testers[52] = "Amaterasu"
-        testers[53] = "Lucifer."
-        testers[54] = "anakin94"
-        testers[55] = "GhostBusters2"
-        testers[56] = "bq."
-        testers[57] = "sawczenqo."
-        testers[58] = "the_karma"
-        testers[59] = "Hunterfire"
-        testers[60] = "Ka1n"
+        testers[1] = "reborn2956"
         
-        int TESTERS_LENGTH = 60
+        int TESTERS_LENGTH = 1
 
         // Register commands ONLY for testers
 
