@@ -16,7 +16,7 @@ endscope
 
 /* Will cause future spell damages (the amplify part) to activate on-attack abilities (ie Sasuke's Passive).
 This means with Hoshikage passive power, Sasuke can use [W] and sometimes it will automatically instantly activate [R].
-LINE 23: Damage_IsAttack() gets activated sometimes, I added Damage_IsPhysical() part which did not fix it.
+LINE 27: Damage_IsAttack() gets activated sometimes, I added Damage_IsPhysical() part which did not fix it.
 I also diagnosed HoshikageSpellBonus to display the amplified damage it's negative as spell damage should be).
 Should I change DSChokuto to activate if damage is negative? (damage < 0)
 
