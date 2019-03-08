@@ -2,7 +2,7 @@ NWU
 ===
 
 Creators: Kroom, MuzK, Kenny  
-A Custom Game Mod enjoyed by hundreds for the popular RTS game Warcraft 3  
+A Custom Game Mod enjoyed by thousands for the popular RTS game Warcraft 3  
 Naruto Wars Unlimited (http://form.narutowarsunlimited.com/)  
 It is a MOBA (hero arena) inspired from the game DoTA, with character origins from the animated Japanese cartoon Naruto.  
 2009 - 2018  
